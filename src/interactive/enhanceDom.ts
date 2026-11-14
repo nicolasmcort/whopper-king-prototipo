@@ -123,13 +123,14 @@ export function enhanceFrame(
     if (text.length > 70) return;
     if (childElements.length > 6) return;
 
-    if (isEditableLabel(text, screenId) && childElements.length <= 1) {
-      makeEditable(el);
+    // Navegación gana sobre inputs: filas de inventario deben ir a detalle
+    if (resolveNav(screenId, text) || isButtonish(text)) {
+      markPressable(el);
       return;
     }
 
-    if (isButtonish(text) || resolveNav(screenId, text)) {
-      markPressable(el);
+    if (isEditableLabel(text, screenId) && childElements.length <= 1) {
+      makeEditable(el);
     }
   });
 

@@ -693,7 +693,7 @@ const ADMIN_SCREENS = new Set([
 /** Pantallas de formulario de recepción: valores de campos editables. */
 const FORM_SCREENS = new Set(['agregar-existente', 'agregar-nuevo', 'editar-movimiento', 'editar-pedido']);
 
-/** Textos que deben volverse editables al hacer clic / al montar. */
+/** Textos editables globales (placeholders / valores de form). Nunca nombres de filas de inventario. */
 const EDITABLE = new Set(
   [
     'buscar producto o código',
@@ -712,14 +712,20 @@ const EDITABLE = new Set(
     '2,4',
     '2,4 kg',
     'nuevo valor (kg) *',
+    '5',
+  ].map(n),
+);
+
+/** Solo en formularios de recepción: nombres de producto del desplegable. */
+const FORM_PRODUCT_VALUES = new Set(
+  [
     'carne de res',
     'pan brioche',
     'papa criolla',
     'arroz blanco',
     'tocineta',
     'queso chedar',
-    '5',
-    'nombre del producto *',
+    'aceite de girasol',
   ].map(n),
 );
 
@@ -751,6 +757,13 @@ const FIGMA_ID_ACTIONS: Record<string, string> = {
   '342:2067': 'cerrar',
   // Header carrito sticky en menú
   '425:2642': 'carrito',
+  // Filas de inventario → detalle (clic en toda la fila)
+  '752:1956': 'tocineta',
+  '752:1977': 'carne de res',
+  '752:1984': 'queso chedar',
+  '752:1991': 'pan brioche',
+  '752:2026': 'papa criolla',
+  '752:2044': 'arroz blanco',
 };
 
 /** Match parcial con límites de palabra (evita “menu” dentro de cualquier texto). */
@@ -828,19 +841,24 @@ export function isButtonish(rawLabel: string) {
 
 export function isEditableLabel(rawLabel: string, screenId?: string) {
   const key = n(rawLabel);
+  // Si la etiqueta navega en esta pantalla, no convertirla en input
+  if (screenId && resolveNav(screenId, rawLabel)) return false;
+
   if (EDITABLE.has(key)) return true;
   // Solo placeholders / valores de formulario explícitos (no celdas de tabla)
   if (/^buscar /i.test(rawLabel.trim())) return true;
   if (/^seleccionar /i.test(rawLabel.trim())) return true;
   if (/^porque s[ií]\.?$/i.test(rawLabel.trim())) return true;
   if (/^aaaaaaaa/i.test(rawLabel.trim())) return true;
+
   if (screenId && FORM_SCREENS.has(screenId)) {
+    if (FORM_PRODUCT_VALUES.has(key)) return true;
     // Valores típicos de inputs en agregar/editar producto
     if (/^\d+([.,]\d+)?$/.test(key)) return true;
     if (/^\d{1,2}\/\d{1,2}\/\d{2,4}$/.test(key)) return true;
     if (/kilogramos|gramos|litros|unidades|\(kg\)|\(g\)|\(l\)/i.test(rawLabel)) return true;
     if (/^[a-z0-9].{0,40}$/i.test(key) && !BUTTONISH.has(key) && key.length <= 40) {
-      // Evitar títulos de sección
+      // Evitar títulos de sección / tabs
       if (/^(producto|datos de recepcion|campos obligatorios|categoria|stock)/i.test(key)) return false;
       if (/\*$/.test(rawLabel.trim())) return false; // labels "Campo *"
       if (/^(nuevo producto|producto existente|cerrar|cancelar|guardar)$/i.test(key)) return false;
