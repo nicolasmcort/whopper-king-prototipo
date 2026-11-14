@@ -42,8 +42,8 @@ const CLIENT_GLOBAL = normMap({
   'a domicilio': 'tu-carrito-domicilio',
   'en el local': 'tu-carrito-local',
   'escanear qr': 'escaneo-qr',
-  // Sin sesión: Mi cuenta lleva a login (no a la cuenta)
-  'mi cuenta': 'login',
+  // Prototipo: Mi cuenta abre la pantalla de cuenta (login queda desde Iniciar sesión)
+  'mi cuenta': 'mi-cuenta',
   'mis datos': 'mis-datos',
   'mis direcciones': 'mis-direcciones',
   'agregar direccion': 'agregar-direccion',
@@ -112,14 +112,15 @@ const BY_SCREEN_RAW: Record<string, Record<string, NavTarget>> = {
     lotes: 'detalle-carne',
   },
   'agregar-existente': {
-    cerrar: '__back__',
+    // Cerrar siempre a inventario (no __back__: el selector nuevo/existente apila historial)
+    cerrar: 'inventario',
     cancelar: 'inventario',
     guardar: 'inventario',
     'nuevo producto': 'agregar-nuevo',
     'producto existente': 'agregar-existente',
   },
   'agregar-nuevo': {
-    cerrar: '__back__',
+    cerrar: 'inventario',
     cancelar: 'inventario',
     guardar: 'inventario',
     'producto existente': 'agregar-existente',
@@ -261,16 +262,23 @@ const BY_SCREEN_RAW: Record<string, Record<string, NavTarget>> = {
     buscar: 'menu',
     'iniciar sesion': 'login',
     'iniciar sesión': 'login',
-    'mi cuenta': 'login',
+    'mi cuenta': 'mi-cuenta',
     'sobre nosotros': 'sobre-nosotros',
     conocernos: 'sobre-nosotros',
     contactanos: 'contactos',
     'contáctanos': 'contactos',
+    'contactanos por aca': 'contactos',
+    'contáctanos por acá': 'contactos',
     pqrs: 'pqrs',
     carrito: 'tu-carrito-local',
     whoppers: 'menu-burgers',
     almuerzos: 'menu-almuerzo',
     bebidas: 'menu-bebidas',
+    privacidad: 'privacidad',
+    'politica de tratamiento de datos': 'privacidad',
+    'política de tratamiento de datos': 'privacidad',
+    'terminos y condiciones': 'privacidad',
+    'términos y condiciones': 'privacidad',
   },
   login: {
     registrarse: 'registro',
@@ -319,76 +327,88 @@ const BY_SCREEN_RAW: Record<string, Record<string, NavTarget>> = {
     pescado: 'menu-pescado',
     bebidas: 'menu-bebidas',
     carrito: 'tu-carrito-local',
+    'tu carrito esta vacio': 'tu-carrito-local',
+    'tu carrito está vacío': 'tu-carrito-local',
     inicio: 'whopper-inicio',
-    'mi cuenta': 'login',
+    'mi cuenta': 'mi-cuenta',
     volver: 'whopper-inicio',
     atras: 'whopper-inicio',
   },
   'menu-burgers': {
     whopper: 'personaliza-whopper',
     carrito: 'tu-carrito-local',
+    'tu carrito esta vacio': 'tu-carrito-local',
     menu: 'menu',
-    'mi cuenta': 'login',
-    volver: 'whopper-inicio',
-    atras: 'whopper-inicio',
+    'mi cuenta': 'mi-cuenta',
+    // Flecha del header: volver al menú, no al inicio
+    volver: 'menu',
+    atras: 'menu',
   },
   'menu-burgers-00': {
     whopper: 'personaliza-whopper',
     carrito: 'tu-carrito-local',
+    'tu carrito esta vacio': 'tu-carrito-local',
     menu: 'menu',
-    'mi cuenta': 'login',
-    volver: 'whopper-inicio',
-    atras: 'whopper-inicio',
+    'mi cuenta': 'mi-cuenta',
+    volver: 'menu',
+    atras: 'menu',
   },
   'menu-almuerzo': {
     menu: 'menu',
     carrito: 'tu-carrito-local',
+    'tu carrito esta vacio': 'tu-carrito-local',
     texana: 'desc-texana',
-    'mi cuenta': 'login',
-    volver: 'whopper-inicio',
-    atras: 'whopper-inicio',
+    'mi cuenta': 'mi-cuenta',
+    volver: 'menu',
+    atras: 'menu',
   },
   'menu-pollo': {
     menu: 'menu',
     carrito: 'tu-carrito-local',
-    'mi cuenta': 'login',
-    volver: 'whopper-inicio',
-    atras: 'whopper-inicio',
+    'tu carrito esta vacio': 'tu-carrito-local',
+    'mi cuenta': 'mi-cuenta',
+    volver: 'menu',
+    atras: 'menu',
   },
   'menu-carne': {
     menu: 'menu',
     carrito: 'tu-carrito-local',
-    'mi cuenta': 'login',
-    volver: 'whopper-inicio',
-    atras: 'whopper-inicio',
+    'tu carrito esta vacio': 'tu-carrito-local',
+    'mi cuenta': 'mi-cuenta',
+    volver: 'menu',
+    atras: 'menu',
   },
   'menu-pescado': {
     menu: 'menu',
     carrito: 'tu-carrito-local',
-    'mi cuenta': 'login',
-    volver: 'whopper-inicio',
-    atras: 'whopper-inicio',
+    'tu carrito esta vacio': 'tu-carrito-local',
+    'mi cuenta': 'mi-cuenta',
+    volver: 'menu',
+    atras: 'menu',
   },
   'menu-bebidas': {
     menu: 'menu',
     carrito: 'tu-carrito-local',
-    'mi cuenta': 'login',
-    volver: 'whopper-inicio',
-    atras: 'whopper-inicio',
+    'tu carrito esta vacio': 'tu-carrito-local',
+    'mi cuenta': 'mi-cuenta',
+    volver: 'menu',
+    atras: 'menu',
   },
   'menu-hamburguesas': {
     menu: 'menu',
     whopper: 'personaliza-whopper',
-    'mi cuenta': 'login',
-    volver: 'whopper-inicio',
-    atras: 'whopper-inicio',
+    carrito: 'tu-carrito-local',
+    'tu carrito esta vacio': 'tu-carrito-local',
+    'mi cuenta': 'mi-cuenta',
+    volver: 'menu',
+    atras: 'menu',
   },
   'personaliza-whopper': {
     'mini combo': 'personaliza-whopper-mini',
     'maxi combo': 'personaliza-whopper-maxi',
     carrito: 'tu-carrito-local',
     agregar: 'tu-carrito-local',
-    'mi cuenta': 'login',
+    'mi cuenta': 'mi-cuenta',
     volver: 'menu-burgers',
     atras: 'menu-burgers',
   },
@@ -551,7 +571,14 @@ const BY_SCREEN_RAW: Record<string, Record<string, NavTarget>> = {
   'agregar-direccion': { guardar: 'mis-direcciones', cancelar: 'mis-direcciones', volver: 'mis-direcciones' },
   'confirmar-elim-direccion': { confirmar: 'mis-direcciones', cancelar: 'mis-direcciones', eliminar: 'mis-direcciones' },
   privacidad: { volver: 'mi-cuenta', atras: 'mi-cuenta', 'mi cuenta': 'mi-cuenta' },
-  contactos: { volver: 'mi-cuenta', atras: 'mi-cuenta', inicio: 'whopper-inicio', 'mi cuenta': 'mi-cuenta' },
+  contactos: {
+    // Sheet desde inicio o cuenta: Cerrar / atrás siempre salen
+    cerrar: '__back__',
+    volver: '__back__',
+    atras: '__back__',
+    inicio: 'whopper-inicio',
+    'mi cuenta': 'mi-cuenta',
+  },
   'elim-cuenta': {
     confirmar: 'login',
     eliminar: 'login',
@@ -637,6 +664,35 @@ const BUTTONISH = new Set(
   ].map(n),
 );
 
+/** Pantallas admin: no aplicar rutas de menú/cliente (evita “Carne de res” → menú). */
+const ADMIN_SCREENS = new Set([
+  'inventario',
+  'detalle-carne',
+  'agregar-existente',
+  'agregar-nuevo',
+  'historial-movimientos',
+  'historial-pedidos',
+  'editar-movimiento',
+  'confirmar-correccion',
+  'editar-pedido',
+  'confirmar-pedido',
+  'pedido-anadir',
+  'pedido-quitado',
+  'pedido-anadido',
+  'registro-eliminado',
+  'numeros-negocio',
+  'ventas-canal',
+  'platos-insumos',
+  'no-implementada',
+  'ajuste-mov-184',
+  'ajuste-ped-1048',
+  'confirmar-eliminacion',
+  'eliminacion-mov-184',
+]);
+
+/** Pantallas de formulario de recepción: valores de campos editables. */
+const FORM_SCREENS = new Set(['agregar-existente', 'agregar-nuevo', 'editar-movimiento', 'editar-pedido']);
+
 /** Textos que deben volverse editables al hacer clic / al montar. */
 const EDITABLE = new Set(
   [
@@ -654,7 +710,16 @@ const EDITABLE = new Set(
     '3 kg',
     '5 kg',
     '2,4',
+    '2,4 kg',
     'nuevo valor (kg) *',
+    'carne de res',
+    'pan brioche',
+    'papa criolla',
+    'arroz blanco',
+    'tocineta',
+    'queso chedar',
+    '5',
+    'nombre del producto *',
   ].map(n),
 );
 
@@ -675,7 +740,34 @@ const FIGMA_ID_ACTIONS: Record<string, string> = {
   // Hamburguesa azul (admin) → sección cliente (solo el botón, no todo el header)
   '404:2117': 'cliente',
   '404:2118': 'cliente',
+  // Bottom nav (Inicio / Buscar / Carrito / Mi cuenta)
+  '342:1199': 'inicio',
+  '342:1203': 'buscar',
+  '342:1211': 'mi cuenta',
+  '818:3495': 'carrito',
+  '818:3496': 'carrito',
+  // Contactos sheet: backdrop y Cerrar
+  '342:2000': 'cerrar',
+  '342:2067': 'cerrar',
+  // Header carrito sticky en menú
+  '425:2642': 'carrito',
 };
+
+/** Match parcial con límites de palabra (evita “menu” dentro de cualquier texto). */
+function partialHit(key: string, k: string): boolean {
+  if (!k) return false;
+  if (key === k) return true;
+  if (key.startsWith(k + ' ') || key.endsWith(' ' + k)) return true;
+  if (key.includes(' ' + k + ' ')) return true;
+  // "whopper" debe poder abrir "whoppers"
+  if (k.startsWith(key) && key.length >= 4) return true;
+  // Etiqueta corta de tab/botón contenida solo como palabra completa
+  if (k.length >= 4) {
+    const re = new RegExp(`(?:^|\\s|:)${k.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}(?:\\s|$|:|-)`, 'i');
+    if (re.test(key)) return true;
+  }
+  return false;
+}
 
 /** Preferir la clave más larga que matchee (evita whopper ⊂ whoppers). */
 function bestPartial(
@@ -685,12 +777,10 @@ function bestPartial(
   let best: NavTarget | null = null;
   let bestLen = -1;
   for (const [k, v] of Object.entries(map)) {
-    if (!k) continue;
-    if (key === k || key.startsWith(k + ' ') || key.includes(k) || k.startsWith(key)) {
-      if (k.length > bestLen) {
-        best = v;
-        bestLen = k.length;
-      }
+    if (!partialHit(key, k)) continue;
+    if (k.length > bestLen) {
+      best = v;
+      bestLen = k.length;
     }
   }
   return best;
@@ -721,6 +811,8 @@ export function resolveNav(screenId: string, rawLabel: string): NavTarget | null
     const hit = bestPartial(key, GLOBAL);
     if (hit) return hit;
   }
+  // En admin, no redirigir a menú/cliente por nombres de producto (“Carne…”, “Pollo…”)
+  if (ADMIN_SCREENS.has(screenId)) return null;
   if (key in CLIENT_GLOBAL) return CLIENT_GLOBAL[key];
   return bestPartial(key, CLIENT_GLOBAL);
 }
@@ -734,7 +826,7 @@ export function isButtonish(rawLabel: string) {
   );
 }
 
-export function isEditableLabel(rawLabel: string) {
+export function isEditableLabel(rawLabel: string, screenId?: string) {
   const key = n(rawLabel);
   if (EDITABLE.has(key)) return true;
   // Solo placeholders / valores de formulario explícitos (no celdas de tabla)
@@ -742,5 +834,24 @@ export function isEditableLabel(rawLabel: string) {
   if (/^seleccionar /i.test(rawLabel.trim())) return true;
   if (/^porque s[ií]\.?$/i.test(rawLabel.trim())) return true;
   if (/^aaaaaaaa/i.test(rawLabel.trim())) return true;
+  if (screenId && FORM_SCREENS.has(screenId)) {
+    // Valores típicos de inputs en agregar/editar producto
+    if (/^\d+([.,]\d+)?$/.test(key)) return true;
+    if (/^\d{1,2}\/\d{1,2}\/\d{2,4}$/.test(key)) return true;
+    if (/kilogramos|gramos|litros|unidades|\(kg\)|\(g\)|\(l\)/i.test(rawLabel)) return true;
+    if (/^[a-z0-9].{0,40}$/i.test(key) && !BUTTONISH.has(key) && key.length <= 40) {
+      // Evitar títulos de sección
+      if (/^(producto|datos de recepcion|campos obligatorios|categoria|stock)/i.test(key)) return false;
+      if (/\*$/.test(rawLabel.trim())) return false; // labels "Campo *"
+      if (/^(nuevo producto|producto existente|cerrar|cancelar|guardar)$/i.test(key)) return false;
+      return true;
+    }
+  }
   return false;
+}
+
+/** Destinos que deben reemplazar la pantalla actual en el historial (selector). */
+export function shouldReplaceHistory(fromId: string, toId: string): boolean {
+  const pair = new Set([fromId, toId]);
+  return pair.has('agregar-existente') && pair.has('agregar-nuevo');
 }

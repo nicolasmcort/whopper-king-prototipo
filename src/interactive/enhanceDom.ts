@@ -56,23 +56,35 @@ function makeEditable(el: HTMLElement) {
   input.value = text;
   input.className = 'proto-field';
   input.setAttribute(MARK, 'input');
+  input.placeholder = text;
   input.style.cssText = [
+    'display:block',
     'width:100%',
-    'height:100%',
-    'min-height:1.2em',
+    'min-width:0',
+    'max-width:100%',
+    'height:auto',
+    'min-height:1.25em',
     'border:none',
     'outline:none',
     'background:transparent',
     'font:inherit',
+    'font-size:inherit',
+    'font-weight:inherit',
+    'line-height:inherit',
+    'letter-spacing:inherit',
     'color:inherit',
     'text-align:inherit',
     'padding:0',
     'margin:0',
     'box-sizing:border-box',
+    'overflow:hidden',
+    'text-overflow:ellipsis',
   ].join(';');
 
   // Keep layout: replace text content
   el.textContent = '';
+  el.style.minWidth = '0';
+  el.style.flex = el.style.flex || '1 1 0%';
   el.appendChild(input);
   el.style.cursor = 'text';
   el.setAttribute(MARK, 'field');
@@ -111,7 +123,7 @@ export function enhanceFrame(
     if (text.length > 70) return;
     if (childElements.length > 6) return;
 
-    if (isEditableLabel(text) && childElements.length <= 1) {
+    if (isEditableLabel(text, screenId) && childElements.length <= 1) {
       makeEditable(el);
       return;
     }

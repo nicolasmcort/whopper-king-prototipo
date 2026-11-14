@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { enhanceFrame } from './interactive/enhanceDom';
-import type { NavTarget } from './interactive/navMap';
+import { shouldReplaceHistory, type NavTarget } from './interactive/navMap';
 import { screenById, screens } from './screens';
 
 /** Ancho del frame en Figma/MagicPath (móvil). */
@@ -35,10 +35,14 @@ function App() {
       : null;
   const Under = underId ? screenById[underId]?.Component : null;
 
-  const go = useCallback((id: string) => {
+  const go = useCallback((id: string, replace = false) => {
     if (!screenById[id]) return;
     setCurrentId(id);
-    setHistory((h) => (h[h.length - 1] === id ? h : [...h, id]));
+    setHistory((h) => {
+      if (h[h.length - 1] === id) return h;
+      if (replace && h.length > 0) return [...h.slice(0, -1), id];
+      return [...h, id];
+    });
     window.location.hash = `/${id}`;
   }, []);
 
@@ -58,10 +62,14 @@ function App() {
 
   const navigate = useCallback(
     (target: NavTarget) => {
-      if (target === '__back__') back();
-      else go(target);
+      if (target === '__back__') {
+        back();
+        return;
+      }
+      const replace = shouldReplaceHistory(currentId, target);
+      go(target, replace);
     },
-    [back, go],
+    [back, go, currentId],
   );
 
   useEffect(() => {
