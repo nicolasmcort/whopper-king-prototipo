@@ -44,6 +44,8 @@ const CLIENT_GLOBAL = normMap({
   'escanear qr': 'escaneo-qr',
   // Prototipo: Mi cuenta abre la pantalla de cuenta (login queda desde Iniciar sesión)
   'mi cuenta': 'mi-cuenta',
+  cuenta: 'mi-cuenta',
+  at: 'mi-cuenta',
   'mis datos': 'mis-datos',
   'mis direcciones': 'mis-direcciones',
   'agregar direccion': 'agregar-direccion',
@@ -100,9 +102,12 @@ const BY_SCREEN_RAW: Record<string, Record<string, NavTarget>> = {
     'arroz blanco': 'detalle-carne',
     tocineta: 'detalle-carne',
     'queso chedar': 'detalle-carne',
-    // Hamburguesa superior → volver a cliente
+    // Hamburguesa superior → cliente; avatar AT → cuenta
     cliente: 'whopper-inicio',
     inicio: 'whopper-inicio',
+    'mi cuenta': 'mi-cuenta',
+    cuenta: 'mi-cuenta',
+    at: 'mi-cuenta',
   },
   'detalle-carne': {
     cerrar: '__back__',
@@ -139,6 +144,8 @@ const BY_SCREEN_RAW: Record<string, Record<string, NavTarget>> = {
     'carne de res - lote res-0511': 'detalle-carne',
     cliente: 'whopper-inicio',
     inicio: 'whopper-inicio',
+    'mi cuenta': 'mi-cuenta',
+    cuenta: 'mi-cuenta',
   },
   'historial-pedidos': {
     inventario: 'inventario',
@@ -151,6 +158,8 @@ const BY_SCREEN_RAW: Record<string, Record<string, NavTarget>> = {
     '#ped-1048 - 06 nov - 09:32': 'editar-pedido',
     cliente: 'whopper-inicio',
     inicio: 'whopper-inicio',
+    'mi cuenta': 'mi-cuenta',
+    cuenta: 'mi-cuenta',
   },
   'editar-movimiento': {
     cerrar: 'historial-movimientos',
@@ -189,6 +198,8 @@ const BY_SCREEN_RAW: Record<string, Record<string, NavTarget>> = {
     'ver informacion': 'ajuste-mov-184',
     cliente: 'whopper-inicio',
     inicio: 'whopper-inicio',
+    'mi cuenta': 'mi-cuenta',
+    cuenta: 'mi-cuenta',
   },
   'numeros-negocio': {
     ...STATS_TABS,
@@ -197,6 +208,8 @@ const BY_SCREEN_RAW: Record<string, Record<string, NavTarget>> = {
     estadisticas: 'numeros-negocio',
     cliente: 'whopper-inicio',
     inicio: 'whopper-inicio',
+    'mi cuenta': 'mi-cuenta',
+    cuenta: 'mi-cuenta',
   },
   'ventas-canal': {
     ...STATS_TABS,
@@ -205,6 +218,8 @@ const BY_SCREEN_RAW: Record<string, Record<string, NavTarget>> = {
     estadisticas: 'numeros-negocio',
     cliente: 'whopper-inicio',
     inicio: 'whopper-inicio',
+    'mi cuenta': 'mi-cuenta',
+    cuenta: 'mi-cuenta',
   },
   'platos-insumos': {
     ...STATS_TABS,
@@ -213,6 +228,8 @@ const BY_SCREEN_RAW: Record<string, Record<string, NavTarget>> = {
     estadisticas: 'numeros-negocio',
     cliente: 'whopper-inicio',
     inicio: 'whopper-inicio',
+    'mi cuenta': 'mi-cuenta',
+    cuenta: 'mi-cuenta',
   },
   'editar-pedido': {
     cerrar: 'historial-pedidos',
@@ -285,7 +302,7 @@ const BY_SCREEN_RAW: Record<string, Record<string, NavTarget>> = {
     'crear cuenta': 'registro',
     'registra tu cuenta': 'registro',
     'continuar con google': 'mi-cuenta',
-    // Login cliente → cuenta; admin → placa azul (estadísticas)
+    // Iniciar sesión siempre → cuenta (admin es atajo aparte, no el login)
     'iniciar sesion': 'mi-cuenta',
     'iniciar sesión': 'mi-cuenta',
     administrador: 'inventario',
@@ -451,7 +468,8 @@ const BY_SCREEN_RAW: Record<string, Record<string, NavTarget>> = {
     quitar: 'quitar-producto-cliente',
     menu: 'menu',
     inicio: 'whopper-inicio',
-    'mi cuenta': 'login',
+    'mi cuenta': 'mi-cuenta',
+    carrito: 'tu-carrito-local',
     volver: 'menu',
     atras: 'menu',
   },
@@ -462,19 +480,22 @@ const BY_SCREEN_RAW: Record<string, Record<string, NavTarget>> = {
     'en el local': 'tu-carrito-local',
     menu: 'menu',
     inicio: 'whopper-inicio',
-    'mi cuenta': 'login',
+    'mi cuenta': 'mi-cuenta',
+    carrito: 'tu-carrito-domicilio',
     volver: 'tu-carrito-local',
     atras: 'tu-carrito-local',
   },
   'carrito-local': {
     pagar: 'pago-local-nequi',
     menu: 'menu',
-    'mi cuenta': 'login',
+    'mi cuenta': 'mi-cuenta',
+    carrito: 'tu-carrito-local',
   },
   'carrito-domicilio': {
     pagar: 'pago-dom-nequi',
     menu: 'menu',
-    'mi cuenta': 'login',
+    'mi cuenta': 'mi-cuenta',
+    carrito: 'tu-carrito-domicilio',
   },
   'pago-local-nequi': {
     confirmar: 'pedido-enviado-local',
@@ -541,14 +562,21 @@ const BY_SCREEN_RAW: Record<string, Record<string, NavTarget>> = {
   'mi-cuenta': {
     'mis datos': 'mis-datos',
     'mis direcciones': 'mis-direcciones',
+    direcciones: 'mis-direcciones',
     privacidad: 'privacidad',
+    'privacidad y datos': 'privacidad',
     contactos: 'contactos',
+    contacto: 'contactos',
+    pqrs: 'pqrs',
+    'tienes una pqrs': 'pqrs',
+    cambiar: 'mis-direcciones',
     'eliminar cuenta': 'elim-cuenta',
     'cerrar sesion': 'login',
     'cerrar sesión': 'login',
     // Ya dentro de la cuenta: no rebotar a login
     'mi cuenta': 'mi-cuenta',
     inicio: 'whopper-inicio',
+    buscar: 'menu',
     menu: 'menu',
     carrito: 'tu-carrito-local',
     volver: 'whopper-inicio',
@@ -748,23 +776,38 @@ const FIGMA_ID_ACTIONS: Record<string, string> = {
   '679:1637': 'carrito',
   '585:2333': 'volver', // X / atrás en login
   '585:2334': 'volver',
-  '585:2364': 'administrador', // fila “Acceder al modo administrador”
-  '585:2091': 'administrador',
+  // Solo el texto del atajo admin (no toda la fila, para no “robar” el login)
   '585:2098': 'administrador',
-  // Hamburguesa azul (admin) → sección cliente (solo el botón, no todo el header)
+  // Login: botón naranja siempre a cuenta
+  '585:2384': 'iniciar sesion',
+  '585:2385': 'iniciar sesion',
+  '585:2386': 'iniciar sesion',
+  // Hamburguesa azul (admin) → cliente inicio
   '404:2117': 'cliente',
   '404:2118': 'cliente',
+  // Avatar AT del header admin → Mi cuenta
+  '404:2121': 'mi cuenta',
+  '404:2122': 'mi cuenta',
+  '404:785': 'mi cuenta',
   // Bottom nav (Inicio / Buscar / Carrito / Mi cuenta)
   '342:1199': 'inicio',
   '342:1203': 'buscar',
   '342:1211': 'mi cuenta',
   '818:3495': 'carrito',
   '818:3496': 'carrito',
+  '818:3531': 'carrito',
+  '818:3532': 'carrito',
+  '818:3537': 'carrito',
+  '342:2210': 'inicio',
+  '342:2214': 'buscar',
+  '342:2222': 'mi cuenta',
   // Contactos sheet: backdrop y Cerrar
   '342:2000': 'cerrar',
   '342:2067': 'cerrar',
   // Header carrito sticky en menú
   '425:2642': 'carrito',
+  '679:1636': 'carrito',
+  '679:1638': 'carrito',
   // Filas de inventario → detalle (clic en toda la fila)
   '752:1956': 'tocineta',
   '752:1977': 'carne de res',
@@ -815,6 +858,10 @@ export function resolveFigmaNav(screenId: string, figmaId: string): NavTarget | 
   if (action === 'volver' || action === 'cliente') return 'whopper-inicio';
   if (action === 'carrito') return 'tu-carrito-local';
   if (action === 'administrador') return 'inventario';
+  if (action === 'mi cuenta' || action === 'cuenta' || action === 'at') return 'mi-cuenta';
+  if (action === 'iniciar sesion') return 'mi-cuenta';
+  if (action === 'inicio') return 'whopper-inicio';
+  if (action === 'buscar') return 'menu';
   return null;
 }
 

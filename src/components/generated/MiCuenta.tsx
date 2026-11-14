@@ -1,5 +1,12 @@
 import React from 'react';
 import { ClientCartIcon, ClientCartIconOutline } from '../ClientCartIcon';
+import {
+  ClientPinIcon,
+  ClientPhoneIcon,
+  ClientStoreIcon,
+  ClientShieldIcon,
+  ClientHelpIcon,
+} from '../ClientUiIcons';
 type LayerValue = string | number;
 const absoluteLayer = (left: LayerValue, top: LayerValue, width: LayerValue, height: LayerValue, style: React.CSSProperties = {}): React.CSSProperties => ({
   position: "absolute",
@@ -384,7 +391,14 @@ export function MiCuenta() {
                 ...row1
               })}>
               <div data-figma-id="342:2102" style={fixedLayer("max-content", 18.333, col1)}>
-                <div data-figma-id="342:2103" style={fixedLayer(14.667, 18.333)} />
+                <div data-figma-id="342:2103" style={{
+                    ...fixedLayer(20, 20),
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center"
+                  }}>
+                  <ClientPinIcon size={18} color="#ed6047" />
+                </div>
               </div>
             </div>
             <div data-figma-id="342:2104" style={fixedLayer("max-content", 36, col1)}>
@@ -461,7 +475,14 @@ export function MiCuenta() {
                 ...row1
               })}>
               <div data-figma-id="342:2112" style={fixedLayer("max-content", 16.5, col1)}>
-                <div data-figma-id="342:2113" style={fixedLayer(16.5, 16.5)} />
+                <div data-figma-id="342:2113" style={{
+                    ...fixedLayer(20, 20),
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center"
+                  }}>
+                  <ClientPhoneIcon size={18} color="#ed6047" />
+                </div>
               </div>
             </div>
             <div data-figma-id="342:2114" style={fixedLayer(107, 36, col1)}>
@@ -573,7 +594,14 @@ export function MiCuenta() {
                   ...row1
                 })}>
                 <div data-figma-id="342:2129" style={fixedLayer("max-content", 18.333, col1)}>
-                  <div data-figma-id="720:2722" style={fixedLayer(14.667, 18.333)} />
+                  <div data-figma-id="720:2722" style={{
+                      ...fixedLayer(20, 20),
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center"
+                    }}>
+                    <ClientPinIcon size={18} color="#ed6047" />
+                  </div>
                 </div>
               </div>
             </div>
@@ -700,7 +728,14 @@ export function MiCuenta() {
                   ...row1
                 })}>
                 <div data-figma-id="342:2147" style={fixedLayer("max-content", 16.5, col1)}>
-                  <div data-figma-id="342:2148" style={fixedLayer(18.419, 16.5)} />
+                  <div data-figma-id="342:2148" style={{
+                      ...fixedLayer(20, 20),
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center"
+                    }}>
+                    <ClientStoreIcon size={18} color="#ed6047" />
+                  </div>
                 </div>
               </div>
             </div>
@@ -877,7 +912,14 @@ export function MiCuenta() {
                     ...row1
                   })}>
                   <div data-figma-id="342:2170" style={fixedLayer("max-content", 18.333, col1)}>
-                    <div data-figma-id="342:2171" style={fixedLayer(14.667, 18.333)} />
+                    <div data-figma-id="342:2171" style={{
+                        ...fixedLayer(20, 20),
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center"
+                      }}>
+                      <ClientShieldIcon size={18} color="#ed6047" />
+                    </div>
                   </div>
                 </div>
               </div>
@@ -957,7 +999,14 @@ export function MiCuenta() {
                     ...row1
                   })}>
                   <div data-figma-id="352:9065" style={fixedLayer("max-content", 18, col1)}>
-                    <div data-figma-id="658:1829" style={fixedLayer(20, 18)} />
+                    <div data-figma-id="658:1829" style={{
+                        ...fixedLayer(20, 20),
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center"
+                      }}>
+                      <ClientHelpIcon size={18} color="#ed6047" />
+                    </div>
                   </div>
                 </div>
               </div>
