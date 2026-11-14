@@ -259,65 +259,6 @@ export function Frame04AgregarNuevoProducto() {
         </span>
       </div>
     </div>
-    <div data-figma-id="752:2676" style={{
-        background: "#dde5f9",
-        borderRadius: 15,
-        ...layout4,
-        minWidth: 0,
-        display: "flex",
-        alignItems: "center",
-        gap: 12,
-        position: "relative",
-        height: 54,
-        flexShrink: 0,
-        alignSelf: "stretch"
-      }}>
-      <div data-figma-id="713:1363" style={fixedLayer(40, 40, {
-          background: "#2457c5",
-          borderRadius: 90,
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center"
-        })}>
-        <span data-figma-id="713:1364" style={fixedLayer(40, 32, {
-            ...font_Manrope,
-            color: "#ffffff",
-            whiteSpace: "pre",
-            fontSize: 22,
-            fontWeight: 800,
-            lineHeight: "32px",
-            textAlign: "center"
-          })}>
-          {"i"}
-        </span>
-      </div>
-      <div data-figma-id="713:1365" style={{
-          ...row1,
-          minWidth: 0,
-          flexDirection: "column",
-          gap: 4,
-          position: "relative",
-          height: 48,
-          flexShrink: 1,
-          flexGrow: 1,
-          flexBasis: 0
-        }}>
-        <span data-figma-id="713:1366" style={{
-            ...font_Manrope,
-            color: "#000000",
-            whiteSpace: "pre-wrap",
-            fontSize: 12,
-            fontWeight: 500,
-            lineHeight: "24px",
-            minWidth: 0,
-            position: "relative",
-            flexShrink: 0,
-            alignSelf: "stretch"
-          }}>
-          {"El registro original se conserva para consultar su historial."}
-        </span>
-      </div>
-    </div>
     <div data-figma-id="752:2581" style={fixedLayer(362, 250, {
         ...row1,
         ...layout2,
