@@ -1,5 +1,5 @@
 import React from 'react';
-import { ClientHeadsetIcon, ClientBackIcon } from '../ClientUiIcons';
+import { ClientPhoneIcon, ClientWhatsAppIcon, ClientBackIcon } from '../ClientUiIcons';
 type LayerValue = string | number;
 const absoluteLayer = (left: LayerValue, top: LayerValue, width: LayerValue, height: LayerValue, style: React.CSSProperties = {}): React.CSSProperties => ({
   position: "absolute",
@@ -207,12 +207,12 @@ export function Contactos() {
                   ...row3
                 })}>
                 <div data-figma-id="585:2505" style={fixedLayer(24, 24, {
-                    overflow: "hidden"
+                    overflow: "hidden",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center"
                   })}>
-                  <div data-figma-id="585:2506" style={absoluteLayer("12.5%", "12.5%", "75%", "75%")} />
-                  <svg data-figma-id="585:2507" viewBox="-0.7 -0.7 8.502 8.604" preserveAspectRatio="none" style={absoluteLayer("calc(38.952% - 0.7px)", "calc(34.887% - 0.7px)", "calc(29.59% + 1.4px)", "calc(30.015% + 1.4px)")}>
-                    <use href="#figma-vector-623" fill="transparent" stroke="#16a34a" strokeWidth={1.4} vectorEffect="non-scaling-stroke" strokeLinecap="round" strokeLinejoin="round" />
-                  </svg>
+                  <ClientWhatsAppIcon size={22} color="#16a34a" />
                 </div>
               </div>
               <div data-figma-id="342:2018" style={fixedLayer(243, 43, col1)}>
@@ -363,7 +363,7 @@ export function Contactos() {
                   <div data-figma-id="802:4016" style={fixedLayer(20, 20, {
                       overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center"
                     })}>
-                    <ClientHeadsetIcon size={20} color="#ed6047" />
+                    <ClientPhoneIcon size={18} color="#ed6047" />
                   </div>
                 </div>
               </div>

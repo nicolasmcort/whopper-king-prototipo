@@ -492,3 +492,50 @@ export function ClientEditIcon({ size = 16, color = '#82776e', style }: Props) {
     />,
   );
 }
+
+/** Teléfono / celular. */
+export function ClientPhoneIcon({ size = 20, color = '#29241f', style }: Props) {
+  return base(
+    size,
+    style,
+    <path
+      d="M8.2 4.2c.3-.7.2-1.2-.4-1.5L6.3 1.8c-.5-.3-1.2-.1-1.5.4C3.2 5.2 4.1 9.2 7.2 12.3c3.1 3.1 7.1 4 10.1 2.4.5-.3.7-1 .4-1.5l-.9-1.5c-.3-.6-.8-.7-1.5-.4l-1.7.8c-.7.3-1.4.1-1.9-.4l-2.9-2.9c-.5-.5-.7-1.2-.4-1.9l.8-1.7Z"
+      stroke={color}
+      strokeWidth={1.5}
+      strokeLinejoin="round"
+    />,
+  );
+}
+
+/** WhatsApp (chat + phone). */
+export function ClientWhatsAppIcon({ size = 22, color = '#16a34a', style }: Props) {
+  return base(
+    size,
+    style,
+    <>
+      <path
+        d="M12 3.5a8.2 8.2 0 0 0-7 12.5L4.2 20l4.2-.8A8.2 8.2 0 1 0 12 3.5Z"
+        stroke={color}
+        strokeWidth={1.5}
+        strokeLinejoin="round"
+      />
+      <path
+        d="M9.2 9.4c.3-.5.6-.5.9-.5h.4c.2 0 .4.1.5.4l.6 1.4c.1.2 0 .4-.1.6l-.3.4c-.1.2-.1.4.1.6.4.5 1 .9 1.6 1.2.2.1.4.1.6-.1l.5-.4c.2-.1.4-.1.6 0l1.3.7c.2.1.3.3.3.5v.4c0 .3 0 .6-.5.9-.4.2-1 .4-1.7.3-1.7-.1-3.5-1.2-4.8-2.5-1.2-1.2-2.1-2.8-2.3-4.4-.1-.7.1-1.3.4-1.7Z"
+        fill={color}
+      />
+    </>,
+  );
+}
+
+/** Instagram. */
+export function ClientInstagramIcon({ size = 20, color = '#29241f', style }: Props) {
+  return base(
+    size,
+    style,
+    <>
+      <rect x="3.5" y="3.5" width="17" height="17" rx="5" stroke={color} strokeWidth={1.5} />
+      <circle cx="12" cy="12" r="4.1" stroke={color} strokeWidth={1.5} />
+      <circle cx="17.1" cy="6.9" r="1.05" fill={color} />
+    </>,
+  );
+}
