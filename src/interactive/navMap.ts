@@ -24,9 +24,14 @@ const CLIENT_GLOBAL = normMap({
   home: 'whopper-inicio',
   menu: 'menu',
   'ver menu': 'menu',
+  'ver todos': 'menu',
   'nuestro menu': 'menu',
+  buscar: 'menu',
+  'que se te antoja': 'menu',
   almuerzo: 'menu-almuerzo',
+  almuerzos: 'menu-almuerzo',
   burgers: 'menu-burgers',
+  whoppers: 'menu-burgers',
   hamburguesas: 'menu-hamburguesas',
   pollo: 'menu-pollo',
   carne: 'menu-carne',
@@ -37,25 +42,33 @@ const CLIENT_GLOBAL = normMap({
   'a domicilio': 'tu-carrito-domicilio',
   'en el local': 'tu-carrito-local',
   'escanear qr': 'escaneo-qr',
-  'mi cuenta': 'mi-cuenta',
+  // Sin sesión: Mi cuenta lleva a login (no a la cuenta)
+  'mi cuenta': 'login',
   'mis datos': 'mis-datos',
   'mis direcciones': 'mis-direcciones',
   'agregar direccion': 'agregar-direccion',
   'agregar dirección': 'agregar-direccion',
   privacidad: 'privacidad',
   contactos: 'contactos',
+  contactanos: 'contactos',
+  'contáctanos': 'contactos',
   'sobre nosotros': 'sobre-nosotros',
+  conocernos: 'sobre-nosotros',
   pqrs: 'pqrs',
   'iniciar sesion': 'login',
   'iniciar sesión': 'login',
   registrarse: 'registro',
   'crear cuenta': 'registro',
+  'registra tu cuenta': 'registro',
   nequi: 'pago-dom-nequi',
   'bre-b': 'pago-dom-breb',
   breb: 'pago-dom-breb',
   efectivo: 'pago-dom-efectivo',
   tarjeta: 'pago-dom-tarjeta',
-  whopper: 'personaliza-whopper',
+  // Entrada admin (placa azul) desde login
+  administrador: 'numeros-negocio',
+  'modo administrador': 'numeros-negocio',
+  'acceder al modo administrador': 'numeros-negocio',
   texana: 'desc-texana',
 });
 
@@ -229,31 +242,62 @@ const BY_SCREEN_RAW: Record<string, Record<string, NavTarget>> = {
   'whopper-inicio': {
     menu: 'menu',
     'ver menu': 'menu',
+    'ver todos': 'menu',
+    buscar: 'menu',
     'iniciar sesion': 'login',
     'iniciar sesión': 'login',
-    'mi cuenta': 'mi-cuenta',
+    'mi cuenta': 'login',
     'sobre nosotros': 'sobre-nosotros',
+    conocernos: 'sobre-nosotros',
+    contactanos: 'contactos',
+    'contáctanos': 'contactos',
     pqrs: 'pqrs',
     carrito: 'tu-carrito-local',
+    whoppers: 'menu-burgers',
+    almuerzos: 'menu-almuerzo',
+    bebidas: 'menu-bebidas',
   },
   login: {
     registrarse: 'registro',
     'crear cuenta': 'registro',
+    'registra tu cuenta': 'registro',
+    'continuar con google': 'mi-cuenta',
+    // Login cliente → cuenta; admin → placa azul (estadísticas)
+    'iniciar sesion': 'mi-cuenta',
+    'iniciar sesión': 'mi-cuenta',
+    administrador: 'numeros-negocio',
+    'modo administrador': 'numeros-negocio',
+    'acceder al modo administrador': 'numeros-negocio',
     continuar: 'sms-telefono',
     'olvidaste tu contrasena': 'correo-cambiar',
     'olvidaste tu contraseña': 'correo-cambiar',
+    volver: 'whopper-inicio',
+    atras: 'whopper-inicio',
+    cerrar: 'whopper-inicio',
   },
   registro: {
     continuar: 'sms-telefono',
     'iniciar sesion': 'login',
+    'iniciar sesión': 'login',
+    volver: 'login',
+    atras: 'login',
   },
   'sms-telefono': {
-    continuar: 'whopper-inicio',
-    verificar: 'whopper-inicio',
+    continuar: 'mi-cuenta',
+    verificar: 'mi-cuenta',
+    volver: 'login',
+    atras: 'login',
+  },
+  'correo-cambiar': {
+    continuar: 'login',
+    enviar: 'login',
+    volver: 'login',
+    atras: 'login',
   },
   menu: {
     almuerzo: 'menu-almuerzo',
     burgers: 'menu-burgers',
+    whoppers: 'menu-burgers',
     hamburguesas: 'menu-hamburguesas',
     pollo: 'menu-pollo',
     carne: 'menu-carne',
@@ -261,7 +305,7 @@ const BY_SCREEN_RAW: Record<string, Record<string, NavTarget>> = {
     bebidas: 'menu-bebidas',
     carrito: 'tu-carrito-local',
     inicio: 'whopper-inicio',
-    'mi cuenta': 'mi-cuenta',
+    'mi cuenta': 'login',
     volver: 'whopper-inicio',
     atras: 'whopper-inicio',
   },
@@ -269,6 +313,7 @@ const BY_SCREEN_RAW: Record<string, Record<string, NavTarget>> = {
     whopper: 'personaliza-whopper',
     carrito: 'tu-carrito-local',
     menu: 'menu',
+    'mi cuenta': 'login',
     volver: 'whopper-inicio',
     atras: 'whopper-inicio',
   },
@@ -276,6 +321,7 @@ const BY_SCREEN_RAW: Record<string, Record<string, NavTarget>> = {
     whopper: 'personaliza-whopper',
     carrito: 'tu-carrito-local',
     menu: 'menu',
+    'mi cuenta': 'login',
     volver: 'whopper-inicio',
     atras: 'whopper-inicio',
   },
@@ -283,36 +329,42 @@ const BY_SCREEN_RAW: Record<string, Record<string, NavTarget>> = {
     menu: 'menu',
     carrito: 'tu-carrito-local',
     texana: 'desc-texana',
+    'mi cuenta': 'login',
     volver: 'whopper-inicio',
     atras: 'whopper-inicio',
   },
   'menu-pollo': {
     menu: 'menu',
     carrito: 'tu-carrito-local',
+    'mi cuenta': 'login',
     volver: 'whopper-inicio',
     atras: 'whopper-inicio',
   },
   'menu-carne': {
     menu: 'menu',
     carrito: 'tu-carrito-local',
+    'mi cuenta': 'login',
     volver: 'whopper-inicio',
     atras: 'whopper-inicio',
   },
   'menu-pescado': {
     menu: 'menu',
     carrito: 'tu-carrito-local',
+    'mi cuenta': 'login',
     volver: 'whopper-inicio',
     atras: 'whopper-inicio',
   },
   'menu-bebidas': {
     menu: 'menu',
     carrito: 'tu-carrito-local',
+    'mi cuenta': 'login',
     volver: 'whopper-inicio',
     atras: 'whopper-inicio',
   },
   'menu-hamburguesas': {
     menu: 'menu',
     whopper: 'personaliza-whopper',
+    'mi cuenta': 'login',
     volver: 'whopper-inicio',
     atras: 'whopper-inicio',
   },
@@ -321,8 +373,21 @@ const BY_SCREEN_RAW: Record<string, Record<string, NavTarget>> = {
     'maxi combo': 'personaliza-whopper-maxi',
     carrito: 'tu-carrito-local',
     agregar: 'tu-carrito-local',
+    'mi cuenta': 'login',
     volver: 'menu-burgers',
     atras: 'menu-burgers',
+  },
+  'personaliza-whopper-mini': {
+    carrito: 'tu-carrito-local',
+    agregar: 'tu-carrito-local',
+    volver: 'personaliza-whopper',
+    atras: 'personaliza-whopper',
+  },
+  'personaliza-whopper-maxi': {
+    carrito: 'tu-carrito-local',
+    agregar: 'tu-carrito-local',
+    volver: 'personaliza-whopper',
+    atras: 'personaliza-whopper',
   },
   'desc-texana': {
     'mini combo': 'personaliza-texana-mini',
@@ -331,6 +396,18 @@ const BY_SCREEN_RAW: Record<string, Record<string, NavTarget>> = {
     volver: 'menu-almuerzo',
     atras: 'menu-almuerzo',
   },
+  'personaliza-texana-mini': {
+    agregar: 'tu-carrito-local',
+    carrito: 'tu-carrito-local',
+    volver: 'desc-texana',
+    atras: 'desc-texana',
+  },
+  'personaliza-texana-maxi': {
+    agregar: 'tu-carrito-local',
+    carrito: 'tu-carrito-local',
+    volver: 'desc-texana',
+    atras: 'desc-texana',
+  },
   'tu-carrito-local': {
     pagar: 'pago-local-nequi',
     'elegir pago': 'pago-local-nequi',
@@ -338,54 +415,149 @@ const BY_SCREEN_RAW: Record<string, Record<string, NavTarget>> = {
     'escanear qr': 'escaneo-qr',
     quitar: 'quitar-producto-cliente',
     menu: 'menu',
+    inicio: 'whopper-inicio',
+    'mi cuenta': 'login',
+    volver: 'menu',
+    atras: 'menu',
   },
   'tu-carrito-domicilio': {
     pagar: 'pago-dom-nequi',
     'elegir pago': 'pago-dom-nequi',
     local: 'tu-carrito-local',
+    'en el local': 'tu-carrito-local',
     menu: 'menu',
+    inicio: 'whopper-inicio',
+    'mi cuenta': 'login',
+    volver: 'tu-carrito-local',
+    atras: 'tu-carrito-local',
   },
   'carrito-local': {
     pagar: 'pago-local-nequi',
     menu: 'menu',
+    'mi cuenta': 'login',
   },
   'carrito-domicilio': {
     pagar: 'pago-dom-nequi',
     menu: 'menu',
+    'mi cuenta': 'login',
   },
-  'pago-local-nequi': { confirmar: 'pedido-enviado-local', nequi: 'pago-local-nequi', efectivo: 'pago-local-efectivo', tarjeta: 'pago-local-tarjeta', 'bre-b': 'pago-local-breb' },
-  'pago-local-efectivo': { confirmar: 'pedido-enviado-local', nequi: 'pago-local-nequi' },
-  'pago-local-tarjeta': { confirmar: 'pedido-enviado-local' },
-  'pago-local-breb': { confirmar: 'pedido-enviado-local' },
-  'pago-dom-nequi': { confirmar: 'pedido-enviado-domicilio', efectivo: 'pago-dom-efectivo', tarjeta: 'pago-dom-tarjeta', 'bre-b': 'pago-dom-breb' },
-  'pago-dom-efectivo': { confirmar: 'pedido-enviado-domicilio' },
-  'pago-dom-tarjeta': { confirmar: 'pedido-enviado-domicilio' },
-  'pago-dom-breb': { confirmar: 'pedido-enviado-domicilio' },
-  'pedido-enviado-local': { inicio: 'whopper-inicio', menu: 'menu' },
-  'pedido-enviado-domicilio': { inicio: 'whopper-inicio', menu: 'menu' },
-  'pedido-exitoso-local': { inicio: 'whopper-inicio', menu: 'menu' },
-  'fallo-pago': { reintentar: 'pago-dom-nequi', carrito: 'tu-carrito-domicilio' },
+  'pago-local-nequi': {
+    confirmar: 'pedido-enviado-local',
+    nequi: 'pago-local-nequi',
+    efectivo: 'pago-local-efectivo',
+    tarjeta: 'pago-local-tarjeta',
+    'bre-b': 'pago-local-breb',
+    volver: 'tu-carrito-local',
+    atras: 'tu-carrito-local',
+  },
+  'pago-local-efectivo': {
+    confirmar: 'pedido-enviado-local',
+    nequi: 'pago-local-nequi',
+    volver: 'tu-carrito-local',
+    atras: 'tu-carrito-local',
+  },
+  'pago-local-tarjeta': {
+    confirmar: 'pedido-enviado-local',
+    volver: 'tu-carrito-local',
+    atras: 'tu-carrito-local',
+  },
+  'pago-local-breb': {
+    confirmar: 'pedido-enviado-local',
+    volver: 'tu-carrito-local',
+    atras: 'tu-carrito-local',
+  },
+  'pago-dom-nequi': {
+    confirmar: 'pedido-enviado-domicilio',
+    efectivo: 'pago-dom-efectivo',
+    tarjeta: 'pago-dom-tarjeta',
+    'bre-b': 'pago-dom-breb',
+    volver: 'tu-carrito-domicilio',
+    atras: 'tu-carrito-domicilio',
+  },
+  'pago-dom-efectivo': {
+    confirmar: 'pedido-enviado-domicilio',
+    volver: 'tu-carrito-domicilio',
+    atras: 'tu-carrito-domicilio',
+  },
+  'pago-dom-tarjeta': {
+    confirmar: 'pedido-enviado-domicilio',
+    volver: 'tu-carrito-domicilio',
+    atras: 'tu-carrito-domicilio',
+  },
+  'pago-dom-breb': {
+    confirmar: 'pedido-enviado-domicilio',
+    volver: 'tu-carrito-domicilio',
+    atras: 'tu-carrito-domicilio',
+  },
+  'pedido-enviado-local': { inicio: 'whopper-inicio', menu: 'menu', continuar: 'whopper-inicio' },
+  'pedido-enviado-domicilio': { inicio: 'whopper-inicio', menu: 'menu', continuar: 'whopper-inicio' },
+  'pedido-exitoso-local': { inicio: 'whopper-inicio', menu: 'menu', continuar: 'whopper-inicio' },
+  'fallo-pago': {
+    reintentar: 'pago-dom-nequi',
+    carrito: 'tu-carrito-domicilio',
+    volver: 'tu-carrito-domicilio',
+  },
+  'quitar-producto-cliente': {
+    confirmar: 'tu-carrito-local',
+    quitar: 'tu-carrito-local',
+    cancelar: 'tu-carrito-local',
+    volver: 'tu-carrito-local',
+  },
   'mi-cuenta': {
     'mis datos': 'mis-datos',
     'mis direcciones': 'mis-direcciones',
     privacidad: 'privacidad',
     contactos: 'contactos',
     'eliminar cuenta': 'elim-cuenta',
+    'cerrar sesion': 'login',
+    'cerrar sesión': 'login',
+    // Ya dentro de la cuenta: no rebotar a login
+    'mi cuenta': 'mi-cuenta',
     inicio: 'whopper-inicio',
+    menu: 'menu',
+    carrito: 'tu-carrito-local',
+    volver: 'whopper-inicio',
+    atras: 'whopper-inicio',
+  },
+  'mis-datos': {
+    guardar: 'mi-cuenta',
+    volver: 'mi-cuenta',
+    atras: 'mi-cuenta',
+    'mi cuenta': 'mi-cuenta',
   },
   'mis-direcciones': {
     agregar: 'agregar-direccion',
     'agregar direccion': 'agregar-direccion',
     eliminar: 'confirmar-elim-direccion',
     volver: 'mi-cuenta',
+    atras: 'mi-cuenta',
+    'mi cuenta': 'mi-cuenta',
   },
-  'agregar-direccion': { guardar: 'mis-direcciones', cancelar: 'mis-direcciones' },
+  'agregar-direccion': { guardar: 'mis-direcciones', cancelar: 'mis-direcciones', volver: 'mis-direcciones' },
   'confirmar-elim-direccion': { confirmar: 'mis-direcciones', cancelar: 'mis-direcciones', eliminar: 'mis-direcciones' },
-  pqrs: { enviar: 'pqrs-confirmacion', continuar: 'pqrs-radicacion' },
+  privacidad: { volver: 'mi-cuenta', atras: 'mi-cuenta', 'mi cuenta': 'mi-cuenta' },
+  contactos: { volver: 'mi-cuenta', atras: 'mi-cuenta', inicio: 'whopper-inicio', 'mi cuenta': 'mi-cuenta' },
+  'elim-cuenta': {
+    confirmar: 'login',
+    eliminar: 'login',
+    cancelar: 'mi-cuenta',
+    volver: 'mi-cuenta',
+  },
+  pqrs: {
+    enviar: 'pqrs-confirmacion',
+    continuar: 'pqrs-radicacion',
+    volver: 'whopper-inicio',
+    atras: 'whopper-inicio',
+  },
   'pqrs-confirmacion': { continuar: 'pqrs-radicacion', inicio: 'whopper-inicio' },
-  'pqrs-radicacion': { inicio: 'whopper-inicio' },
-  'sobre-nosotros': { inicio: 'whopper-inicio', menu: 'menu' },
-  'escaneo-qr': { continuar: 'tu-carrito-local', cancelar: 'menu' },
+  'pqrs-radicacion': { inicio: 'whopper-inicio', continuar: 'whopper-inicio' },
+  'sobre-nosotros': {
+    inicio: 'whopper-inicio',
+    menu: 'menu',
+    volver: 'whopper-inicio',
+    atras: 'whopper-inicio',
+  },
+  'escaneo-qr': { continuar: 'tu-carrito-local', cancelar: 'tu-carrito-local', volver: 'tu-carrito-local' },
 
   'no-implementada': {
     inventario: 'inventario',
@@ -478,7 +650,31 @@ const FIGMA_ID_ACTIONS: Record<string, string> = {
   '711:1141': 'volver', // flecha atrás en headers de menú/categoría
   '679:1635': 'carrito', // carrito header inicio
   '679:1637': 'carrito',
+  '585:2333': 'volver', // X / atrás en login
+  '585:2334': 'volver',
+  '585:2364': 'administrador', // fila “Acceder al modo administrador”
+  '585:2091': 'administrador',
+  '585:2098': 'administrador',
 };
+
+/** Preferir la clave más larga que matchee (evita whopper ⊂ whoppers). */
+function bestPartial(
+  key: string,
+  map: Record<string, NavTarget>,
+): NavTarget | null {
+  let best: NavTarget | null = null;
+  let bestLen = -1;
+  for (const [k, v] of Object.entries(map)) {
+    if (!k) continue;
+    if (key === k || key.startsWith(k + ' ') || key.includes(k) || k.startsWith(key)) {
+      if (k.length > bestLen) {
+        best = v;
+        bestLen = k.length;
+      }
+    }
+  }
+  return best;
+}
 
 export function resolveFigmaNav(screenId: string, figmaId: string): NavTarget | null {
   const action = FIGMA_ID_ACTIONS[figmaId];
@@ -487,6 +683,7 @@ export function resolveFigmaNav(screenId: string, figmaId: string): NavTarget | 
   if (dest) return dest;
   if (action === 'volver') return 'whopper-inicio';
   if (action === 'carrito') return 'tu-carrito-local';
+  if (action === 'administrador') return 'numeros-negocio';
   return null;
 }
 
@@ -495,28 +692,24 @@ export function resolveNav(screenId: string, rawLabel: string): NavTarget | null
   if (!key) return null;
   const local = BY_SCREEN[screenId];
   if (local && key in local) return local[key];
-  // partial match for labels with trailing spaces / composite text
   if (local) {
-    for (const [k, v] of Object.entries(local)) {
-      if (key === k || key.startsWith(k + ' ') || k.startsWith(key) || key.includes(k)) return v;
-    }
+    const hit = bestPartial(key, local);
+    if (hit) return hit;
   }
   if (key in GLOBAL) return GLOBAL[key];
-  for (const [k, v] of Object.entries(GLOBAL)) {
-    if (key.includes(k)) return v;
+  {
+    const hit = bestPartial(key, GLOBAL);
+    if (hit) return hit;
   }
   if (key in CLIENT_GLOBAL) return CLIENT_GLOBAL[key];
-  for (const [k, v] of Object.entries(CLIENT_GLOBAL)) {
-    if (key.includes(k)) return v;
-  }
-  return null;
+  return bestPartial(key, CLIENT_GLOBAL);
 }
 
 export function isButtonish(rawLabel: string) {
   const key = n(rawLabel);
   if (BUTTONISH.has(key)) return true;
   // short UI labels often buttons
-  return /^(modificar|eliminar|guardar|cancelar|cerrar|agregar|añadir|quitar|revisar|confirmar|volver)/i.test(
+  return /^(modificar|eliminar|guardar|cancelar|cerrar|agregar|añadir|quitar|revisar|confirmar|volver|iniciar|acceder|continuar|registra|olvidaste|ver todos|buscar)/i.test(
     rawLabel.trim(),
   );
 }
