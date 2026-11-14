@@ -1,0 +1,92 @@
+[
+  {
+    "id": "inventario",
+    "name": "01 · Inventario",
+    "file": "Frame01Inventario",
+    "nav": "inventario"
+  },
+  {
+    "id": "detalle-carne",
+    "name": "02 · Detalle · Carne de res",
+    "file": "Frame02DetalleCarneDeRes",
+    "nav": "inventario"
+  },
+  {
+    "id": "agregar-existente",
+    "name": "03 · Agregar · Existente",
+    "file": "Frame03AgregarExistentePredeterminado",
+    "nav": "inventario"
+  },
+  {
+    "id": "agregar-nuevo",
+    "name": "04 · Agregar · Nuevo producto",
+    "file": "Frame04AgregarNuevoProducto",
+    "nav": "inventario"
+  },
+  {
+    "id": "historial-movimientos",
+    "name": "05 · Historial · Movimientos",
+    "file": "Frame05HistorialMovimientos",
+    "nav": "historial"
+  },
+  {
+    "id": "historial-pedidos",
+    "name": "06 · Historial · Pedidos",
+    "file": "Frame06HistorialPedidos",
+    "nav": "historial"
+  },
+  {
+    "id": "ajuste-mov-184",
+    "name": "07 · Ajuste · MOV-184",
+    "file": "AjusteMOV184",
+    "nav": "historial"
+  },
+  {
+    "id": "confirmar-correccion",
+    "name": "08 · Confirmar corrección · MOV-184",
+    "file": "Frame08ConfirmarCorrecciNMOV184",
+    "nav": "historial"
+  },
+  {
+    "id": "editar-pedido",
+    "name": "09 · Editar pedido · PED-1048",
+    "file": "Frame09EditarPedidoPED1048",
+    "nav": "historial"
+  },
+  {
+    "id": "confirmar-pedido",
+    "name": "10 · Confirmar cambios · PED-1048",
+    "file": "Frame10ConfirmarCambiosPED1048",
+    "nav": "historial"
+  },
+  {
+    "id": "ajuste-ped-1048",
+    "name": "Ajuste · PED-1048",
+    "file": "AjustePED1048",
+    "nav": "historial"
+  },
+  {
+    "id": "eliminacion-mov-184",
+    "name": "Eliminación · MOV-184",
+    "file": "EliminaciNMOV184",
+    "nav": "historial"
+  },
+  {
+    "id": "confirmar-eliminacion",
+    "name": "Confirmar eliminación",
+    "file": "ConfirmarEliminaciNNuevaPropuesta",
+    "nav": "historial"
+  },
+  {
+    "id": "registro-eliminado",
+    "name": "15 · Historial · Registro eliminado",
+    "file": "Frame15HistorialRegistroEliminado",
+    "nav": "historial"
+  },
+  {
+    "id": "no-implementada",
+    "name": "16 · Funcionalidad no implementada",
+    "file": "Frame16FuncionalidadNoImplementada",
+    "nav": "otros"
+  }
+]

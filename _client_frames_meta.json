@@ -1,0 +1,418 @@
+[
+  {
+    "name": "WHOPPER INICIO",
+    "generatedName": "mighty-leaf-6212",
+    "file": "WHOPPERINICIO.tsx",
+    "export": "WHOPPERINICIO",
+    "component": "WHOPPERINICIO",
+    "id": "whopper-inicio"
+  },
+  {
+    "name": "WHOPPER INICIO - funcion no realizada",
+    "generatedName": "fair-tide-2580",
+    "file": "WHOPPERINICIOFuncionNoRealizada.tsx",
+    "export": "WHOPPERINICIOFuncionNoRealizada",
+    "component": "WHOPPERINICIOFuncionNoRealizada",
+    "id": "whopper-inicio-funcion-no-realizada"
+  },
+  {
+    "name": "Iniciar sesion - nueva",
+    "generatedName": "readily-winter-1508",
+    "file": "IniciarSesionNueva.tsx",
+    "export": "IniciarSesionNueva",
+    "component": "IniciarSesionNueva",
+    "id": "iniciar-sesion-nueva"
+  },
+  {
+    "name": "Registro de cuenta",
+    "generatedName": "brightly-pool-7787",
+    "file": "RegistroDeCuenta.tsx",
+    "export": "RegistroDeCuenta",
+    "component": "RegistroDeCuenta",
+    "id": "registro-de-cuenta"
+  },
+  {
+    "name": "sms telefono",
+    "generatedName": "lively-summer-6377",
+    "file": "SmsTelefono.tsx",
+    "export": "SmsTelefono",
+    "component": "SmsTelefono",
+    "id": "sms-telefono"
+  },
+  {
+    "name": "correo cambiar",
+    "generatedName": "sparkling-sand-5286",
+    "file": "CorreoCambiar.tsx",
+    "export": "CorreoCambiar",
+    "component": "CorreoCambiar",
+    "id": "correo-cambiar"
+  },
+  {
+    "name": "Contactos",
+    "generatedName": "zesty-noon-8896",
+    "file": "Contactos.tsx",
+    "export": "Contactos",
+    "component": "Contactos",
+    "id": "contactos"
+  },
+  {
+    "name": "Mi cuenta",
+    "generatedName": "fancily-month-3968",
+    "file": "MiCuenta.tsx",
+    "export": "MiCuenta",
+    "component": "MiCuenta",
+    "id": "mi-cuenta"
+  },
+  {
+    "name": "Mis datos",
+    "generatedName": "fairly-house-5917",
+    "file": "MisDatos.tsx",
+    "export": "MisDatos",
+    "component": "MisDatos",
+    "id": "mis-datos"
+  },
+  {
+    "name": "Mis direcciones - Whopper King",
+    "generatedName": "serene-field-9321",
+    "file": "MisDireccionesWhopperKing.tsx",
+    "export": "MisDireccionesWhopperKing",
+    "component": "MisDireccionesWhopperKing",
+    "id": "mis-direcciones"
+  },
+  {
+    "name": "Agregar dirección",
+    "generatedName": "rapid-castle-1053",
+    "file": "AgregarDirecciN.tsx",
+    "export": "AgregarDirecciN",
+    "component": "AgregarDirecciN",
+    "id": "agregar-direcci-n"
+  },
+  {
+    "name": "Confirmar eliminación - Whopper King",
+    "generatedName": "softly-land-8750",
+    "file": "ConfirmarEliminaciNWhopperKing.tsx",
+    "export": "ConfirmarEliminaciNWhopperKing",
+    "component": "ConfirmarEliminaciNWhopperKing",
+    "id": "confirmar-eliminaci-n"
+  },
+  {
+    "name": "Privacidad y datos",
+    "generatedName": "fierce-sky-4420",
+    "file": "PrivacidadYDatos.tsx",
+    "export": "PrivacidadYDatos",
+    "component": "PrivacidadYDatos",
+    "id": "privacidad-y-datos"
+  },
+  {
+    "name": "Eliminación de cuenta",
+    "generatedName": "warmly-stream-2152",
+    "file": "EliminaciNDeCuenta.tsx",
+    "export": "EliminaciNDeCuenta",
+    "component": "EliminaciNDeCuenta",
+    "id": "eliminaci-n-de-cuenta"
+  },
+  {
+    "name": "Menú· Whopper King",
+    "generatedName": "kindly-winter-9943",
+    "file": "MenWhopperKing.tsx",
+    "export": "MenWhopperKing",
+    "component": "MenWhopperKing",
+    "id": "men"
+  },
+  {
+    "name": "Almuerzo· Whopper King",
+    "generatedName": "zesty-town-8432",
+    "file": "AlmuerzoWhopperKing.tsx",
+    "export": "AlmuerzoWhopperKing",
+    "component": "AlmuerzoWhopperKing",
+    "id": "almuerzo"
+  },
+  {
+    "name": "Burgers · Whopper King",
+    "generatedName": "coolly-flood-7262",
+    "file": "BurgersWhopperKing.tsx",
+    "export": "BurgersWhopperKing",
+    "component": "BurgersWhopperKing",
+    "id": "burgers"
+  },
+  {
+    "name": "Burgers · Whopper King 00",
+    "generatedName": "sweet-winter-3504",
+    "file": "BurgersWhopperKing00.tsx",
+    "export": "BurgersWhopperKing00",
+    "component": "BurgersWhopperKing00",
+    "id": "burgers--00"
+  },
+  {
+    "name": "Pollo· Whopper King",
+    "generatedName": "breezily-lake-1263",
+    "file": "PolloWhopperKing.tsx",
+    "export": "PolloWhopperKing",
+    "component": "PolloWhopperKing",
+    "id": "pollo"
+  },
+  {
+    "name": "Carne · Whopper King",
+    "generatedName": "richly-month-4897",
+    "file": "CarneWhopperKing.tsx",
+    "export": "CarneWhopperKing",
+    "component": "CarneWhopperKing",
+    "id": "carne"
+  },
+  {
+    "name": "Pescado· Whopper King",
+    "generatedName": "zestily-gulf-5345",
+    "file": "PescadoWhopperKing.tsx",
+    "export": "PescadoWhopperKing",
+    "component": "PescadoWhopperKing",
+    "id": "pescado"
+  },
+  {
+    "name": "Bebidas Whoper King",
+    "generatedName": "fiercely-noon-9510",
+    "file": "BebidasWhoperKing.tsx",
+    "export": "BebidasWhoperKing",
+    "component": "BebidasWhoperKing",
+    "id": "bebidas-whoper-king"
+  },
+  {
+    "name": "Carrito local",
+    "generatedName": "sparklingly-shadow-9834",
+    "file": "CarritoLocal.tsx",
+    "export": "CarritoLocal",
+    "component": "CarritoLocal",
+    "id": "carrito-local"
+  },
+  {
+    "name": "Carrito domicilio",
+    "generatedName": "tenderly-dawn-1978",
+    "file": "CarritoDomicilio.tsx",
+    "export": "CarritoDomicilio",
+    "component": "CarritoDomicilio",
+    "id": "carrito-domicilio"
+  },
+  {
+    "name": "Tu carrito local",
+    "generatedName": "tender-land-9797",
+    "file": "TuCarritoLocal.tsx",
+    "export": "TuCarritoLocal",
+    "component": "TuCarritoLocal",
+    "id": "tu-carrito-local"
+  },
+  {
+    "name": "Tu carrito · A domicilio",
+    "generatedName": "wondrously-evening-4437",
+    "file": "TuCarritoADomicilio.tsx",
+    "export": "TuCarritoADomicilio",
+    "component": "TuCarritoADomicilio",
+    "id": "tu-carrito-a-domicilio"
+  },
+  {
+    "name": "Carrito No funciona",
+    "generatedName": "freshly-summer-2136",
+    "file": "CarritoNoFunciona.tsx",
+    "export": "CarritoNoFunciona",
+    "component": "CarritoNoFunciona",
+    "id": "carrito-no-funciona"
+  },
+  {
+    "name": "Pantalla de escaneo de QR",
+    "generatedName": "quietly-second-4583",
+    "file": "PantallaDeEscaneoDeQR.tsx",
+    "export": "PantallaDeEscaneoDeQR",
+    "component": "PantallaDeEscaneoDeQR",
+    "id": "pantalla-de-escaneo-de-qr"
+  },
+  {
+    "name": "Pedido Enviado · Local",
+    "generatedName": "mightily-sun-8248",
+    "file": "PedidoEnviadoLocal.tsx",
+    "export": "PedidoEnviadoLocal",
+    "component": "PedidoEnviadoLocal",
+    "id": "pedido-enviado-local"
+  },
+  {
+    "name": "Pedido Enviado · Domicilio",
+    "generatedName": "fiercely-house-1347",
+    "file": "PedidoEnviadoDomicilio.tsx",
+    "export": "PedidoEnviadoDomicilio",
+    "component": "PedidoEnviadoDomicilio",
+    "id": "pedido-enviado-domicilio"
+  },
+  {
+    "name": "Pedido Exitoso Local",
+    "generatedName": "soft-road-8437",
+    "file": "PedidoExitosoLocal.tsx",
+    "export": "PedidoExitosoLocal",
+    "component": "PedidoExitosoLocal",
+    "id": "pedido-exitoso-local"
+  },
+  {
+    "name": "Fallo en el pago",
+    "generatedName": "wondrous-sun-8791",
+    "file": "FalloEnElPago.tsx",
+    "export": "FalloEnElPago",
+    "component": "FalloEnElPago",
+    "id": "fallo-en-el-pago"
+  },
+  {
+    "name": "Quitar Producto",
+    "generatedName": "quietly-sky-6497",
+    "file": "QuitarProducto.tsx",
+    "export": "QuitarProducto",
+    "component": "QuitarProducto",
+    "id": "quitar-producto"
+  },
+  {
+    "name": "Sobre Nosotros",
+    "generatedName": "sturdily-stone-6659",
+    "file": "SobreNosotros.tsx",
+    "export": "SobreNosotros",
+    "component": "SobreNosotros",
+    "id": "sobre-nosotros"
+  },
+  {
+    "name": "PQRS",
+    "generatedName": "brightly-ocean-4790",
+    "file": "PQRS.tsx",
+    "export": "PQRS",
+    "component": "PQRS",
+    "id": "pqrs"
+  },
+  {
+    "name": "PQRS Confirmacion",
+    "generatedName": "smart-noon-6848",
+    "file": "PQRSConfirmacion.tsx",
+    "export": "PQRSConfirmacion",
+    "component": "PQRSConfirmacion",
+    "id": "pqrs-confirmacion"
+  },
+  {
+    "name": "PQRS Radicacion",
+    "generatedName": "safely-air-7586",
+    "file": "PQRSRadicacion.tsx",
+    "export": "PQRSRadicacion",
+    "component": "PQRSRadicacion",
+    "id": "pqrs-radicacion"
+  },
+  {
+    "name": "Descripción Texana",
+    "generatedName": "crisply-brook-2163",
+    "file": "DescripciNTexana.tsx",
+    "export": "DescripciNTexana",
+    "component": "DescripciNTexana",
+    "id": "descripci-n-texana"
+  },
+  {
+    "name": "Whopper · Personaliza tu pedido",
+    "generatedName": "sparkling-hill-5712",
+    "file": "WhopperPersonalizaTuPedido.tsx",
+    "export": "WhopperPersonalizaTuPedido",
+    "component": "WhopperPersonalizaTuPedido",
+    "id": "whopper-personaliza-tu-pedido"
+  },
+  {
+    "name": "Whopper · Mini Combo · Personaliza tu pedido",
+    "generatedName": "fresh-door-4332",
+    "file": "WhopperMiniComboPersonalizaTuPedido.tsx",
+    "export": "WhopperMiniComboPersonalizaTuPedido",
+    "component": "WhopperMiniComboPersonalizaTuPedido",
+    "id": "whopper-mini-combo-personaliza-tu-pedido"
+  },
+  {
+    "name": "Whopper · Maxi Combo · Personaliza tu pedido",
+    "generatedName": "deeply-cave-6493",
+    "file": "WhopperMaxiComboPersonalizaTuPedido.tsx",
+    "export": "WhopperMaxiComboPersonalizaTuPedido",
+    "component": "WhopperMaxiComboPersonalizaTuPedido",
+    "id": "whopper-maxi-combo-personaliza-tu-pedido"
+  },
+  {
+    "name": "Texana Especial · Maxi Combo · Personaliza tu pedido",
+    "generatedName": "calmly-creek-6375",
+    "file": "TexanaEspecialMaxiComboPersonalizaTuPedido.tsx",
+    "export": "TexanaEspecialMaxiComboPersonalizaTuPedido",
+    "component": "TexanaEspecialMaxiComboPersonalizaTuPedido",
+    "id": "texana-especial-maxi-combo-personaliza-tu-pedido"
+  },
+  {
+    "name": "Texana Especial · Mini Combo · Personaliza tu pedido",
+    "generatedName": "clever-brook-5227",
+    "file": "TexanaEspecialMiniComboPersonalizaTuPedido.tsx",
+    "export": "TexanaEspecialMiniComboPersonalizaTuPedido",
+    "component": "TexanaEspecialMiniComboPersonalizaTuPedido",
+    "id": "texana-especial-mini-combo-personaliza-tu-pedido"
+  },
+  {
+    "name": "Elige cómo pagar · A domicilio  · Bre-B",
+    "generatedName": "wild-valley-3041",
+    "file": "EligeCMoPagarADomicilioBreB.tsx",
+    "export": "EligeCMoPagarADomicilioBreB",
+    "component": "EligeCMoPagarADomicilioBreB",
+    "id": "elige-c-mo-pagar-a-domicilio-bre-b"
+  },
+  {
+    "name": "Elige cómo pagar · A domicilio · Efectivo",
+    "generatedName": "readily-park-6801",
+    "file": "EligeCMoPagarADomicilioEfectivo.tsx",
+    "export": "EligeCMoPagarADomicilioEfectivo",
+    "component": "EligeCMoPagarADomicilioEfectivo",
+    "id": "elige-c-mo-pagar-a-domicilio-efectivo"
+  },
+  {
+    "name": "Elige cómo pagar · A domicilio · Nequi",
+    "generatedName": "steadily-coast-9990",
+    "file": "EligeCMoPagarADomicilioNequi.tsx",
+    "export": "EligeCMoPagarADomicilioNequi",
+    "component": "EligeCMoPagarADomicilioNequi",
+    "id": "elige-c-mo-pagar-a-domicilio-nequi"
+  },
+  {
+    "name": "Elige cómo pagar · A domicilio · Tarjeta",
+    "generatedName": "keen-second-7075",
+    "file": "EligeCMoPagarADomicilioTarjeta.tsx",
+    "export": "EligeCMoPagarADomicilioTarjeta",
+    "component": "EligeCMoPagarADomicilioTarjeta",
+    "id": "elige-c-mo-pagar-a-domicilio-tarjeta"
+  },
+  {
+    "name": "Elige cómo pagar · En el local · Bre-B",
+    "generatedName": "bravely-morning-1027",
+    "file": "EligeCMoPagarEnElLocalBreB.tsx",
+    "export": "EligeCMoPagarEnElLocalBreB",
+    "component": "EligeCMoPagarEnElLocalBreB",
+    "id": "elige-c-mo-pagar-en-el-local-bre-b"
+  },
+  {
+    "name": "Elige cómo pagar · En el local · Efectivo",
+    "generatedName": "sparkling-second-1138",
+    "file": "EligeCMoPagarEnElLocalEfectivo.tsx",
+    "export": "EligeCMoPagarEnElLocalEfectivo",
+    "component": "EligeCMoPagarEnElLocalEfectivo",
+    "id": "elige-c-mo-pagar-en-el-local-efectivo"
+  },
+  {
+    "name": "Elige cómo pagar · En el local · Nequi",
+    "generatedName": "vibrantly-city-8949",
+    "file": "EligeCMoPagarEnElLocalNequi.tsx",
+    "export": "EligeCMoPagarEnElLocalNequi",
+    "component": "EligeCMoPagarEnElLocalNequi",
+    "id": "elige-c-mo-pagar-en-el-local-nequi"
+  },
+  {
+    "name": "Elige cómo pagar · En el local · Tarjeta",
+    "generatedName": "kind-forest-5816",
+    "file": "EligeCMoPagarEnElLocalTarjeta.tsx",
+    "export": "EligeCMoPagarEnElLocalTarjeta",
+    "component": "EligeCMoPagarEnElLocalTarjeta",
+    "id": "elige-c-mo-pagar-en-el-local-tarjeta"
+  },
+  {
+    "name": "Menu de Hamburguesas",
+    "generatedName": "fancily-tower-2619",
+    "file": "MenuDeHamburguesas.tsx",
+    "export": "MenuDeHamburguesas",
+    "component": "MenuDeHamburguesas",
+    "id": "menu-de-hamburguesas"
+  }
+]
