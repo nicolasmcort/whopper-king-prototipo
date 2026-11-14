@@ -65,10 +65,10 @@ const CLIENT_GLOBAL = normMap({
   breb: 'pago-dom-breb',
   efectivo: 'pago-dom-efectivo',
   tarjeta: 'pago-dom-tarjeta',
-  // Entrada admin (placa azul) desde login
-  administrador: 'numeros-negocio',
-  'modo administrador': 'numeros-negocio',
-  'acceder al modo administrador': 'numeros-negocio',
+  // Entrada admin (placa azul) desde login → inventario
+  administrador: 'inventario',
+  'modo administrador': 'inventario',
+  'acceder al modo administrador': 'inventario',
   texana: 'desc-texana',
 });
 
@@ -100,6 +100,9 @@ const BY_SCREEN_RAW: Record<string, Record<string, NavTarget>> = {
     'arroz blanco': 'detalle-carne',
     tocineta: 'detalle-carne',
     'queso chedar': 'detalle-carne',
+    // Hamburguesa superior → volver a cliente
+    cliente: 'whopper-inicio',
+    inicio: 'whopper-inicio',
   },
   'detalle-carne': {
     cerrar: '__back__',
@@ -133,6 +136,8 @@ const BY_SCREEN_RAW: Record<string, Record<string, NavTarget>> = {
     'ajustes (1)': 'ajuste-mov-184',
     'mov-184 - 05 nov 2026': 'editar-movimiento',
     'carne de res - lote res-0511': 'detalle-carne',
+    cliente: 'whopper-inicio',
+    inicio: 'whopper-inicio',
   },
   'historial-pedidos': {
     inventario: 'inventario',
@@ -143,6 +148,8 @@ const BY_SCREEN_RAW: Record<string, Record<string, NavTarget>> = {
     eliminar: 'confirmar-eliminacion',
     'ajustes (1)': 'ajuste-ped-1048',
     '#ped-1048 - 06 nov - 09:32': 'editar-pedido',
+    cliente: 'whopper-inicio',
+    inicio: 'whopper-inicio',
   },
   'editar-movimiento': {
     cerrar: 'historial-movimientos',
@@ -179,24 +186,32 @@ const BY_SCREEN_RAW: Record<string, Record<string, NavTarget>> = {
     movimientos: 'historial-movimientos',
     pedidos: 'historial-pedidos',
     'ver informacion': 'ajuste-mov-184',
+    cliente: 'whopper-inicio',
+    inicio: 'whopper-inicio',
   },
   'numeros-negocio': {
     ...STATS_TABS,
     inventario: 'inventario',
     historial: 'historial-movimientos',
     estadisticas: 'numeros-negocio',
+    cliente: 'whopper-inicio',
+    inicio: 'whopper-inicio',
   },
   'ventas-canal': {
     ...STATS_TABS,
     inventario: 'inventario',
     historial: 'historial-movimientos',
     estadisticas: 'numeros-negocio',
+    cliente: 'whopper-inicio',
+    inicio: 'whopper-inicio',
   },
   'platos-insumos': {
     ...STATS_TABS,
     inventario: 'inventario',
     historial: 'historial-movimientos',
     estadisticas: 'numeros-negocio',
+    cliente: 'whopper-inicio',
+    inicio: 'whopper-inicio',
   },
   'editar-pedido': {
     cerrar: 'historial-pedidos',
@@ -265,9 +280,9 @@ const BY_SCREEN_RAW: Record<string, Record<string, NavTarget>> = {
     // Login cliente → cuenta; admin → placa azul (estadísticas)
     'iniciar sesion': 'mi-cuenta',
     'iniciar sesión': 'mi-cuenta',
-    administrador: 'numeros-negocio',
-    'modo administrador': 'numeros-negocio',
-    'acceder al modo administrador': 'numeros-negocio',
+    administrador: 'inventario',
+    'modo administrador': 'inventario',
+    'acceder al modo administrador': 'inventario',
     continuar: 'sms-telefono',
     'olvidaste tu contrasena': 'correo-cambiar',
     'olvidaste tu contraseña': 'correo-cambiar',
@@ -565,6 +580,8 @@ const BY_SCREEN_RAW: Record<string, Record<string, NavTarget>> = {
     estadisticas: 'numeros-negocio',
     cerrar: 'inventario',
     volver: 'inventario',
+    cliente: 'whopper-inicio',
+    inicio: 'whopper-inicio',
   },
 };
 
@@ -655,6 +672,9 @@ const FIGMA_ID_ACTIONS: Record<string, string> = {
   '585:2364': 'administrador', // fila “Acceder al modo administrador”
   '585:2091': 'administrador',
   '585:2098': 'administrador',
+  // Hamburguesa azul (admin) → sección cliente (solo el botón, no todo el header)
+  '404:2117': 'cliente',
+  '404:2118': 'cliente',
 };
 
 /** Preferir la clave más larga que matchee (evita whopper ⊂ whoppers). */
@@ -681,9 +701,9 @@ export function resolveFigmaNav(screenId: string, figmaId: string): NavTarget | 
   if (!action) return null;
   const dest = resolveNav(screenId, action);
   if (dest) return dest;
-  if (action === 'volver') return 'whopper-inicio';
+  if (action === 'volver' || action === 'cliente') return 'whopper-inicio';
   if (action === 'carrito') return 'tu-carrito-local';
-  if (action === 'administrador') return 'numeros-negocio';
+  if (action === 'administrador') return 'inventario';
   return null;
 }
 
