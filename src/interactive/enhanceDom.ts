@@ -16,14 +16,32 @@ function leafText(el: Element): string {
   return '';
 }
 
-function nearestLabel(start: Element, root: Element): string {
-  let el: Element | null = start;
-  while (el && el !== root) {
-    const t = leafText(el);
-    if (t && t.length <= 60) return t;
-    el = el.parentElement;
+/** Textos cortos propios del nodo (sin concatenar todo el árbol). */
+function ownShortLabels(el: Element): string[] {
+  const out: string[] = [];
+  for (const node of Array.from(el.childNodes)) {
+    if (node.nodeType === Node.TEXT_NODE) {
+      const t = (node.textContent || '').replace(/\s+/g, ' ').trim();
+      if (t && t.length <= 40) out.push(t);
+    }
   }
-  return leafText(start);
+  for (const child of Array.from(el.children)) {
+    const tag = child.tagName;
+    if (tag === 'SPAN' || tag === 'P' || tag === 'LABEL' || tag === 'A' || tag === 'BUTTON') {
+      const t = leafText(child);
+      if (t && t.length <= 40) out.push(t);
+    }
+    // Título anidado un nivel (p. ej. span dentro de div de fila)
+    if (tag === 'DIV') {
+      for (const nested of Array.from(child.children)) {
+        if (nested.tagName === 'SPAN' || nested.tagName === 'P') {
+          const t = leafText(nested);
+          if (t && t.length <= 40) out.push(t);
+        }
+      }
+    }
+  }
+  return out;
 }
 
 /** Botones solo-ícono (sin texto): data-proto-action / data-figma-id antes que label. */
@@ -47,9 +65,22 @@ function resolveFromClick(
     }
     el = el.parentElement;
   }
-  const label = nearestLabel(target, root);
-  if (!label) return null;
-  return resolveNav(screenId, label);
+
+  // Subir el árbol: probar textos del nodo y títulos cortos hijos (todo el cuadro, no solo el label)
+  el = target;
+  while (el && el !== root) {
+    for (const label of ownShortLabels(el)) {
+      const dest = resolveNav(screenId, label);
+      if (dest) return dest;
+    }
+    const t = leafText(el);
+    if (t) {
+      const dest = resolveNav(screenId, t);
+      if (dest) return dest;
+    }
+    el = el.parentElement;
+  }
+  return null;
 }
 
 function makeEditable(el: HTMLElement) {
@@ -106,6 +137,40 @@ function markPressable(el: HTMLElement) {
   el.setAttribute('role', 'button');
 }
 
+/** Expande el hit area a la tarjeta/opción contenedora (pago, combo, etc.). */
+function expandOptionHitArea(el: HTMLElement, actionLabel: string, root: HTMLElement) {
+  let node: HTMLElement | null = el.parentElement;
+  let card: HTMLElement | null = null;
+  while (node && node !== root) {
+    const h = node.offsetHeight;
+    const style = node.style;
+    const radius = style.borderRadius || '';
+    const shadow = style.boxShadow || '';
+    const looksRounded = /16px|12px|9999|1rem/.test(radius) || shadow.includes('inset');
+    if (looksRounded && h >= 48 && h <= 140) {
+      card = node;
+      break;
+    }
+    // Contenedor de opción un poco más alto (wrapper 88px con card 76px)
+    if (h >= 70 && h <= 100 && node.querySelectorAll('span').length >= 1) {
+      const inner = Array.from(node.children).find((c) => {
+        const ch = c as HTMLElement;
+        return ch.offsetHeight >= 48 && ch.offsetHeight <= 90;
+      }) as HTMLElement | undefined;
+      if (inner) {
+        card = inner;
+        break;
+      }
+    }
+    node = node.parentElement;
+  }
+  if (!card) return;
+  if (!card.getAttribute('data-proto-action')) {
+    card.setAttribute('data-proto-action', actionLabel);
+  }
+  markPressable(card);
+}
+
 export function enhanceFrame(
   root: HTMLElement,
   screenId: string,
@@ -145,6 +210,9 @@ export function enhanceFrame(
     // Navegación gana sobre inputs: filas de inventario deben ir a detalle
     if (resolveNav(screenId, text) || isButtonish(text)) {
       markPressable(el);
+      if (resolveNav(screenId, text) && text.length <= 40) {
+        expandOptionHitArea(el, text, root);
+      }
       return;
     }
 

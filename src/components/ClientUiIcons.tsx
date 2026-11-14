@@ -337,9 +337,9 @@ export function ClientCheckIcon({ size = 18, color = '#ed6047', style }: Props) 
     size,
     style,
     <path
-      d="M6 12.5L10 16.5L18 8"
+      d="M5.5 12.2L10.2 16.7L18.5 7.5"
       stroke={color}
-      strokeWidth={1.8}
+      strokeWidth={2.4}
       strokeLinecap="round"
       strokeLinejoin="round"
     />,

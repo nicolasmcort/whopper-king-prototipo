@@ -234,7 +234,7 @@ export function PedidoExitosoLocal() {
             <div data-figma-id="654:4488" style={fixedLayer(32, 32, {
                 overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center"
               })}>
-              <ClientAlertIcon size={28} color="#ed6047" />
+              <ClientCheckIcon size={28} color="#ffffff" />
           </div>
           </div>
           <div data-figma-id="654:4490" style={{

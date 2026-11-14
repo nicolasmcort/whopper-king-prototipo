@@ -239,7 +239,7 @@ export function PedidoEnviadoLocal() {
             <div data-figma-id="369:1723" style={fixedLayer(32, 32, {
                 overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center"
               })}>
-              <ClientAlertIcon size={28} color="#ed6047" />
+              <ClientCheckIcon size={28} color="#ffffff" />
           </div>
           </div>
           <div data-figma-id="369:1725" style={{

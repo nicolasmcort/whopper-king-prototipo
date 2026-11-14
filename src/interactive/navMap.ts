@@ -1051,18 +1051,26 @@ export function isEditableLabel(rawLabel: string, screenId?: string) {
   return false;
 }
 
-const COMBO_VARIANT_SCREENS = new Set([
+const REPLACE_VARIANT_SCREENS = new Set([
   'personaliza-whopper',
   'personaliza-whopper-mini',
   'personaliza-whopper-maxi',
   'desc-texana',
   'personaliza-texana-mini',
   'personaliza-texana-maxi',
+  'pago-local-nequi',
+  'pago-local-efectivo',
+  'pago-local-tarjeta',
+  'pago-local-breb',
+  'pago-dom-nequi',
+  'pago-dom-efectivo',
+  'pago-dom-tarjeta',
+  'pago-dom-breb',
 ]);
 
-/** Destinos que deben reemplazar la pantalla actual en el historial (selector / combos). */
+/** Destinos que deben reemplazar la pantalla actual en el historial (selector / combos / pago). */
 export function shouldReplaceHistory(fromId: string, toId: string): boolean {
   const pair = new Set([fromId, toId]);
   if (pair.has('agregar-existente') && pair.has('agregar-nuevo')) return true;
-  return COMBO_VARIANT_SCREENS.has(fromId) && COMBO_VARIANT_SCREENS.has(toId);
+  return REPLACE_VARIANT_SCREENS.has(fromId) && REPLACE_VARIANT_SCREENS.has(toId);
 }
