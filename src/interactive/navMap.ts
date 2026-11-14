@@ -430,16 +430,22 @@ const BY_SCREEN_RAW: Record<string, Record<string, NavTarget>> = {
     atras: 'menu-burgers',
   },
   'personaliza-whopper-mini': {
+    sencilla: 'personaliza-whopper',
+    'maxi combo': 'personaliza-whopper-maxi',
     carrito: 'tu-carrito-local',
     agregar: 'tu-carrito-local',
-    volver: 'personaliza-whopper',
-    atras: 'personaliza-whopper',
+    'mi cuenta': 'mi-cuenta',
+    volver: 'menu-burgers',
+    atras: 'menu-burgers',
   },
   'personaliza-whopper-maxi': {
+    sencilla: 'personaliza-whopper',
+    'mini combo': 'personaliza-whopper-mini',
     carrito: 'tu-carrito-local',
     agregar: 'tu-carrito-local',
-    volver: 'personaliza-whopper',
-    atras: 'personaliza-whopper',
+    'mi cuenta': 'mi-cuenta',
+    volver: 'menu-burgers',
+    atras: 'menu-burgers',
   },
   'desc-texana': {
     'mini combo': 'personaliza-texana-mini',
@@ -449,16 +455,20 @@ const BY_SCREEN_RAW: Record<string, Record<string, NavTarget>> = {
     atras: 'menu-almuerzo',
   },
   'personaliza-texana-mini': {
+    sencilla: 'desc-texana',
+    'maxi combo': 'personaliza-texana-maxi',
     agregar: 'tu-carrito-local',
     carrito: 'tu-carrito-local',
-    volver: 'desc-texana',
-    atras: 'desc-texana',
+    volver: 'menu-almuerzo',
+    atras: 'menu-almuerzo',
   },
   'personaliza-texana-maxi': {
+    sencilla: 'desc-texana',
+    'mini combo': 'personaliza-texana-mini',
     agregar: 'tu-carrito-local',
     carrito: 'tu-carrito-local',
-    volver: 'desc-texana',
-    atras: 'desc-texana',
+    volver: 'menu-almuerzo',
+    atras: 'menu-almuerzo',
   },
   'tu-carrito-local': {
     pagar: 'pago-local-nequi',
@@ -1041,8 +1051,18 @@ export function isEditableLabel(rawLabel: string, screenId?: string) {
   return false;
 }
 
-/** Destinos que deben reemplazar la pantalla actual en el historial (selector). */
+const COMBO_VARIANT_SCREENS = new Set([
+  'personaliza-whopper',
+  'personaliza-whopper-mini',
+  'personaliza-whopper-maxi',
+  'desc-texana',
+  'personaliza-texana-mini',
+  'personaliza-texana-maxi',
+]);
+
+/** Destinos que deben reemplazar la pantalla actual en el historial (selector / combos). */
 export function shouldReplaceHistory(fromId: string, toId: string): boolean {
   const pair = new Set([fromId, toId]);
-  return pair.has('agregar-existente') && pair.has('agregar-nuevo');
+  if (pair.has('agregar-existente') && pair.has('agregar-nuevo')) return true;
+  return COMBO_VARIANT_SCREENS.has(fromId) && COMBO_VARIANT_SCREENS.has(toId);
 }

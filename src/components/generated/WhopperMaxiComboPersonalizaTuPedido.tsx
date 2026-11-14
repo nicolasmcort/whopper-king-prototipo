@@ -323,7 +323,10 @@ export function WhopperMaxiComboPersonalizaTuPedido() {
             alignSelf: "stretch"
           }}>
             <div data-figma-id="556:4008" style={fixedLayer(354, 264, {
-              background: "#dddddd",
+              background: "url(\"https://storage.googleapis.com/storage.magicpath.ai/user/426091581041446912/figma-assets/5cdef993-0dbb-4774-9e93-d1809f98a59d.png\")",
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+              backgroundRepeat: "no-repeat",
               aspectRatio: "1200 / 896"
             })} />
           </div>
@@ -539,7 +542,7 @@ export function WhopperMaxiComboPersonalizaTuPedido() {
               flexShrink: 0,
               alignSelf: "stretch"
             }}>
-              <div data-figma-id="552:3893" style={{
+              <div data-figma-id="552:3893" data-proto-action="sencilla" style={{
                 ...surface1,
                 borderRadius: 16,
                 ...row5,
@@ -647,7 +650,7 @@ export function WhopperMaxiComboPersonalizaTuPedido() {
                   </div>
                 </div>
               </div>
-              <div data-figma-id="552:3907" style={{
+              <div data-figma-id="552:3907" data-proto-action="mini combo" style={{
                 ...surface1,
                 borderRadius: 16,
                 ...row5,
@@ -791,7 +794,7 @@ export function WhopperMaxiComboPersonalizaTuPedido() {
                   </div>
                 </div>
               </div>
-              <div data-figma-id="552:3924" style={{
+              <div data-figma-id="552:3924" data-proto-action="maxi combo" style={{
                 background: "#fff1eb",
                 boxShadow: "inset 0 0 0 1px #ed6047",
                 borderRadius: 16,

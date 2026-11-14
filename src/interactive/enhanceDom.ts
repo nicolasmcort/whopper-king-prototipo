@@ -113,10 +113,17 @@ export function enhanceFrame(
 ): () => void {
   const candidates = root.querySelectorAll<HTMLElement>('div, span, p, button, a, label');
 
-  // Flechas atrás (SVG con data-proto-action): marcar el contenedor clickeable
-  root.querySelectorAll<HTMLElement>('[data-proto-action="volver"]').forEach((svg) => {
-    const hit = (svg.closest('[data-figma-id]') as HTMLElement | null) || (svg.parentElement as HTMLElement | null);
-    if (hit) markPressable(hit);
+  // data-proto-action: marcar hit area (flechas atrás y opciones de combo)
+  root.querySelectorAll<HTMLElement>('[data-proto-action]').forEach((el) => {
+    const action = el.getAttribute('data-proto-action');
+    if (action === 'volver') {
+      const hit =
+        (el.closest('[data-figma-id]') as HTMLElement | null) ||
+        (el.parentElement as HTMLElement | null);
+      if (hit) markPressable(hit);
+      return;
+    }
+    markPressable(el);
   });
 
   candidates.forEach((el) => {

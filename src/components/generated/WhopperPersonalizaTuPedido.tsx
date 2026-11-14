@@ -542,7 +542,7 @@ export function WhopperPersonalizaTuPedido() {
               flexShrink: 0,
               alignSelf: "stretch"
             }}>
-              <div data-figma-id="552:3627" style={{
+              <div data-figma-id="552:3627" data-proto-action="sencilla" style={{
                 background: "#fff1eb",
                 boxShadow: "inset 0 0 0 1px #ed6047",
                 borderRadius: 16,
@@ -661,7 +661,7 @@ export function WhopperPersonalizaTuPedido() {
                   </div>
                 </div>
               </div>
-              <div data-figma-id="552:3642" style={{
+              <div data-figma-id="552:3642" data-proto-action="mini combo" style={{
                 ...surface1,
                 borderRadius: 16,
                 ...row5,
@@ -805,7 +805,7 @@ export function WhopperPersonalizaTuPedido() {
                   </div>
                 </div>
               </div>
-              <div data-figma-id="552:3659" style={{
+              <div data-figma-id="552:3659" data-proto-action="maxi combo" style={{
                 ...surface1,
                 borderRadius: 16,
                 ...row5,

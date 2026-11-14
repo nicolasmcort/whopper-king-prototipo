@@ -86,14 +86,8 @@ function App() {
   useLayoutEffect(() => {
     const root = frameRef.current;
     if (!root) return;
-    let cleanup: (() => void) | undefined;
-    const t = window.setTimeout(() => {
-      cleanup = enhanceFrame(root, current.id, navigate);
-    }, 0);
-    return () => {
-      window.clearTimeout(t);
-      cleanup?.();
-    };
+    const cleanup = enhanceFrame(root, current.id, navigate);
+    return () => cleanup();
   }, [current.id, navigate]);
 
   return (
