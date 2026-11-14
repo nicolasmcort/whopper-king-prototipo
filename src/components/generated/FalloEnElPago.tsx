@@ -1,4 +1,31 @@
 import React from 'react';
+import {
+  ClientBackIcon,
+  ClientUtensilsIcon,
+  ClientPinIcon,
+  ClientClockIcon,
+  ClientLockIcon,
+  ClientStoreIcon,
+  ClientCardIcon,
+  ClientCashIcon,
+  ClientNequiIcon,
+  ClientBrebIcon,
+  ClientHelpIcon,
+  ClientTrashIcon,
+  ClientChevronRightIcon,
+  ClientAlertIcon,
+  ClientCheckIcon,
+  ClientEyeIcon,
+  ClientShieldIcon,
+  ClientHeadsetIcon,
+  ClientHomeIcon,
+  ClientUserIcon,
+  ClientSearchIcon,
+  ClientHeartIcon,
+  ClientLogoutIcon,
+  ClientCloseIcon,
+  ClientEditIcon,
+} from '../ClientUiIcons';
 type LayerValue = string | number;
 const absoluteLayer = (left: LayerValue, top: LayerValue, width: LayerValue, height: LayerValue, style: React.CSSProperties = {}): React.CSSProperties => ({
   position: "absolute",
@@ -131,9 +158,7 @@ export function FalloEnElPago() {
           <div data-figma-id="369:1894" style={fixedLayer(32, 32, {
             overflow: "hidden"
           })}>
-            <div data-figma-id="369:1895" style={absoluteLayer("12.5%", "12.5%", "75%", "75%")} />
-            <div data-figma-id="369:1896" style={absoluteLayer("50%", "33.333%", "0%", "16.667%")} />
-            <div data-figma-id="369:1897" style={absoluteLayer("50%", "66.667%", "0.042%", "0%")} />
+            <ClientAlertIcon size={28} color="#ed6047" />
           </div>
         </div>
       </div>

@@ -1,4 +1,31 @@
 import React from 'react';
+import {
+  ClientBackIcon,
+  ClientUtensilsIcon,
+  ClientPinIcon,
+  ClientClockIcon,
+  ClientLockIcon,
+  ClientStoreIcon,
+  ClientCardIcon,
+  ClientCashIcon,
+  ClientNequiIcon,
+  ClientBrebIcon,
+  ClientHelpIcon,
+  ClientTrashIcon,
+  ClientChevronRightIcon,
+  ClientAlertIcon,
+  ClientCheckIcon,
+  ClientEyeIcon,
+  ClientShieldIcon,
+  ClientHeadsetIcon,
+  ClientHomeIcon,
+  ClientUserIcon,
+  ClientSearchIcon,
+  ClientHeartIcon,
+  ClientLogoutIcon,
+  ClientCloseIcon,
+  ClientEditIcon,
+} from '../ClientUiIcons';
 type LayerValue = string | number;
 const absoluteLayer = (left: LayerValue, top: LayerValue, width: LayerValue, height: LayerValue, style: React.CSSProperties = {}): React.CSSProperties => ({
   position: "absolute",
@@ -118,11 +145,8 @@ export function QuitarProducto() {
             <div data-figma-id="375:451" style={fixedLayer(28, 28, {
                 overflow: "hidden"
               })}>
-              <div data-figma-id="375:452" style={absoluteLayer("12.5%", "25%", "75%", "0%")} />
-              <div data-figma-id="375:453" style={absoluteLayer("20.833%", "8.333%", "58.333%", "83.333%")} />
-              <div data-figma-id="375:454" style={absoluteLayer("41.667%", "45.833%", "0%", "25%")} />
-              <div data-figma-id="375:455" style={absoluteLayer("58.333%", "45.833%", "0%", "25%")} />
-            </div>
+              <ClientTrashIcon size={24} color="#ed6047" />
+          </div>
           </div>
         </div>
         <div data-figma-id="375:456" style={fixedLayer(305.03, 35.5)}>

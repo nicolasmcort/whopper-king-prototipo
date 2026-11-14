@@ -11,6 +11,20 @@ import {
   ClientNequiIcon,
   ClientBrebIcon,
   ClientHelpIcon,
+  ClientTrashIcon,
+  ClientChevronRightIcon,
+  ClientAlertIcon,
+  ClientCheckIcon,
+  ClientEyeIcon,
+  ClientShieldIcon,
+  ClientHeadsetIcon,
+  ClientHomeIcon,
+  ClientUserIcon,
+  ClientSearchIcon,
+  ClientHeartIcon,
+  ClientLogoutIcon,
+  ClientCloseIcon,
+  ClientEditIcon,
 } from '../ClientUiIcons';
 type LayerValue = string | number;
 const absoluteLayer = (left: LayerValue, top: LayerValue, width: LayerValue, height: LayerValue, style: React.CSSProperties = {}): React.CSSProperties => ({
@@ -240,8 +254,8 @@ export function PantallaDeEscaneoDeQR() {
               flexGrow: 1,
               flexBasis: 0
             }}>
-              <div data-figma-id="646:2365" style={absoluteLayer("3.75%", "15.714%", "92.5%", "85.714%")} />
-            </div>
+              <svg viewBox="0 0 19 12" width="100%" height="100%" fill="none" aria-hidden><rect x="0" y="8" width="3" height="4" rx="0.5" fill="#29241f"/><rect x="5" y="5.5" width="3" height="6.5" rx="0.5" fill="#29241f"/><rect x="10" y="3" width="3" height="9" rx="0.5" fill="#29241f"/><rect x="15" y="0.5" width="3" height="11.5" rx="0.5" fill="#29241f"/></svg>
+                </div>
           </div>
         </div>
         <div data-figma-id="646:2366" style={fixedLayer("max-content", 12, col2)}>
@@ -372,13 +386,10 @@ export function PantallaDeEscaneoDeQR() {
         right: 20
       }}>
         <div data-figma-id="646:2384" style={fixedLayer(20, 20, {
-          overflow: "hidden"
+          overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center"
         })}>
-          <div data-figma-id="646:2385" style={absoluteLayer("50%", "8.333%", "25%", "37.5%")} />
-          <div data-figma-id="646:2386" style={absoluteLayer("62.5%", "8.333%", "0%", "79.167%")} />
-          <div data-figma-id="646:2387" style={absoluteLayer("20.833%", "8.333%", "16.667%", "37.5%")} />
-          <div data-figma-id="646:2388" style={absoluteLayer("29.167%", "45.833%", "0%", "41.667%")} />
-        </div>
+          <ClientBackIcon size={20} color="#29241f" />
+          </div>
         <div data-figma-id="646:2389" style={fixedLayer("max-content", 22, {
           display: "flex",
           padding: "1.5px 0 0.5px 10px",

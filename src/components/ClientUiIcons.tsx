@@ -301,3 +301,194 @@ export function ClientHelpIcon({ size = 20, color = '#82776e', style }: Props) {
     </>,
   );
 }
+
+export function ClientChevronRightIcon({ size = 12, color = '#82776e', style }: Props) {
+  return base(
+    size,
+    style,
+    <path
+      d="M9 6L15 12L9 18"
+      stroke={color}
+      strokeWidth={1.8}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />,
+  );
+}
+
+export function ClientAlertIcon({ size = 28, color = '#ed6047', style }: Props) {
+  return base(
+    size,
+    style,
+    <>
+      <circle cx="12" cy="12" r="8.5" stroke={color} strokeWidth={1.6} />
+      <path d="M12 8v5" stroke={color} strokeWidth={1.8} strokeLinecap="round" />
+      <circle cx="12" cy="16.2" r="1" fill={color} />
+    </>,
+  );
+}
+
+export function ClientCheckIcon({ size = 18, color = '#ed6047', style }: Props) {
+  return base(
+    size,
+    style,
+    <path
+      d="M6 12.5L10 16.5L18 8"
+      stroke={color}
+      strokeWidth={1.8}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />,
+  );
+}
+
+export function ClientEyeIcon({ size = 20, color = '#82776e', style }: Props) {
+  return base(
+    size,
+    style,
+    <>
+      <path
+        d="M2.5 12s3.5-6.5 9.5-6.5S21.5 12 21.5 12s-3.5 6.5-9.5 6.5S2.5 12 2.5 12Z"
+        stroke={color}
+        strokeWidth={1.5}
+        strokeLinejoin="round"
+      />
+      <circle cx="12" cy="12" r="2.5" stroke={color} strokeWidth={1.5} />
+    </>,
+  );
+}
+
+export function ClientShieldIcon({ size = 20, color = '#ed6047', style }: Props) {
+  return base(
+    size,
+    style,
+    <path
+      d="M12 3.5 19 6.5v5c0 4.5-3.2 7.6-7 8.5-3.8-.9-7-4-7-8.5v-5L12 3.5Z"
+      stroke={color}
+      strokeWidth={1.5}
+      strokeLinejoin="round"
+    />,
+  );
+}
+
+export function ClientHeadsetIcon({ size = 20, color = '#ed6047', style }: Props) {
+  return base(
+    size,
+    style,
+    <>
+      <path
+        d="M5 13.5V12a7 7 0 0 1 14 0v1.5"
+        stroke={color}
+        strokeWidth={1.5}
+        strokeLinecap="round"
+      />
+      <path
+        d="M5 13.5h2.5V18H5a1.5 1.5 0 0 1-1.5-1.5v-1.5A1.5 1.5 0 0 1 5 13.5ZM19 13.5h-2.5V18H19a1.5 1.5 0 0 0 1.5-1.5v-1.5A1.5 1.5 0 0 0 19 13.5Z"
+        stroke={color}
+        strokeWidth={1.5}
+        strokeLinejoin="round"
+      />
+    </>,
+  );
+}
+
+export function ClientHomeIcon({ size = 20, color = '#82776e', style }: Props) {
+  return base(
+    size,
+    style,
+    <path
+      d="M4 11.5 12 5l8 6.5V19a1 1 0 0 1-1 1h-5v-5H10v5H5a1 1 0 0 1-1-1v-7.5Z"
+      stroke={color}
+      strokeWidth={1.5}
+      strokeLinejoin="round"
+    />,
+  );
+}
+
+export function ClientUserIcon({ size = 20, color = '#ed6047', style }: Props) {
+  return base(
+    size,
+    style,
+    <>
+      <circle cx="12" cy="8" r="3.2" stroke={color} strokeWidth={1.5} />
+      <path
+        d="M5.5 18.5c1.5-3 4-4.5 6.5-4.5s5 1.5 6.5 4.5"
+        stroke={color}
+        strokeWidth={1.5}
+        strokeLinecap="round"
+      />
+    </>,
+  );
+}
+
+export function ClientSearchIcon({ size = 20, color = '#29241f', style }: Props) {
+  return base(
+    size,
+    style,
+    <>
+      <circle cx="11" cy="11" r="6" stroke={color} strokeWidth={1.5} />
+      <path d="M16 16.5 20 20.5" stroke={color} strokeWidth={1.5} strokeLinecap="round" />
+    </>,
+  );
+}
+
+export function ClientHeartIcon({ size = 20, color = '#ed6047', style }: Props) {
+  return base(
+    size,
+    style,
+    <path
+      d="M12 19s-7-4.3-7-9.2A3.8 3.8 0 0 1 12 7.2a3.8 3.8 0 0 1 7 2.6C19 14.7 12 19 12 19Z"
+      stroke={color}
+      strokeWidth={1.5}
+      strokeLinejoin="round"
+    />,
+  );
+}
+
+export function ClientLogoutIcon({ size = 20, color = '#ed6047', style }: Props) {
+  return base(
+    size,
+    style,
+    <>
+      <path
+        d="M10 5H6.5A1.5 1.5 0 0 0 5 6.5v11A1.5 1.5 0 0 0 6.5 19H10"
+        stroke={color}
+        strokeWidth={1.5}
+        strokeLinecap="round"
+      />
+      <path
+        d="M13 12h7M17 8.5 20.5 12 17 15.5"
+        stroke={color}
+        strokeWidth={1.5}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </>,
+  );
+}
+
+export function ClientCloseIcon({ size = 20, color = '#29241f', style }: Props) {
+  return base(
+    size,
+    style,
+    <path
+      d="M7 7l10 10M17 7 7 17"
+      stroke={color}
+      strokeWidth={1.6}
+      strokeLinecap="round"
+    />,
+  );
+}
+
+export function ClientEditIcon({ size = 16, color = '#82776e', style }: Props) {
+  return base(
+    size,
+    style,
+    <path
+      d="M14 5.5 18.5 10M4 20l1.2-5.5L15.5 4.2a2 2 0 0 1 2.8 0l1.5 1.5a2 2 0 0 1 0 2.8L9.5 18.8 4 20Z"
+      stroke={color}
+      strokeWidth={1.4}
+      strokeLinejoin="round"
+    />,
+  );
+}

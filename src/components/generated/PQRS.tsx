@@ -1,4 +1,31 @@
 import React from 'react';
+import {
+  ClientBackIcon,
+  ClientUtensilsIcon,
+  ClientPinIcon,
+  ClientClockIcon,
+  ClientLockIcon,
+  ClientStoreIcon,
+  ClientCardIcon,
+  ClientCashIcon,
+  ClientNequiIcon,
+  ClientBrebIcon,
+  ClientHelpIcon,
+  ClientTrashIcon,
+  ClientChevronRightIcon,
+  ClientAlertIcon,
+  ClientCheckIcon,
+  ClientEyeIcon,
+  ClientShieldIcon,
+  ClientHeadsetIcon,
+  ClientHomeIcon,
+  ClientUserIcon,
+  ClientSearchIcon,
+  ClientHeartIcon,
+  ClientLogoutIcon,
+  ClientCloseIcon,
+  ClientEditIcon,
+} from '../ClientUiIcons';
 type LayerValue = string | number;
 const absoluteLayer = (left: LayerValue, top: LayerValue, width: LayerValue, height: LayerValue, style: React.CSSProperties = {}): React.CSSProperties => ({
   position: "absolute",
@@ -961,22 +988,20 @@ export function PQRS() {
               gap: 6
             })}>
               <div data-figma-id="464:2090" style={fixedLayer(17, 12, {
-                overflow: "hidden"
+                overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center"
               })}>
-                <div data-figma-id="464:2091" style={absoluteLayer("5.882%", "8.333%", "94.118%", "83.333%")} />
-              </div>
+                <ClientBackIcon size={17} color="#29241f" />
+          </div>
               <div data-figma-id="464:2092" style={fixedLayer(16, 12, {
-                overflow: "hidden"
+                overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center"
               })}>
-                <div data-figma-id="464:2093" style={absoluteLayer("3.125%", "20.833%", "93.75%", "104.167%")} />
-              </div>
+                <ClientBackIcon size={16} color="#29241f" />
+          </div>
               <div data-figma-id="464:2094" style={fixedLayer(22, 11, {
-                overflow: "hidden"
+                overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center"
               })}>
-                <div data-figma-id="464:2095" style={absoluteLayer("3.409%", "6.818%", "81.818%", "86.364%")} />
-                <div data-figma-id="464:2096" style={absoluteLayer("11.364%", "22.727%", "59.091%", "54.545%")} />
-                <div data-figma-id="464:2097" style={absoluteLayer("93.182%", "36.364%", "0%", "27.273%")} />
-              </div>
+                <svg viewBox="0 0 27 13" width="100%" height="100%" fill="none" aria-hidden><rect x="0.7" y="1.2" width="22.5" height="10.6" rx="2.2" stroke="#29241f" strokeWidth="1.3"/><rect x="2.4" y="2.9" width="17" height="7.2" rx="1.2" fill="#29241f"/><path d="M24.2 4.2h1.6a1.2 1.2 0 0 1 1.2 1.2v2.2a1.2 1.2 0 0 1-1.2 1.2h-1.6" stroke="#29241f" strokeWidth="1.3" strokeLinecap="round"/></svg>
+          </div>
             </div>
           </div>
         </div>

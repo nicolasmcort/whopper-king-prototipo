@@ -1,5 +1,32 @@
 import React from 'react';
 import { ClientCartIcon, ClientCartIconOutline } from '../ClientCartIcon';
+import {
+  ClientBackIcon,
+  ClientUtensilsIcon,
+  ClientPinIcon,
+  ClientClockIcon,
+  ClientLockIcon,
+  ClientStoreIcon,
+  ClientCardIcon,
+  ClientCashIcon,
+  ClientNequiIcon,
+  ClientBrebIcon,
+  ClientHelpIcon,
+  ClientTrashIcon,
+  ClientChevronRightIcon,
+  ClientAlertIcon,
+  ClientCheckIcon,
+  ClientEyeIcon,
+  ClientShieldIcon,
+  ClientHeadsetIcon,
+  ClientHomeIcon,
+  ClientUserIcon,
+  ClientSearchIcon,
+  ClientHeartIcon,
+  ClientLogoutIcon,
+  ClientCloseIcon,
+  ClientEditIcon,
+} from '../ClientUiIcons';
 type LayerValue = string | number;
 const absoluteLayer = (left: LayerValue, top: LayerValue, width: LayerValue, height: LayerValue, style: React.CSSProperties = {}): React.CSSProperties => ({
   position: "absolute",
@@ -208,10 +235,10 @@ export function MisDireccionesWhopperKing() {
                     ...row3
                   })}>
                   <div data-figma-id="342:1467" style={fixedLayer(24, 24, {
-                      overflow: "hidden"
+                      overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center"
                     })}>
-                    <div data-figma-id="342:1468" style={absoluteLayer("9.375%", "11.316%", "81.25%", "76.184%")} />
-                  </div>
+                    <ClientCheckIcon size={20} color="#2d8659" />
+          </div>
                 </div>
               </div>
               <div data-figma-id="342:1469" style={fixedLayer("max-content", 101, col2)}>
@@ -350,10 +377,10 @@ export function MisDireccionesWhopperKing() {
                     ...row3
                   })}>
                   <div data-figma-id="342:1491" style={fixedLayer(24, 24, {
-                      overflow: "hidden"
+                      overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center"
                     })}>
-                    <div data-figma-id="342:1492" style={absoluteLayer("12.5%", "12.5%", "75%", "75%")} />
-                  </div>
+                    <ClientCheckIcon size={20} color="#2d8659" />
+          </div>
                 </div>
               </div>
               <div data-figma-id="342:1493" style={fixedLayer("max-content", 82, col2)}>
@@ -467,10 +494,10 @@ export function MisDireccionesWhopperKing() {
                   alignSelf: "stretch"
                 }}>
                 <div data-figma-id="342:1510" style={fixedLayer(20, 20, {
-                    overflow: "hidden"
+                    overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center"
                   })}>
-                  <div data-figma-id="342:1511" style={absoluteLayer("11.854%", "13.126%", "76.297%", "72.802%")} />
-                </div>
+                  <ClientCheckIcon size={18} color="#ed6047" />
+          </div>
                 <div data-figma-id="342:1512" style={fixedLayer("max-content", 20, col3)}>
                   <span data-figma-id="342:1513" style={{
                       ...font_Inter,
@@ -504,10 +531,10 @@ export function MisDireccionesWhopperKing() {
                     overflow: "hidden"
                   })}>
                   <div data-figma-id="342:1517" style={absoluteLayer(0, 2, 20, 20, {
-                      overflow: "hidden"
+                      overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center"
                     })}>
-                    <div data-figma-id="342:1518" style={absoluteLayer("15.625%", "9.373%", "68.75%", "81.252%")} />
-                  </div>
+                    <ClientBackIcon size={20} color="#29241f" />
+          </div>
                   <div data-figma-id="342:1519" style={absoluteLayer(32, 2, "max-content", 20, col3)}>
                     <span data-figma-id="342:1520" style={{
                         ...font_Inter,
@@ -541,11 +568,10 @@ export function MisDireccionesWhopperKing() {
           }}>
           <div data-figma-id="342:1522" style={fixedLayer("max-content", 22, col1)}>
             <div data-figma-id="342:1523" style={fixedLayer(20, 20, {
-                overflow: "hidden"
+                overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center"
               })}>
-              <div data-figma-id="342:1524" style={absoluteLayer("37.5%", "31.25%", "25%", "25%")} />
-              <div data-figma-id="342:1525" style={absoluteLayer("18.75%", "12.5%", "62.5%", "78.125%")} />
-            </div>
+              <ClientBackIcon size={20} color="#29241f" />
+          </div>
           </div>
           <div data-figma-id="342:1526" style={fixedLayer(274, 59, {
               display: "flex",
@@ -625,8 +651,8 @@ export function MisDireccionesWhopperKing() {
                   flexGrow: 1,
                   flexBasis: 0
                 }}>
-                <div data-figma-id="342:1540" style={absoluteLayer("-2.545%", "10.035%", "105.438%", "82.822%")} />
-              </div>
+                <svg viewBox="0 0 19 12" width="100%" height="100%" fill="none" aria-hidden><rect x="0" y="8" width="3" height="4" rx="0.5" fill="#29241f"/><rect x="5" y="5.5" width="3" height="6.5" rx="0.5" fill="#29241f"/><rect x="10" y="3" width="3" height="9" rx="0.5" fill="#29241f"/><rect x="15" y="0.5" width="3" height="11.5" rx="0.5" fill="#29241f"/></svg>
+                </div>
             </div>
           </div>
           <div data-figma-id="342:1541" style={fixedLayer("max-content", 12, col4)}>

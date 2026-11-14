@@ -1,4 +1,31 @@
 import React from 'react';
+import {
+  ClientBackIcon,
+  ClientUtensilsIcon,
+  ClientPinIcon,
+  ClientClockIcon,
+  ClientLockIcon,
+  ClientStoreIcon,
+  ClientCardIcon,
+  ClientCashIcon,
+  ClientNequiIcon,
+  ClientBrebIcon,
+  ClientHelpIcon,
+  ClientTrashIcon,
+  ClientChevronRightIcon,
+  ClientAlertIcon,
+  ClientCheckIcon,
+  ClientEyeIcon,
+  ClientShieldIcon,
+  ClientHeadsetIcon,
+  ClientHomeIcon,
+  ClientUserIcon,
+  ClientSearchIcon,
+  ClientHeartIcon,
+  ClientLogoutIcon,
+  ClientCloseIcon,
+  ClientEditIcon,
+} from '../ClientUiIcons';
 type LayerValue = string | number;
 const absoluteLayer = (left: LayerValue, top: LayerValue, width: LayerValue, height: LayerValue, style: React.CSSProperties = {}): React.CSSProperties => ({
   position: "absolute",
@@ -101,9 +128,9 @@ export function EliminaciNDeCuenta() {
       }}>
         <div data-figma-id="342:1636" style={fixedLayer(44, 44, row2)}>
           <div data-figma-id="342:1637" style={fixedLayer(22, 22, {
-            overflow: "hidden"
+            overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center"
           })}>
-            <div data-figma-id="342:1638" style={absoluteLayer("20.833%", "20.833%", "58.333%", "58.333%")} />
+            <ClientBackIcon size={20} color="#29241f" />
           </div>
         </div>
         <div data-figma-id="342:1639" style={fixedLayer("max-content", 30, col1)}>
@@ -163,10 +190,10 @@ export function EliminaciNDeCuenta() {
               alignItems: "center"
             })}>
               <div data-figma-id="342:1645" style={fixedLayer(22, 22, {
-                overflow: "hidden"
+                overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center"
               })}>
-                <div data-figma-id="342:1646" style={absoluteLayer("16.667%", "8.333%", "66.667%", "83.333%")} />
-              </div>
+                <ClientBackIcon size={20} color="#29241f" />
+          </div>
             </div>
           </div>
           <div data-figma-id="342:1647" style={fixedLayer("max-content", 78, {
@@ -513,12 +540,10 @@ export function EliminaciNDeCuenta() {
             alignSelf: "stretch"
           }}>
             <div data-figma-id="342:1677" style={fixedLayer(16, 16, {
-              overflow: "hidden"
+              overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center"
             })}>
-              <div data-figma-id="342:1678" style={absoluteLayer("8.333%", "8.333%", "83.333%", "83.333%")} />
-              <div data-figma-id="342:1679" style={absoluteLayer("50%", "33.333%", "0%", "16.667%")} />
-              <div data-figma-id="342:1680" style={absoluteLayer("50%", "66.667%", "0.042%", "0%")} />
-            </div>
+              <ClientClockIcon size={16} color="#2d8659" />
+          </div>
             <div data-figma-id="342:1681" style={fixedLayer("max-content", 18, col1)}>
               <span data-figma-id="342:1682" style={{
                 ...font_Manrope,
@@ -597,13 +622,10 @@ export function EliminaciNDeCuenta() {
                 alignSelf: "stretch"
               }}>
                 <div data-figma-id="342:1688" style={fixedLayer(18, 18, {
-                  overflow: "hidden"
+                  overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center"
                 })}>
-                  <div data-figma-id="342:1689" style={absoluteLayer("12.5%", "25%", "75%", "0%")} />
-                  <div data-figma-id="342:1690" style={absoluteLayer("20.833%", "8.333%", "58.333%", "83.333%")} />
-                  <div data-figma-id="342:1691" style={absoluteLayer("41.667%", "45.833%", "0%", "25%")} />
-                  <div data-figma-id="342:1692" style={absoluteLayer("58.333%", "45.833%", "0%", "25%")} />
-                </div>
+                  <ClientStoreIcon size={18} color="#29241f" />
+          </div>
                 <div data-figma-id="342:1693" style={fixedLayer("max-content", 19, {
                   ...col1,
                   alignItems: "center"
@@ -709,21 +731,19 @@ export function EliminaciNDeCuenta() {
           gap: 6
         })}>
           <div data-figma-id="342:1703" style={fixedLayer(17, 12, {
-            overflow: "hidden"
+            overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center"
           })}>
-            <div data-figma-id="342:1704" style={absoluteLayer("5.882%", "8.333%", "94.118%", "83.333%")} />
+            <ClientBackIcon size={17} color="#29241f" />
           </div>
           <div data-figma-id="342:1705" style={fixedLayer(16, 12, {
-            overflow: "hidden"
+            overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center"
           })}>
-            <div data-figma-id="342:1706" style={absoluteLayer("3.125%", "20.833%", "93.75%", "104.167%")} />
+            <ClientBackIcon size={16} color="#29241f" />
           </div>
           <div data-figma-id="342:1707" style={fixedLayer(22, 11, {
-            overflow: "hidden"
+            overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center"
           })}>
-            <div data-figma-id="342:1708" style={absoluteLayer("3.409%", "6.818%", "81.818%", "86.364%")} />
-            <div data-figma-id="342:1709" style={absoluteLayer("11.364%", "22.727%", "59.091%", "54.545%")} />
-            <div data-figma-id="342:1710" style={absoluteLayer("93.182%", "36.364%", "0%", "27.273%")} />
+            <svg viewBox="0 0 27 13" width="100%" height="100%" fill="none" aria-hidden><rect x="0.7" y="1.2" width="22.5" height="10.6" rx="2.2" stroke="#29241f" strokeWidth="1.3"/><rect x="2.4" y="2.9" width="17" height="7.2" rx="1.2" fill="#29241f"/><path d="M24.2 4.2h1.6a1.2 1.2 0 0 1 1.2 1.2v2.2a1.2 1.2 0 0 1-1.2 1.2h-1.6" stroke="#29241f" strokeWidth="1.3" strokeLinecap="round"/></svg>
           </div>
         </div>
       </div>
@@ -784,13 +804,10 @@ export function EliminaciNDeCuenta() {
               ...row4
             })}>
               <div data-figma-id="342:1718" style={fixedLayer(28, 28, {
-                overflow: "hidden"
+                overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center"
               })}>
-                <div data-figma-id="342:1719" style={absoluteLayer("12.5%", "25%", "75%", "0%")} />
-                <div data-figma-id="342:1720" style={absoluteLayer("20.833%", "8.333%", "58.333%", "83.333%")} />
-                <div data-figma-id="342:1721" style={absoluteLayer("41.667%", "45.833%", "0%", "25%")} />
-                <div data-figma-id="342:1722" style={absoluteLayer("58.333%", "45.833%", "0%", "25%")} />
-              </div>
+                <ClientTrashIcon size={24} color="#ed6047" />
+          </div>
             </div>
           </div>
           <div data-figma-id="342:1723" style={fixedLayer(305.03, 35.5)}>

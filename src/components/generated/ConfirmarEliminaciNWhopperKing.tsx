@@ -1,4 +1,31 @@
 import React from 'react';
+import {
+  ClientBackIcon,
+  ClientUtensilsIcon,
+  ClientPinIcon,
+  ClientClockIcon,
+  ClientLockIcon,
+  ClientStoreIcon,
+  ClientCardIcon,
+  ClientCashIcon,
+  ClientNequiIcon,
+  ClientBrebIcon,
+  ClientHelpIcon,
+  ClientTrashIcon,
+  ClientChevronRightIcon,
+  ClientAlertIcon,
+  ClientCheckIcon,
+  ClientEyeIcon,
+  ClientShieldIcon,
+  ClientHeadsetIcon,
+  ClientHomeIcon,
+  ClientUserIcon,
+  ClientSearchIcon,
+  ClientHeartIcon,
+  ClientLogoutIcon,
+  ClientCloseIcon,
+  ClientEditIcon,
+} from '../ClientUiIcons';
 type LayerValue = string | number;
 const absoluteLayer = (left: LayerValue, top: LayerValue, width: LayerValue, height: LayerValue, style: React.CSSProperties = {}): React.CSSProperties => ({
   position: "absolute",
@@ -136,7 +163,7 @@ export function ConfirmarEliminaciNWhopperKing() {
             <div data-figma-id="342:1384" style={fixedLayer(16, 16, {
               overflow: "hidden"
             })}>
-              <div data-figma-id="342:1385" style={absoluteLayer("12.5%", "8.333%", "75%", "79.594%")} />
+              <ClientTrashIcon size={24} color="#ed6047" />
             </div>
             <div data-figma-id="342:1386" style={fixedLayer(24, 16, col2)}>
               <div data-figma-id="342:1387" style={fixedLayer(16, 16, {
@@ -154,7 +181,7 @@ export function ConfirmarEliminaciNWhopperKing() {
                   flexGrow: 1,
                   flexBasis: 0
                 }}>
-                  <div data-figma-id="342:1389" style={absoluteLayer("0%", "16.667%", "100%", "70.833%")} />
+                  <svg viewBox="0 0 19 12" width="100%" height="100%" fill="none" aria-hidden><rect x="0" y="8" width="3" height="4" rx="0.5" fill="#29241f"/><rect x="5" y="5.5" width="3" height="6.5" rx="0.5" fill="#29241f"/><rect x="10" y="3" width="3" height="9" rx="0.5" fill="#29241f"/><rect x="15" y="0.5" width="3" height="11.5" rx="0.5" fill="#29241f"/></svg>
                 </div>
               </div>
             </div>
@@ -203,10 +230,10 @@ export function ConfirmarEliminaciNWhopperKing() {
               ...row2
             })}>
               <div data-figma-id="342:1396" style={fixedLayer(20, 20, {
-                overflow: "hidden"
+                overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center"
               })}>
-                <div data-figma-id="342:1397" style={absoluteLayer("33.333%", "20.833%", "29.167%", "58.333%")} />
-              </div>
+                <ClientBackIcon size={20} color="#29241f" />
+          </div>
             </div>
           </div>
           <div data-figma-id="342:1398" style={fixedLayer("max-content", 28, col1)}>
@@ -254,10 +281,10 @@ export function ConfirmarEliminaciNWhopperKing() {
                 ...row2
               })}>
                 <div data-figma-id="342:1404" style={fixedLayer(20, 20, {
-                  overflow: "hidden"
+                  overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center"
                 })}>
-                  <div data-figma-id="342:1405" style={absoluteLayer("12.5%", "8.708%", "75%", "78.792%")} />
-                </div>
+                  <ClientBackIcon size={20} color="#29241f" />
+          </div>
               </div>
               <div data-figma-id="342:1406" style={fixedLayer("max-content", 53, col3)}>
                 <div data-figma-id="342:1407" style={fixedLayer("max-content", 53, col1)}>
@@ -345,10 +372,10 @@ export function ConfirmarEliminaciNWhopperKing() {
                 ...row2
               })}>
                 <div data-figma-id="342:1417" style={fixedLayer(20, 20, {
-                  overflow: "hidden"
+                  overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center"
                 })}>
-                  <div data-figma-id="342:1418" style={absoluteLayer("8.333%", "8.333%", "83.333%", "79.167%")} />
-                </div>
+                  <ClientBackIcon size={20} color="#29241f" />
+          </div>
               </div>
               <div data-figma-id="342:1419" style={fixedLayer("max-content", 53, col3)}>
                 <div data-figma-id="342:1420" style={fixedLayer("max-content", 53, col1)}>
@@ -483,13 +510,10 @@ export function ConfirmarEliminaciNWhopperKing() {
               ...row2
             })}>
               <div data-figma-id="342:1434" style={fixedLayer(28, 28, {
-                overflow: "hidden"
+                overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center"
               })}>
-                <div data-figma-id="342:1435" style={absoluteLayer("12.5%", "25%", "75%", "0%")} />
-                <div data-figma-id="342:1436" style={absoluteLayer("20.833%", "8.333%", "58.333%", "83.333%")} />
-                <div data-figma-id="342:1437" style={absoluteLayer("41.667%", "45.833%", "0%", "25%")} />
-                <div data-figma-id="342:1438" style={absoluteLayer("58.333%", "45.833%", "0%", "25%")} />
-              </div>
+                <ClientAlertIcon size={28} color="#ed6047" />
+          </div>
             </div>
           </div>
           <div data-figma-id="342:1439" style={fixedLayer(305.03, 35.5)}>

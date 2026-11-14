@@ -1,4 +1,5 @@
 import React from 'react';
+import { ClientHeadsetIcon, ClientBackIcon } from '../ClientUiIcons';
 type LayerValue = string | number;
 const absoluteLayer = (left: LayerValue, top: LayerValue, width: LayerValue, height: LayerValue, style: React.CSSProperties = {}): React.CSSProperties => ({
   position: "absolute",
@@ -360,10 +361,9 @@ export function Contactos() {
                 })}>
                 <div data-figma-id="342:2045" style={fixedLayer("max-content", 20, col1)}>
                   <div data-figma-id="802:4016" style={fixedLayer(20, 20, {
-                      overflow: "hidden"
+                      overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center"
                     })}>
-                    <div data-figma-id="802:4017" style={absoluteLayer("20.833%", "8.333%", "58.333%", "83.333%")} />
-                    <div data-figma-id="802:4018" style={absoluteLayer("50%", "75%", "0.042%", "0%")} />
+                    <ClientHeadsetIcon size={20} color="#ed6047" />
                   </div>
                 </div>
               </div>

@@ -11,6 +11,20 @@ import {
   ClientNequiIcon,
   ClientBrebIcon,
   ClientHelpIcon,
+  ClientTrashIcon,
+  ClientChevronRightIcon,
+  ClientAlertIcon,
+  ClientCheckIcon,
+  ClientEyeIcon,
+  ClientShieldIcon,
+  ClientHeadsetIcon,
+  ClientHomeIcon,
+  ClientUserIcon,
+  ClientSearchIcon,
+  ClientHeartIcon,
+  ClientLogoutIcon,
+  ClientCloseIcon,
+  ClientEditIcon,
 } from '../ClientUiIcons';
 type LayerValue = string | number;
 const absoluteLayer = (left: LayerValue, top: LayerValue, width: LayerValue, height: LayerValue, style: React.CSSProperties = {}): React.CSSProperties => ({
@@ -223,10 +237,10 @@ export function PedidoEnviadoLocal() {
               justifyContent: "center"
             })}>
             <div data-figma-id="369:1723" style={fixedLayer(32, 32, {
-                overflow: "hidden"
+                overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center"
               })}>
-              <div data-figma-id="369:1724" style={absoluteLayer("20.833%", "29.167%", "58.333%", "41.667%")} />
-            </div>
+              <ClientAlertIcon size={28} color="#ed6047" />
+          </div>
           </div>
           <div data-figma-id="369:1725" style={{
               ...row1,
@@ -368,11 +382,10 @@ export function PedidoEnviadoLocal() {
               }}>
               <div data-figma-id="369:1745" style={fixedLayer(24, 24, row2)}>
                 <div data-figma-id="369:1746" style={fixedLayer(20, 20, {
-                    overflow: "hidden"
+                    overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center"
                   })}>
-                  <div data-figma-id="369:1747" style={absoluteLayer("12.5%", "12.5%", "75%", "75%")} />
-                  <div data-figma-id="369:1748" style={absoluteLayer("50%", "29.167%", "12.5%", "29.167%")} />
-                </div>
+                  <ClientBackIcon size={20} color="#29241f" />
+          </div>
               </div>
               <div data-figma-id="369:1749" style={fixedLayer("max-content", 20, col1)}>
                 <span data-figma-id="369:1750" style={{

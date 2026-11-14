@@ -1,4 +1,31 @@
 import React from 'react';
+import {
+  ClientBackIcon,
+  ClientUtensilsIcon,
+  ClientPinIcon,
+  ClientClockIcon,
+  ClientLockIcon,
+  ClientStoreIcon,
+  ClientCardIcon,
+  ClientCashIcon,
+  ClientNequiIcon,
+  ClientBrebIcon,
+  ClientHelpIcon,
+  ClientTrashIcon,
+  ClientChevronRightIcon,
+  ClientAlertIcon,
+  ClientCheckIcon,
+  ClientEyeIcon,
+  ClientShieldIcon,
+  ClientHeadsetIcon,
+  ClientHomeIcon,
+  ClientUserIcon,
+  ClientSearchIcon,
+  ClientHeartIcon,
+  ClientLogoutIcon,
+  ClientCloseIcon,
+  ClientEditIcon,
+} from '../ClientUiIcons';
 type LayerValue = string | number;
 const absoluteLayer = (left: LayerValue, top: LayerValue, width: LayerValue, height: LayerValue, style: React.CSSProperties = {}): React.CSSProperties => ({
   position: "absolute",
@@ -190,11 +217,10 @@ export function WhopperMaxiComboPersonalizaTuPedido() {
             justifyContent: "center"
           })}>
             <div data-figma-id="552:3858" style={fixedLayer(20, 20, {
-              overflow: "hidden"
+              overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center"
             })}>
-              <div data-figma-id="552:3859" style={absoluteLayer("20.833%", "50%", "58.333%", "0%")} />
-              <div data-figma-id="552:3860" style={absoluteLayer("20.833%", "20.833%", "29.167%", "58.333%")} />
-            </div>
+              <ClientBackIcon size={20} color="#29241f" />
+          </div>
           </div>
           <div data-figma-id="552:3861" style={fixedLayer("max-content", 41, col1)}>
             <div data-figma-id="552:3862" style={{
@@ -956,12 +982,9 @@ export function WhopperMaxiComboPersonalizaTuPedido() {
           gap: 6
         })}>
           <div data-figma-id="552:3946" style={fixedLayer(16, 14, {
-            overflow: "hidden"
+            overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center"
           })}>
-            <div data-figma-id="552:3947" style={absoluteLayer("0%", "70.168%", "16.471%", "20.168%")} />
-            <div data-figma-id="552:3948" style={absoluteLayer("26.471%", "50%", "16.471%", "40.336%")} />
-            <div data-figma-id="552:3949" style={absoluteLayer("52.941%", "29.832%", "16.471%", "60.504%")} />
-            <div data-figma-id="552:3950" style={absoluteLayer("79.412%", "9.664%", "16.471%", "80.672%")} />
+            <ClientBackIcon size={16} color="#29241f" />
           </div>
           <div data-figma-id="552:3951" style={fixedLayer(18, 14, {
             ...col1,
@@ -982,8 +1005,8 @@ export function WhopperMaxiComboPersonalizaTuPedido() {
                 flexGrow: 1,
                 flexBasis: 0
               }}>
-                <div data-figma-id="552:3954" style={absoluteLayer("4.219%", "27.143%", "91.562%", "75.714%")} />
-              </div>
+                <svg viewBox="0 0 19 12" width="100%" height="100%" fill="none" aria-hidden><rect x="0" y="8" width="3" height="4" rx="0.5" fill="#29241f"/><rect x="5" y="5.5" width="3" height="6.5" rx="0.5" fill="#29241f"/><rect x="10" y="3" width="3" height="9" rx="0.5" fill="#29241f"/><rect x="15" y="0.5" width="3" height="11.5" rx="0.5" fill="#29241f"/></svg>
+                </div>
             </div>
           </div>
           <div data-figma-id="552:3955" style={fixedLayer(26, 14, {
@@ -1005,10 +1028,8 @@ export function WhopperMaxiComboPersonalizaTuPedido() {
                 flexGrow: 1,
                 flexBasis: 0
               }}>
-                <div data-figma-id="552:3958" style={absoluteLayer("2%", "12.286%", "84%", "75.429%")} />
-                <div data-figma-id="552:3959" style={absoluteLayer("8%", "22.571%", "72%", "54.857%")} />
-                <div data-figma-id="552:3960" style={absoluteLayer("92%", "37.657%", "4.8%", "24.686%")} />
-              </div>
+                <svg viewBox="0 0 27 13" width="100%" height="100%" fill="none" aria-hidden><rect x="0.7" y="1.2" width="22.5" height="10.6" rx="2.2" stroke="#29241f" strokeWidth="1.3"/><rect x="2.4" y="2.9" width="17" height="7.2" rx="1.2" fill="#29241f"/><path d="M24.2 4.2h1.6a1.2 1.2 0 0 1 1.2 1.2v2.2a1.2 1.2 0 0 1-1.2 1.2h-1.6" stroke="#29241f" strokeWidth="1.3" strokeLinecap="round"/></svg>
+                </div>
             </div>
           </div>
         </div>

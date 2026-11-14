@@ -322,21 +322,19 @@ export function SobreNosotros() {
           </div>
           <div data-figma-id="464:1983" style={fixedLayer(67, "max-content", row3)}>
             <div data-figma-id="464:1984" style={fixedLayer(17, 12, {
-                overflow: "hidden"
+                overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center"
               })}>
-              <div data-figma-id="464:1985" style={absoluteLayer("5.882%", "8.333%", "94.118%", "83.333%")} />
+              <svg viewBox="0 0 19 12" width="100%" height="100%" fill="none" aria-hidden><rect x="0" y="8" width="3" height="4" rx="0.5" fill="#29241f"/><rect x="5" y="5.5" width="3" height="6.5" rx="0.5" fill="#29241f"/><rect x="10" y="3" width="3" height="9" rx="0.5" fill="#29241f"/><rect x="15" y="0.5" width="3" height="11.5" rx="0.5" fill="#29241f"/></svg>
             </div>
             <div data-figma-id="464:1986" style={fixedLayer(16, 12, {
-                overflow: "hidden"
+                overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center"
               })}>
-              <div data-figma-id="464:1987" style={absoluteLayer("3.125%", "20.833%", "93.75%", "104.167%")} />
+              <svg viewBox="0 0 17 13" width="100%" height="100%" fill="none" aria-hidden><path d="M8.5 11.5a1.2 1.2 0 1 0 0-2.4 1.2 1.2 0 0 0 0 2.4Z" fill="#29241f"/><path d="M3.2 7.2a7.5 7.5 0 0 1 10.6 0" stroke="#29241f" strokeWidth="1.4" strokeLinecap="round"/><path d="M1 4.2a10.5 10.5 0 0 1 15 0" stroke="#29241f" strokeWidth="1.4" strokeLinecap="round"/></svg>
             </div>
             <div data-figma-id="464:1988" style={fixedLayer(22, 11, {
-                overflow: "hidden"
+                overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center"
               })}>
-              <div data-figma-id="464:1989" style={absoluteLayer("3.409%", "6.818%", "81.818%", "86.364%")} />
-              <div data-figma-id="464:1990" style={absoluteLayer("11.364%", "22.727%", "59.091%", "54.545%")} />
-              <div data-figma-id="464:1991" style={absoluteLayer("93.182%", "36.364%", "0%", "27.273%")} />
+              <svg viewBox="0 0 27 13" width="100%" height="100%" fill="none" aria-hidden><rect x="0.7" y="1.2" width="22.5" height="10.6" rx="2.2" stroke="#29241f" strokeWidth="1.3"/><rect x="2.4" y="2.9" width="17" height="7.2" rx="1.2" fill="#29241f"/><path d="M24.2 4.2h1.6a1.2 1.2 0 0 1 1.2 1.2v2.2a1.2 1.2 0 0 1-1.2 1.2h-1.6" stroke="#29241f" strokeWidth="1.3" strokeLinecap="round"/></svg>
             </div>
           </div>
         </div>
@@ -1645,21 +1643,19 @@ export function SobreNosotros() {
               </div>
               <div data-figma-id="864:2957" style={fixedLayer(67, "max-content", row3)}>
                 <div data-figma-id="864:2958" style={fixedLayer(17, 12, {
-                    overflow: "hidden"
+                    overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center"
                   })}>
-                  <div data-figma-id="864:2959" style={absoluteLayer("5.882%", "8.333%", "94.118%", "83.333%")} />
+                  <svg viewBox="0 0 19 12" width="100%" height="100%" fill="none" aria-hidden><rect x="0" y="8" width="3" height="4" rx="0.5" fill="#29241f"/><rect x="5" y="5.5" width="3" height="6.5" rx="0.5" fill="#29241f"/><rect x="10" y="3" width="3" height="9" rx="0.5" fill="#29241f"/><rect x="15" y="0.5" width="3" height="11.5" rx="0.5" fill="#29241f"/></svg>
                 </div>
                 <div data-figma-id="864:2960" style={fixedLayer(16, 12, {
-                    overflow: "hidden"
+                    overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center"
                   })}>
-                  <div data-figma-id="864:2961" style={absoluteLayer("3.125%", "20.833%", "93.75%", "104.167%")} />
+                  <svg viewBox="0 0 17 13" width="100%" height="100%" fill="none" aria-hidden><path d="M8.5 11.5a1.2 1.2 0 1 0 0-2.4 1.2 1.2 0 0 0 0 2.4Z" fill="#29241f"/><path d="M3.2 7.2a7.5 7.5 0 0 1 10.6 0" stroke="#29241f" strokeWidth="1.4" strokeLinecap="round"/><path d="M1 4.2a10.5 10.5 0 0 1 15 0" stroke="#29241f" strokeWidth="1.4" strokeLinecap="round"/></svg>
                 </div>
                 <div data-figma-id="864:2962" style={fixedLayer(22, 11, {
-                    overflow: "hidden"
+                    overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center"
                   })}>
-                  <div data-figma-id="864:2963" style={absoluteLayer("3.409%", "6.818%", "81.818%", "86.364%")} />
-                  <div data-figma-id="864:2964" style={absoluteLayer("11.364%", "22.727%", "59.091%", "54.545%")} />
-                  <div data-figma-id="864:2965" style={absoluteLayer("93.182%", "36.364%", "0%", "27.273%")} />
+                  <svg viewBox="0 0 27 13" width="100%" height="100%" fill="none" aria-hidden><rect x="0.7" y="1.2" width="22.5" height="10.6" rx="2.2" stroke="#29241f" strokeWidth="1.3"/><rect x="2.4" y="2.9" width="17" height="7.2" rx="1.2" fill="#29241f"/><path d="M24.2 4.2h1.6a1.2 1.2 0 0 1 1.2 1.2v2.2a1.2 1.2 0 0 1-1.2 1.2h-1.6" stroke="#29241f" strokeWidth="1.3" strokeLinecap="round"/></svg>
                 </div>
               </div>
             </div>

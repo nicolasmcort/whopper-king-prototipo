@@ -1,4 +1,31 @@
 import React from 'react';
+import {
+  ClientBackIcon,
+  ClientUtensilsIcon,
+  ClientPinIcon,
+  ClientClockIcon,
+  ClientLockIcon,
+  ClientStoreIcon,
+  ClientCardIcon,
+  ClientCashIcon,
+  ClientNequiIcon,
+  ClientBrebIcon,
+  ClientHelpIcon,
+  ClientTrashIcon,
+  ClientChevronRightIcon,
+  ClientAlertIcon,
+  ClientCheckIcon,
+  ClientEyeIcon,
+  ClientShieldIcon,
+  ClientHeadsetIcon,
+  ClientHomeIcon,
+  ClientUserIcon,
+  ClientSearchIcon,
+  ClientHeartIcon,
+  ClientLogoutIcon,
+  ClientCloseIcon,
+  ClientEditIcon,
+} from '../ClientUiIcons';
 type LayerValue = string | number;
 const absoluteLayer = (left: LayerValue, top: LayerValue, width: LayerValue, height: LayerValue, style: React.CSSProperties = {}): React.CSSProperties => ({
   position: "absolute",
@@ -155,16 +182,14 @@ export function RegistroDeCuenta() {
             </svg>
           </div>
           <div data-figma-id="342:1816" style={fixedLayer(15, 11, {
-              overflow: "hidden"
+              overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center"
             })}>
-            <div data-figma-id="342:1817" style={absoluteLayer("3.556%", "6.667%", "92.889%", "83.333%")} />
+            <svg viewBox="0 0 19 12" width="100%" height="100%" fill="none" aria-hidden><rect x="0" y="8" width="3" height="4" rx="0.5" fill="#29241f"/><rect x="5" y="5.5" width="3" height="6.5" rx="0.5" fill="#29241f"/><rect x="10" y="3" width="3" height="9" rx="0.5" fill="#29241f"/><rect x="15" y="0.5" width="3" height="11.5" rx="0.5" fill="#29241f"/></svg>
           </div>
           <div data-figma-id="342:1818" style={fixedLayer(24, 11, {
-              overflow: "hidden"
+              overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center"
             })}>
-            <div data-figma-id="342:1819" style={absoluteLayer("2.083%", "4.545%", "83.333%", "90.909%")} />
-            <div data-figma-id="342:1820" style={absoluteLayer("8.333%", "18.182%", "62.5%", "63.636%")} />
-            <div data-figma-id="342:1821" style={absoluteLayer("91.667%", "31.818%", "4.167%", "36.364%")} />
+            <svg viewBox="0 0 27 13" width="100%" height="100%" fill="none" aria-hidden><rect x="0.7" y="1.2" width="22.5" height="10.6" rx="2.2" stroke="#29241f" strokeWidth="1.3"/><rect x="2.4" y="2.9" width="17" height="7.2" rx="1.2" fill="#29241f"/><path d="M24.2 4.2h1.6a1.2 1.2 0 0 1 1.2 1.2v2.2a1.2 1.2 0 0 1-1.2 1.2h-1.6" stroke="#29241f" strokeWidth="1.3" strokeLinecap="round"/></svg>
           </div>
         </div>
       </div>
@@ -261,16 +286,14 @@ export function RegistroDeCuenta() {
             </svg>
           </div>
           <div data-figma-id="342:1835" style={fixedLayer(15, 11, {
-              overflow: "hidden"
+              overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center"
             })}>
-            <div data-figma-id="342:1836" style={absoluteLayer("3.556%", "6.667%", "92.889%", "83.333%")} />
+            <svg viewBox="0 0 19 12" width="100%" height="100%" fill="none" aria-hidden><rect x="0" y="8" width="3" height="4" rx="0.5" fill="#29241f"/><rect x="5" y="5.5" width="3" height="6.5" rx="0.5" fill="#29241f"/><rect x="10" y="3" width="3" height="9" rx="0.5" fill="#29241f"/><rect x="15" y="0.5" width="3" height="11.5" rx="0.5" fill="#29241f"/></svg>
           </div>
           <div data-figma-id="342:1837" style={fixedLayer(24, 11, {
-              overflow: "hidden"
+              overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center"
             })}>
-            <div data-figma-id="342:1838" style={absoluteLayer("2.083%", "4.545%", "83.333%", "90.909%")} />
-            <div data-figma-id="342:1839" style={absoluteLayer("8.333%", "18.182%", "62.5%", "63.636%")} />
-            <div data-figma-id="342:1840" style={absoluteLayer("91.667%", "31.818%", "4.167%", "36.364%")} />
+            <svg viewBox="0 0 27 13" width="100%" height="100%" fill="none" aria-hidden><rect x="0.7" y="1.2" width="22.5" height="10.6" rx="2.2" stroke="#29241f" strokeWidth="1.3"/><rect x="2.4" y="2.9" width="17" height="7.2" rx="1.2" fill="#29241f"/><path d="M24.2 4.2h1.6a1.2 1.2 0 0 1 1.2 1.2v2.2a1.2 1.2 0 0 1-1.2 1.2h-1.6" stroke="#29241f" strokeWidth="1.3" strokeLinecap="round"/></svg>
           </div>
         </div>
       </div>
@@ -589,7 +612,7 @@ export function RegistroDeCuenta() {
               <div data-figma-id="342:1890" style={absoluteLayer(298, 0, 44, 44, {
                   overflow: "hidden"
                 })}>
-                <div data-figma-id="342:1891" style={absoluteLayer("44.003%", "44.697%", "9.091%", "9.091%")} />
+                <ClientEyeIcon size={16} color="#82776e" />
                 <svg data-figma-id="342:1892" viewBox="-0.6 -0.6 13.923 10.533" preserveAspectRatio="none" style={absoluteLayer("calc(34.091% - 0.6px)", "calc(38.636% - 0.6px)", "calc(28.915% + 1.2px)", "calc(21.212% + 1.2px)")}>
                   <use href="#figma-vector-452" fill="transparent" stroke="#4a4545" strokeWidth={1.2} vectorEffect="non-scaling-stroke" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
