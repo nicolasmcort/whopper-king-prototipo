@@ -12,6 +12,7 @@ const base = (
   style: CSSProperties | undefined,
   children: ReactNode,
   viewBox = '0 0 24 24',
+  attrs: Record<string, string> = {},
 ) => (
   <svg
     width={size}
@@ -20,6 +21,7 @@ const base = (
     fill="none"
     aria-hidden
     style={{ display: 'block', flexShrink: 0, ...style }}
+    {...attrs}
   >
     {children}
   </svg>
@@ -37,6 +39,8 @@ export function ClientBackIcon({ size = 20, color = '#29241f', style }: Props) {
       strokeLinecap="round"
       strokeLinejoin="round"
     />,
+    '0 0 24 24',
+    { 'data-proto-action': 'volver' },
   );
 }
 

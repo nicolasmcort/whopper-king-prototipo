@@ -26,7 +26,7 @@ function nearestLabel(start: Element, root: Element): string {
   return leafText(start);
 }
 
-/** Botones solo-ícono (sin texto): resuelve por data-figma-id antes que por label. */
+/** Botones solo-ícono (sin texto): data-proto-action / data-figma-id antes que label. */
 function resolveFromClick(
   target: HTMLElement,
   root: HTMLElement,
@@ -34,6 +34,12 @@ function resolveFromClick(
 ): NavTarget | null {
   let el: Element | null = target;
   while (el && el !== root) {
+    const action = el.getAttribute('data-proto-action');
+    if (action) {
+      const byAction = resolveNav(screenId, action);
+      if (byAction) return byAction;
+      if (action === 'volver') return '__back__';
+    }
     const figmaId = el.getAttribute('data-figma-id');
     if (figmaId) {
       const byId = resolveFigmaNav(screenId, figmaId);
@@ -106,6 +112,12 @@ export function enhanceFrame(
   navigate: (target: NavTarget) => void,
 ): () => void {
   const candidates = root.querySelectorAll<HTMLElement>('div, span, p, button, a, label');
+
+  // Flechas atrás (SVG con data-proto-action): marcar el contenedor clickeable
+  root.querySelectorAll<HTMLElement>('[data-proto-action="volver"]').forEach((svg) => {
+    const hit = (svg.closest('[data-figma-id]') as HTMLElement | null) || (svg.parentElement as HTMLElement | null);
+    if (hit) markPressable(hit);
+  });
 
   candidates.forEach((el) => {
     const figmaId = el.getAttribute('data-figma-id');

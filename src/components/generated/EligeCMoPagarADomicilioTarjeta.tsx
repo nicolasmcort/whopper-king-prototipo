@@ -945,7 +945,7 @@ export function EligeCMoPagarADomicilioTarjeta() {
         <div data-figma-id="653:4078" style={fixedLayer(20, 20, {
             overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center"
           })}>
-          ClientCardIcon
+          <ClientBackIcon size={20} color="#29241f" />
           </div>
       </div>
     </div>
