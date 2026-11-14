@@ -693,7 +693,7 @@ const ADMIN_SCREENS = new Set([
 /** Pantallas de formulario de recepción: valores de campos editables. */
 const FORM_SCREENS = new Set(['agregar-existente', 'agregar-nuevo', 'editar-movimiento', 'editar-pedido']);
 
-/** Textos editables globales (placeholders / valores de form). Nunca nombres de filas de inventario. */
+/** Textos editables globales (placeholders / buscadores). */
 const EDITABLE = new Set(
   [
     'buscar producto o código',
@@ -701,23 +701,12 @@ const EDITABLE = new Set(
     'buscar producto',
     'porque sí.',
     'porque si.',
-    'aceite de girasol',
-    'seleccionar proveedor',
-    'ana torres',
-    'aaaaaaaa-aaaaaaa-000000',
-    'kilogramos (kg)',
-    '06/05/2027',
-    '3 kg',
-    '5 kg',
-    '2,4',
-    '2,4 kg',
     'nuevo valor (kg) *',
-    '5',
   ].map(n),
 );
 
-/** Solo en formularios de recepción: nombres de producto del desplegable. */
-const FORM_PRODUCT_VALUES = new Set(
+/** Solo en formularios de recepción: valores de campos que sí se editan. */
+const FORM_FIELD_VALUES = new Set(
   [
     'carne de res',
     'pan brioche',
@@ -726,6 +715,25 @@ const FORM_PRODUCT_VALUES = new Set(
     'tocineta',
     'queso chedar',
     'aceite de girasol',
+    'seleccionar proveedor',
+    'aaaaaaaa-aaaaaaa-000000',
+    'kilogramos (kg)',
+    '06/05/2027',
+    '3 kg',
+    '5 kg',
+    '2,4',
+    '2,4 kg',
+    '5',
+  ].map(n),
+);
+
+/** Resumen de auditoría (Registra / Fecha y hora): NUNCA inputs. */
+const READONLY_FORM_VALUES = new Set(
+  [
+    'ana torres',
+    '06 nov 2026 - 09:41',
+    'registra',
+    'fecha y hora',
   ].map(n),
 );
 
@@ -833,14 +841,19 @@ export function resolveNav(screenId: string, rawLabel: string): NavTarget | null
 export function isButtonish(rawLabel: string) {
   const key = n(rawLabel);
   if (BUTTONISH.has(key)) return true;
-  // short UI labels often buttons
-  return /^(modificar|eliminar|guardar|cancelar|cerrar|agregar|añadir|quitar|revisar|confirmar|volver|iniciar|acceder|continuar|registra|olvidaste|ver todos|buscar)/i.test(
+  // short UI labels often buttons (no “Registra” del resumen de auditoría)
+  return /^(modificar|eliminar|guardar|cancelar|cerrar|agregar|añadir|quitar|revisar|confirmar|volver|iniciar|acceder|continuar|registrarse|registrar cuenta|registra tu|olvidaste|ver todos|buscar)/i.test(
     rawLabel.trim(),
   );
 }
 
 export function isEditableLabel(rawLabel: string, screenId?: string) {
   const key = n(rawLabel);
+  // Resumen Registra / Fecha y hora: siempre texto fijo
+  if (READONLY_FORM_VALUES.has(key)) return false;
+  if (/^\d{1,2}\s+(ene|feb|mar|abr|may|jun|jul|ago|sep|oct|nov|dic)\b/i.test(rawLabel.trim())) {
+    return false;
+  }
   // Si la etiqueta navega en esta pantalla, no convertirla en input
   if (screenId && resolveNav(screenId, rawLabel)) return false;
 
@@ -852,18 +865,11 @@ export function isEditableLabel(rawLabel: string, screenId?: string) {
   if (/^aaaaaaaa/i.test(rawLabel.trim())) return true;
 
   if (screenId && FORM_SCREENS.has(screenId)) {
-    if (FORM_PRODUCT_VALUES.has(key)) return true;
-    // Valores típicos de inputs en agregar/editar producto
+    // Solo lista blanca de valores de campo (sin catch-all que convierta el resumen)
+    if (FORM_FIELD_VALUES.has(key)) return true;
     if (/^\d+([.,]\d+)?$/.test(key)) return true;
     if (/^\d{1,2}\/\d{1,2}\/\d{2,4}$/.test(key)) return true;
-    if (/kilogramos|gramos|litros|unidades|\(kg\)|\(g\)|\(l\)/i.test(rawLabel)) return true;
-    if (/^[a-z0-9].{0,40}$/i.test(key) && !BUTTONISH.has(key) && key.length <= 40) {
-      // Evitar títulos de sección / tabs
-      if (/^(producto|datos de recepcion|campos obligatorios|categoria|stock)/i.test(key)) return false;
-      if (/\*$/.test(rawLabel.trim())) return false; // labels "Campo *"
-      if (/^(nuevo producto|producto existente|cerrar|cancelar|guardar)$/i.test(key)) return false;
-      return true;
-    }
+    if (/^kilogramos|^gramos|^litros|^unidades/i.test(rawLabel.trim())) return true;
   }
   return false;
 }
