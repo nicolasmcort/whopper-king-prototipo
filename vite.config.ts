@@ -5,6 +5,8 @@ import tailwindcss from '@tailwindcss/vite';
 
 // https://vite.dev/config/
 export default defineConfig({
+  // GitHub Pages: https://nicolasmcort.github.io/whopper-king-ux/
+  base: process.env.GITHUB_PAGES === 'true' ? '/whopper-king-ux/' : '/',
   plugins: [react(), tailwindcss()],
   resolve: {
     alias: {

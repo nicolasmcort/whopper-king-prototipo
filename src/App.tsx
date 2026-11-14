@@ -16,12 +16,12 @@ const SHEETS = new Set([
 
 function readHash(): string {
   const h = window.location.hash.replace(/^#\/?/, '').trim();
-  return h && screenById[h] ? h : 'inventario';
+  return h && screenById[h] ? h : 'whopper-inicio';
 }
 
 function App() {
   const [currentId, setCurrentId] = useState(readHash);
-  const [history, setHistory] = useState<string[]>(['inventario']);
+  const [history, setHistory] = useState<string[]>(['whopper-inicio']);
   const frameRef = useRef<HTMLDivElement>(null);
 
   const current = screenById[currentId] ?? screens[0];
@@ -45,7 +45,7 @@ function App() {
   const back = useCallback(() => {
     setHistory((h) => {
       if (h.length <= 1) {
-        go('inventario');
+        go('whopper-inicio');
         return h;
       }
       const next = h.slice(0, -1);
@@ -71,7 +71,7 @@ function App() {
       setHistory((h) => (h[h.length - 1] === id ? h : [...h, id]));
     };
     window.addEventListener('hashchange', onHash);
-    if (!window.location.hash) window.location.hash = '/inventario';
+    if (!window.location.hash) window.location.hash = '/whopper-inicio';
     return () => window.removeEventListener('hashchange', onHash);
   }, []);
 
