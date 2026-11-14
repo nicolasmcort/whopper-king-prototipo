@@ -1,5 +1,18 @@
 import React from 'react';
 import { ClientCartIcon, ClientCartIconOutline } from '../ClientCartIcon';
+import {
+  ClientBackIcon,
+  ClientUtensilsIcon,
+  ClientPinIcon,
+  ClientClockIcon,
+  ClientLockIcon,
+  ClientStoreIcon,
+  ClientCardIcon,
+  ClientCashIcon,
+  ClientNequiIcon,
+  ClientBrebIcon,
+  ClientHelpIcon,
+} from '../ClientUiIcons';
 type LayerValue = string | number;
 const absoluteLayer = (left: LayerValue, top: LayerValue, width: LayerValue, height: LayerValue, style: React.CSSProperties = {}): React.CSSProperties => ({
   position: "absolute",
@@ -227,10 +240,9 @@ export function EligeCMoPagarEnElLocalBreB() {
             ...row1
           })}>
           <div data-figma-id="650:3220" style={fixedLayer(20, 20, {
-              overflow: "hidden"
+              overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center"
             })}>
-            <div data-figma-id="650:3221" style={absoluteLayer("20.833%", "50%", "58.333%", "0%")} />
-            <div data-figma-id="650:3222" style={absoluteLayer("20.833%", "20.833%", "29.167%", "58.333%")} />
+            <ClientBackIcon size={20} color="#29241f" />
           </div>
         </div>
         <div data-figma-id="650:3223" style={fixedLayer("max-content", 30, {
@@ -286,14 +298,10 @@ export function EligeCMoPagarEnElLocalBreB() {
               alignSelf: "stretch"
             }}>
             <div data-figma-id="650:3229" style={fixedLayer(18, 18, {
-                overflow: "hidden"
+                overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center"
               })}>
-              <div data-figma-id="650:3230" style={absoluteLayer("50%", "8.333%", "25%", "37.5%")} />
-              <div data-figma-id="650:3231" style={absoluteLayer("62.5%", "8.333%", "0%", "83.333%")} />
-              <div data-figma-id="650:3232" style={absoluteLayer("79.167%", "8.333%", "0%", "83.333%")} />
-              <div data-figma-id="650:3233" style={absoluteLayer("25%", "8.333%", "0%", "83.333%")} />
-              <div data-figma-id="650:3234" style={absoluteLayer("25%", "29.167%", "16.667%", "0%")} />
-            </div>
+              <ClientStoreIcon size={18} color="#29241f" />
+          </div>
             <div data-figma-id="650:3235" style={fixedLayer("max-content", 19, {
                 ...col1,
                 padding: "0 0 0 8px",
@@ -331,11 +339,10 @@ export function EligeCMoPagarEnElLocalBreB() {
                 alignSelf: "stretch"
               }}>
               <div data-figma-id="650:3239" style={fixedLayer(16, 16, {
-                  overflow: "hidden"
+                  overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center"
                 })}>
-                <div data-figma-id="650:3240" style={absoluteLayer("8.333%", "8.333%", "83.333%", "83.333%")} />
-                <div data-figma-id="650:3241" style={absoluteLayer("50%", "25%", "16.667%", "33.333%")} />
-              </div>
+                <ClientClockIcon size={16} color="#2d8659" />
+          </div>
               <div data-figma-id="650:3242" style={fixedLayer("max-content", 17, {
                   ...col1,
                   padding: "0 0 0 6px",
@@ -519,11 +526,10 @@ export function EligeCMoPagarEnElLocalBreB() {
                       ...row2
                     })}>
                     <div data-figma-id="650:3263" style={fixedLayer(20, 20, {
-                        overflow: "hidden"
+                        overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center"
                       })}>
-                      <div data-figma-id="650:3264" style={absoluteLayer("20.833%", "8.333%", "58.333%", "83.333%")} />
-                      <div data-figma-id="650:3265" style={absoluteLayer("50%", "75%", "0.042%", "0%")} />
-                    </div>
+                      <ClientNequiIcon size={20} />
+          </div>
                   </div>
                 </div>
                 <div data-figma-id="650:3266" style={fixedLayer(189, 39.88, col3)}>
@@ -688,11 +694,10 @@ export function EligeCMoPagarEnElLocalBreB() {
                         ...row2
                       })}>
                       <div data-figma-id="650:3294" style={fixedLayer(20, 20, {
-                          overflow: "hidden"
+                          overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center"
                         })}>
-                        <div data-figma-id="650:3295" style={absoluteLayer("8.333%", "20.833%", "83.333%", "58.333%")} />
-                        <div data-figma-id="650:3296" style={absoluteLayer("8.333%", "41.667%", "83.333%", "0%")} />
-                      </div>
+                        <ClientCardIcon size={20} color="#29241f" />
+          </div>
                     </div>
                   </div>
                   <div data-figma-id="650:3297" style={fixedLayer(252, 39.88, col3)}>
@@ -764,7 +769,7 @@ export function EligeCMoPagarEnElLocalBreB() {
               alignItems: "center",
               justifyContent: "center"
             })}>
-            <ClientCartIconOutline size={20} color="#82776e" />
+            <ClientCashIcon size={20} color="#29241f" />
           </div>
                     </div>
                   </div>
@@ -835,11 +840,10 @@ export function EligeCMoPagarEnElLocalBreB() {
               alignSelf: "stretch"
             }}>
             <div data-figma-id="650:3319" style={fixedLayer(14, 14, {
-                overflow: "hidden"
+                overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center"
               })}>
-              <div data-figma-id="650:3320" style={absoluteLayer("12.5%", "45.833%", "75%", "45.833%")} />
-              <div data-figma-id="650:3321" style={absoluteLayer("29.167%", "8.333%", "41.667%", "37.5%")} />
-            </div>
+              <ClientLockIcon size={14} color="#82776e" />
+          </div>
             <div data-figma-id="650:3322" style={fixedLayer("max-content", 15, {
                 ...col1,
                 padding: "0 0 0 6px",

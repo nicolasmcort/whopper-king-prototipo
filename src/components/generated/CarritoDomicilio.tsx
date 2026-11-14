@@ -1,4 +1,17 @@
 import React from 'react';
+import {
+  ClientBackIcon,
+  ClientUtensilsIcon,
+  ClientPinIcon,
+  ClientClockIcon,
+  ClientLockIcon,
+  ClientStoreIcon,
+  ClientCardIcon,
+  ClientCashIcon,
+  ClientNequiIcon,
+  ClientBrebIcon,
+  ClientHelpIcon,
+} from '../ClientUiIcons';
 type LayerValue = string | number;
 const absoluteLayer = (left: LayerValue, top: LayerValue, width: LayerValue, height: LayerValue, style: React.CSSProperties = {}): React.CSSProperties => ({
   position: "absolute",
@@ -400,11 +413,10 @@ export function CarritoDomicilio() {
                 ...layout2
               })}>
               <div data-figma-id="646:2111" style={fixedLayer(16, 16, {
-                  overflow: "hidden"
+                  overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center"
                 })}>
-                <div data-figma-id="646:2112" style={absoluteLayer("12.5%", "25%", "75%", "0%")} />
-                <div data-figma-id="646:2113" style={absoluteLayer("25%", "8.333%", "54.167%", "83.333%")} />
-              </div>
+                <ClientClockIcon size={16} color="#2d8659" />
+          </div>
             </div>
             <div data-figma-id="646:2114" style={fixedLayer(24, 22.5)}>
               <span data-figma-id="646:2115" style={{
@@ -697,10 +709,10 @@ export function CarritoDomicilio() {
                   ...row3
                 })}>
                 <div data-figma-id="646:2019" style={fixedLayer(16, 16, {
-                    overflow: "hidden"
+                    overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center"
                   })}>
-                  <div data-figma-id="646:2020" style={absoluteLayer("12.5%", "8.333%", "75%", "83.333%")} />
-                </div>
+                  <ClientClockIcon size={16} color="#2d8659" />
+          </div>
               </div>
               <div data-figma-id="646:2021" style={fixedLayer(20, 20, {
                   border: "2px solid #ebe4dc",
@@ -792,12 +804,10 @@ export function CarritoDomicilio() {
                   ...row3
                 })}>
                 <div data-figma-id="646:2030" style={fixedLayer(16, 16, {
-                    overflow: "hidden"
+                    overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center"
                   })}>
-                  <div data-figma-id="646:2031" style={absoluteLayer("8.333%", "58.333%", "29.167%", "29.167%")} />
-                  <div data-figma-id="646:2032" style={absoluteLayer("62.5%", "58.333%", "29.167%", "29.167%")} />
-                  <div data-figma-id="646:2033" style={absoluteLayer("22.917%", "25%", "50%", "47.917%")} />
-                </div>
+                  <ClientClockIcon size={16} color="#2d8659" />
+          </div>
               </div>
               <div data-figma-id="646:2034" style={fixedLayer(20, 20, {
                   boxShadow: "inset 0 0 0 2px #ed6047",

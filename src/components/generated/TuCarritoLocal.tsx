@@ -1,5 +1,18 @@
 import React from 'react';
 import { ClientCartIcon, ClientCartIconOutline } from '../ClientCartIcon';
+import {
+  ClientBackIcon,
+  ClientUtensilsIcon,
+  ClientPinIcon,
+  ClientClockIcon,
+  ClientLockIcon,
+  ClientStoreIcon,
+  ClientCardIcon,
+  ClientCashIcon,
+  ClientNequiIcon,
+  ClientBrebIcon,
+  ClientHelpIcon,
+} from '../ClientUiIcons';
 type LayerValue = string | number;
 const absoluteLayer = (left: LayerValue, top: LayerValue, width: LayerValue, height: LayerValue, style: React.CSSProperties = {}): React.CSSProperties => ({
   position: "absolute",
@@ -178,9 +191,9 @@ export function TuCarritoLocal() {
             ...row2
           })}>
           <div data-figma-id="650:2716" style={fixedLayer(20, 20, {
-              overflow: "hidden"
+              overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center"
             })}>
-            <div data-figma-id="650:2717" style={absoluteLayer("12.5%", "20.833%", "75%", "58.333%")} />
+            <ClientBackIcon size={20} color="#29241f" />
           </div>
         </div>
         <div data-figma-id="650:2718" style={fixedLayer("max-content", 29, col3)}>
@@ -262,10 +275,10 @@ export function TuCarritoLocal() {
                   flexDirection: "column"
                 })}>
                 <div data-figma-id="650:2730" style={fixedLayer(20, 20, {
-                    overflow: "hidden"
+                    overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center"
                   })}>
-                  <div data-figma-id="650:2731" style={absoluteLayer("12.5%", "8.333%", "77.083%", "83.333%")} />
-                </div>
+                  <ClientUtensilsIcon size={20} color="#ed6047" />
+          </div>
               </div>
               <div data-figma-id="650:2732" style={{
                   minWidth: 0,
@@ -356,11 +369,10 @@ export function TuCarritoLocal() {
                 alignSelf: "stretch"
               }}>
               <div data-figma-id="650:2739" style={fixedLayer(16, 16, {
-                  overflow: "hidden"
+                  overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center"
                 })}>
-                <div data-figma-id="650:2740" style={absoluteLayer("12.5%", "12.5%", "75%", "75%")} />
-                <div data-figma-id="650:2741" style={absoluteLayer("50%", "29.167%", "12.5%", "29.167%")} />
-              </div>
+                <ClientClockIcon size={16} color="#2d8659" />
+          </div>
               <div data-figma-id="650:2742" style={fixedLayer("max-content", 18, col5)}>
                 <span data-figma-id="650:2743" style={{
                     ...font_Manrope,
@@ -980,11 +992,10 @@ export function TuCarritoLocal() {
                 alignSelf: "stretch"
               }}>
               <div data-figma-id="650:2905" style={fixedLayer(14, 14, {
-                  overflow: "hidden"
+                  overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center"
                 })}>
-                <div data-figma-id="650:2906" style={absoluteLayer("20.833%", "45.833%", "58.333%", "41.667%")} />
-                <div data-figma-id="650:2907" style={absoluteLayer("33.333%", "12.5%", "33.333%", "33.333%")} />
-              </div>
+                <ClientLockIcon size={14} color="#82776e" />
+          </div>
               <div data-figma-id="650:2908" style={fixedLayer("max-content", 18, col5)}>
                 <span data-figma-id="650:2909" style={{
                     ...font_Inter,

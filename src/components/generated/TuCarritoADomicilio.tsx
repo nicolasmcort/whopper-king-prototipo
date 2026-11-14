@@ -1,4 +1,19 @@
 import React from 'react';
+import { ClientCartIconOutline } from '../ClientCartIcon';
+import {
+  ClientBackIcon,
+  ClientUtensilsIcon,
+  ClientPinIcon,
+  ClientClockIcon,
+  ClientLockIcon,
+  ClientStoreIcon,
+  ClientCardIcon,
+  ClientCashIcon,
+  ClientNequiIcon,
+  ClientBrebIcon,
+  ClientHelpIcon,
+  ClientTrashIcon,
+} from '../ClientUiIcons';
 type LayerValue = string | number;
 const absoluteLayer = (left: LayerValue, top: LayerValue, width: LayerValue, height: LayerValue, style: React.CSSProperties = {}): React.CSSProperties => ({
   position: "absolute",
@@ -250,9 +265,9 @@ export function TuCarritoADomicilio() {
             ...row2
           })}>
           <div data-figma-id="650:2597" style={fixedLayer(20, 20, {
-              overflow: "hidden"
+              overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center"
             })}>
-            <div data-figma-id="650:2598" style={absoluteLayer("34.375%", "18.75%", "31.25%", "62.5%")} />
+            <ClientBackIcon size={20} color="#29241f" />
           </div>
         </div>
         <div data-figma-id="650:2599" style={fixedLayer("max-content", 30, col3)}>
@@ -275,9 +290,9 @@ export function TuCarritoADomicilio() {
             ...row2
           })}>
           <div data-figma-id="650:2602" style={fixedLayer(20, 20, {
-              overflow: "hidden"
+              overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center"
             })}>
-            <div data-figma-id="650:2603" style={absoluteLayer("12.5%", "12.5%", "75%", "75%")} />
+            <ClientCartIconOutline size={20} color="#82776e" />
           </div>
         </div>
       </div>
@@ -315,13 +330,10 @@ export function TuCarritoADomicilio() {
             <div data-figma-id="650:2607" style={fixedLayer(255.11, "max-content", row1)}>
               <div data-figma-id="650:2608" style={fixedLayer("max-content", 20, col3)}>
                 <div data-figma-id="650:2609" style={fixedLayer(20, 20, {
-                    overflow: "hidden"
+                    overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center"
                   })}>
-                  <div data-figma-id="650:2610" style={absoluteLayer("8.333%", "62.5%", "25%", "25%")} />
-                  <div data-figma-id="650:2611" style={absoluteLayer("66.667%", "62.5%", "25%", "25%")} />
-                  <div data-figma-id="650:2612" style={absoluteLayer("50%", "37.5%", "25%", "41.667%")} />
-                  <div data-figma-id="650:2613" style={absoluteLayer("33.333%", "37.5%", "35.417%", "20.833%")} />
-                </div>
+                  <ClientPinIcon size={20} color="#ed6047" />
+          </div>
               </div>
               <div data-figma-id="650:2614" style={fixedLayer("max-content", 21, {
                   display: "flex",
@@ -384,10 +396,10 @@ export function TuCarritoADomicilio() {
               alignSelf: "stretch"
             }}>
             <div data-figma-id="650:2621" style={fixedLayer(16, 16, {
-                overflow: "hidden"
+                overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center"
               })}>
-              <div data-figma-id="650:2622" style={absoluteLayer("12.5%", "12.5%", "75%", "75%")} />
-            </div>
+              <ClientClockIcon size={16} color="#2d8659" />
+          </div>
             <div data-figma-id="650:2623" style={fixedLayer("max-content", 20, col4)}>
               <span data-figma-id="650:2624" style={{
                   ...font_Inter,
@@ -569,11 +581,10 @@ export function TuCarritoADomicilio() {
                   ...layout2
                 })}>
                 <div data-figma-id="653:4408" style={fixedLayer(16, 16, {
-                    overflow: "hidden"
+                    overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center"
                   })}>
-                  <div data-figma-id="653:4409" style={absoluteLayer("12.5%", "25%", "75%", "0%")} />
-                  <div data-figma-id="653:4410" style={absoluteLayer("25%", "8.333%", "54.167%", "83.333%")} />
-                </div>
+                  <ClientTrashIcon size={16} color="#ed6047" />
+          </div>
               </div>
               <div data-figma-id="653:4411" style={fixedLayer(24, 22.5)}>
                 <span data-figma-id="653:4412" style={{
@@ -1030,11 +1041,10 @@ export function TuCarritoADomicilio() {
           alignSelf: "stretch"
         }}>
         <div data-figma-id="650:2705" style={fixedLayer(14, 14, {
-            overflow: "hidden"
+            overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center"
           })}>
-          <div data-figma-id="650:2706" style={absoluteLayer("20.833%", "45.833%", "58.333%", "41.667%")} />
-          <div data-figma-id="650:2707" style={absoluteLayer("33.333%", "12.5%", "33.333%", "33.333%")} />
-        </div>
+          <ClientLockIcon size={14} color="#82776e" />
+          </div>
         <div data-figma-id="650:2708" style={fixedLayer("max-content", 18, col4)}>
           <span data-figma-id="650:2709" style={{
               ...font_Inter,

@@ -1,4 +1,17 @@
 import React from 'react';
+import {
+  ClientBackIcon,
+  ClientUtensilsIcon,
+  ClientPinIcon,
+  ClientClockIcon,
+  ClientLockIcon,
+  ClientStoreIcon,
+  ClientCardIcon,
+  ClientCashIcon,
+  ClientNequiIcon,
+  ClientBrebIcon,
+  ClientHelpIcon,
+} from '../ClientUiIcons';
 type LayerValue = string | number;
 const absoluteLayer = (left: LayerValue, top: LayerValue, width: LayerValue, height: LayerValue, style: React.CSSProperties = {}): React.CSSProperties => ({
   position: "absolute",
@@ -207,9 +220,9 @@ export function PedidoEnviadoDomicilio() {
             justifyContent: "center"
           })}>
           <div data-figma-id="369:1795" style={fixedLayer(16, 16, {
-              overflow: "hidden"
+              overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center"
             })}>
-            <div data-figma-id="369:1796" style={absoluteLayer("25%", "25%", "50%", "50%")} />
+            <ClientClockIcon size={16} color="#2d8659" />
           </div>
         </div>
       </div>
@@ -352,10 +365,10 @@ export function PedidoEnviadoDomicilio() {
                 gap: 6
               })}>
               <div data-figma-id="369:1811" style={fixedLayer(14, 14, {
-                  overflow: "hidden"
+                  overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center"
                 })}>
-                <div data-figma-id="369:1812" style={absoluteLayer("20.833%", "29.167%", "58.333%", "41.667%")} />
-              </div>
+                <ClientLockIcon size={14} color="#82776e" />
+          </div>
               <span data-figma-id="369:1813" style={{
                   ...font_Inter,
                   ...text1,
@@ -393,10 +406,10 @@ export function PedidoEnviadoDomicilio() {
               }}>
               <div data-figma-id="369:1816" style={fixedLayer(24, 24, row2)}>
                 <div data-figma-id="369:1817" style={fixedLayer(20, 20, {
-                    overflow: "hidden"
+                    overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center"
                   })}>
-                  <div data-figma-id="369:1818" style={absoluteLayer("20.833%", "8.333%", "58.333%", "83.333%")} />
-                </div>
+                  <ClientBackIcon size={20} color="#29241f" />
+          </div>
               </div>
               <div data-figma-id="369:1819" style={fixedLayer("max-content", 20, col1)}>
                 <span data-figma-id="369:1820" style={{
@@ -561,11 +574,10 @@ export function PedidoEnviadoDomicilio() {
               flexDirection: "column"
             })}>
             <div data-figma-id="369:1853" style={fixedLayer(16, 16, {
-                overflow: "hidden"
+                overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center"
               })}>
-              <div data-figma-id="369:1854" style={absoluteLayer("8.333%", "8.333%", "83.333%", "83.333%")} />
-              <div data-figma-id="369:1855" style={absoluteLayer("50%", "33.333%", "0.042%", "33.333%")} />
-            </div>
+              <ClientClockIcon size={16} color="#2d8659" />
+          </div>
           </div>
           <div data-figma-id="369:1856" style={fixedLayer("max-content", 39, {
               display: "flex",

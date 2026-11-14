@@ -1,4 +1,17 @@
 import React from 'react';
+import {
+  ClientBackIcon,
+  ClientUtensilsIcon,
+  ClientPinIcon,
+  ClientClockIcon,
+  ClientLockIcon,
+  ClientStoreIcon,
+  ClientCardIcon,
+  ClientCashIcon,
+  ClientNequiIcon,
+  ClientBrebIcon,
+  ClientHelpIcon,
+} from '../ClientUiIcons';
 type LayerValue = string | number;
 const absoluteLayer = (left: LayerValue, top: LayerValue, width: LayerValue, height: LayerValue, style: React.CSSProperties = {}): React.CSSProperties => ({
   position: "absolute",
@@ -289,11 +302,10 @@ export function PantallaDeEscaneoDeQR() {
           boxShadow: "0px 2px 4px -2px rgba(0, 0, 0, 0.1), 0px 4px 6px -1px rgba(0, 0, 0, 0.1)"
         })} />
         <div data-figma-id="646:2375" style={fixedLayer(16, 16, {
-          overflow: "hidden"
+          overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center"
         })}>
-          <div data-figma-id="646:2376" style={absoluteLayer("25%", "25%", "50%", "50%")} />
-          <div data-figma-id="646:2377" style={absoluteLayer("25%", "25%", "50%", "50%")} />
-        </div>
+          <ClientClockIcon size={16} color="#2d8659" />
+          </div>
       </div>
     </div>
     <div data-figma-id="646:2378" style={{

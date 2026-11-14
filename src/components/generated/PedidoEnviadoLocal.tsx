@@ -1,4 +1,17 @@
 import React from 'react';
+import {
+  ClientBackIcon,
+  ClientUtensilsIcon,
+  ClientPinIcon,
+  ClientClockIcon,
+  ClientLockIcon,
+  ClientStoreIcon,
+  ClientCardIcon,
+  ClientCashIcon,
+  ClientNequiIcon,
+  ClientBrebIcon,
+  ClientHelpIcon,
+} from '../ClientUiIcons';
 type LayerValue = string | number;
 const absoluteLayer = (left: LayerValue, top: LayerValue, width: LayerValue, height: LayerValue, style: React.CSSProperties = {}): React.CSSProperties => ({
   position: "absolute",
@@ -170,9 +183,9 @@ export function PedidoEnviadoLocal() {
             justifyContent: "center"
           })}>
           <div data-figma-id="369:1718" style={fixedLayer(16, 16, {
-              overflow: "hidden"
+              overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center"
             })}>
-            <div data-figma-id="369:1719" style={absoluteLayer("25%", "25%", "50%", "50%")} />
+            <ClientClockIcon size={16} color="#2d8659" />
           </div>
         </div>
       </div>
@@ -328,10 +341,10 @@ export function PedidoEnviadoLocal() {
               }}>
               <div data-figma-id="369:1739" style={fixedLayer(24, 24, row2)}>
                 <div data-figma-id="369:1740" style={fixedLayer(20, 20, {
-                    overflow: "hidden"
+                    overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center"
                   })}>
-                  <div data-figma-id="369:1741" style={absoluteLayer("12.5%", "8.333%", "77.083%", "83.333%")} />
-                </div>
+                  <ClientUtensilsIcon size={20} color="#ed6047" />
+          </div>
               </div>
               <div data-figma-id="369:1742" style={fixedLayer("max-content", 20, col1)}>
                 <span data-figma-id="369:1743" style={{
