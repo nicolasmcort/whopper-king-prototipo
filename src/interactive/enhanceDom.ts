@@ -66,13 +66,23 @@ function resolveFromClick(
     el = el.parentElement;
   }
 
-  // Subir el árbol: probar textos del nodo y títulos cortos hijos (todo el cuadro, no solo el label)
+  // Subir el árbol: preferir nombres de producto sobre pestañas de categoría
+  // (p. ej. no elegir “Hamburguesas” del encabezado de sección al tocar una tarjeta).
+  const categoryTabs = new Set(['hamburguesas', 'los favoritos', 'favoritos', 'whoppers']);
   el = target;
   while (el && el !== root) {
-    for (const label of ownShortLabels(el)) {
+    const labels = ownShortLabels(el);
+    let fallback: NavTarget | null = null;
+    for (const label of labels) {
       const dest = resolveNav(screenId, label);
-      if (dest) return dest;
+      if (!dest) continue;
+      if (categoryTabs.has(normalizeLabel(label))) {
+        fallback ??= dest;
+        continue;
+      }
+      return dest;
     }
+    if (fallback) return fallback;
     const t = leafText(el);
     if (t) {
       const dest = resolveNav(screenId, t);
@@ -225,7 +235,7 @@ function pinClientTabBar(root: HTMLElement) {
   }
 }
 
-/** Expande el hit area a la tarjeta/opción contenedora (pago, combo, etc.). */
+/** Expande el hit area a la tarjeta/opción contenedora (pago, combo, producto). */
 function expandOptionHitArea(el: HTMLElement, actionLabel: string, root: HTMLElement) {
   let node: HTMLElement | null = el.parentElement;
   let card: HTMLElement | null = null;
@@ -234,8 +244,11 @@ function expandOptionHitArea(el: HTMLElement, actionLabel: string, root: HTMLEle
     const style = node.style;
     const radius = style.borderRadius || '';
     const shadow = style.boxShadow || '';
-    const looksRounded = /16px|12px|9999|1rem/.test(radius) || shadow.includes('inset');
-    if (looksRounded && h >= 48 && h <= 140) {
+    // Incluye 10px (tarjetas de menú) además de 12/14/16
+    const looksRounded =
+      /10px|14px|16px|12px|9999|1rem/.test(radius) || shadow.includes('inset');
+    // Opciones cortas (pago/combo) o tarjetas de producto del menú (~245px)
+    if (looksRounded && h >= 48 && h <= 300) {
       card = node;
       break;
     }

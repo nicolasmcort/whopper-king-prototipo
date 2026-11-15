@@ -91,6 +91,23 @@ const STATS_TABS: Record<string, NavTarget> = {
   platos: 'platos-insumos',
 };
 
+/** Detalle provisional compartido para cualquier hamburguesa del menú. */
+const BURGER_DETAIL = 'personaliza-whopper';
+const BURGER_DETAIL_NAV: Record<string, NavTarget> = {
+  whopper: BURGER_DETAIL,
+  'whopper king': BURGER_DETAIL,
+  'whopper bbq': BURGER_DETAIL,
+  'whopper hawaiana': BURGER_DETAIL,
+  'whopper pollo milanesa': BURGER_DETAIL,
+  'whopper criolla': BURGER_DETAIL,
+  'chesse whopper': BURGER_DETAIL,
+  'cheese whopper': BURGER_DETAIL,
+  'cow boy': BURGER_DETAIL,
+  'big boy': BURGER_DETAIL,
+  'todo terreno especial': BURGER_DETAIL,
+  'todo terreno': BURGER_DETAIL,
+};
+
 /** Por pantalla: etiqueta → destino */
 const BY_SCREEN_RAW: Record<string, Record<string, NavTarget>> = {
   inventario: {
@@ -357,7 +374,8 @@ const BY_SCREEN_RAW: Record<string, Record<string, NavTarget>> = {
     hamburguesas: 'menu-burgers-00',
     'los favoritos': 'menu-burgers',
     favoritos: 'menu-burgers',
-    whopper: 'personaliza-whopper',
+    // Todas las hamburguesas → mismo detalle provisional
+    ...BURGER_DETAIL_NAV,
     carrito: 'tu-carrito-local',
     'tu carrito esta vacio': 'tu-carrito-local',
     menu: 'menu',
@@ -371,7 +389,7 @@ const BY_SCREEN_RAW: Record<string, Record<string, NavTarget>> = {
     hamburguesas: 'menu-burgers-00',
     'los favoritos': 'menu-burgers',
     favoritos: 'menu-burgers',
-    whopper: 'personaliza-whopper',
+    ...BURGER_DETAIL_NAV,
     carrito: 'tu-carrito-local',
     'tu carrito esta vacio': 'tu-carrito-local',
     menu: 'menu',
@@ -438,7 +456,7 @@ const BY_SCREEN_RAW: Record<string, Record<string, NavTarget>> = {
     favoritos: 'menu-burgers',
     menu: 'menu',
     buscar: 'menu',
-    whopper: 'personaliza-whopper',
+    ...BURGER_DETAIL_NAV,
     carrito: 'tu-carrito-local',
     'tu carrito esta vacio': 'tu-carrito-local',
     inicio: 'whopper-inicio',
