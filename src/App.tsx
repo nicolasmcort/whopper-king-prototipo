@@ -15,17 +15,12 @@ const SHEETS = new Set([
   'eliminacion-mov-184',
 ]);
 
-/** Menús de categoría: no traen tab bar en Figma; la inyectamos. */
-const INJECT_TAB_BAR = new Set([
-  'menu-burgers',
-  'menu-burgers-00',
-  'menu-hamburguesas',
-  'menu-almuerzo',
-  'menu-pollo',
-  'menu-carne',
-  'menu-pescado',
-  'menu-bebidas',
-]);
+/**
+ * Tab bar Inicio/Buscar/Carrito/Mi cuenta inyectada.
+ * Menús de categoría (almuerzo, burgers, …) NO: solo «Tu carrito está vacío».
+ * Inicio / Mi cuenta / Carrito ya la traen en su propio frame.
+ */
+const INJECT_TAB_BAR = new Set<string>();
 
 function readHash(): string {
   const h = window.location.hash.replace(/^#\/?/, '').trim();
