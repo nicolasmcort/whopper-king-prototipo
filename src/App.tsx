@@ -44,6 +44,8 @@ function App() {
       : null;
   const Under = underId ? screenById[underId]?.Component : null;
 
+  const skipHashPush = useRef(false);
+
   const go = useCallback((id: string, replace = false) => {
     if (!screenById[id]) return;
     setCurrentId(id);
@@ -52,7 +54,12 @@ function App() {
       if (replace && h.length > 0) return [...h.slice(0, -1), id];
       return [...h, id];
     });
-    window.location.hash = `/${id}`;
+    const nextHash = `/${id}`;
+    // Solo marcar skip si el hash cambia (si no, hashchange no dispara y el flag quedaría pegado)
+    if (window.location.hash.replace(/^#/, '') !== nextHash) {
+      skipHashPush.current = true;
+      window.location.hash = nextHash;
+    }
   }, []);
 
   const back = useCallback(() => {
@@ -64,7 +71,11 @@ function App() {
       const next = h.slice(0, -1);
       const id = next[next.length - 1];
       setCurrentId(id);
-      window.location.hash = `/${id}`;
+      const nextHash = `/${id}`;
+      if (window.location.hash.replace(/^#/, '') !== nextHash) {
+        skipHashPush.current = true;
+        window.location.hash = nextHash;
+      }
       return next;
     });
   }, [go]);
@@ -87,6 +98,10 @@ function App() {
     const onHash = () => {
       const id = readHash();
       setCurrentId(id);
+      if (skipHashPush.current) {
+        skipHashPush.current = false;
+        return;
+      }
       setHistory((h) => (h[h.length - 1] === id ? h : [...h, id]));
     };
     window.addEventListener('hashchange', onHash);

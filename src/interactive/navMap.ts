@@ -561,8 +561,9 @@ const BY_SCREEN_RAW: Record<string, Record<string, NavTarget>> = {
     tarjeta: 'pago-local-tarjeta',
     'bre-b': 'pago-local-breb',
     breb: 'pago-local-breb',
-    volver: '__back__',
-    atras: '__back__',
+    // Siempre al carrito (no al historial: evita “pedido en preparación”)
+    volver: 'tu-carrito-local',
+    atras: 'tu-carrito-local',
   },
   'pago-local-efectivo': {
     // Efectivo → pendiente de cobro en caja
@@ -573,8 +574,8 @@ const BY_SCREEN_RAW: Record<string, Record<string, NavTarget>> = {
     efectivo: 'pago-local-efectivo',
     tarjeta: 'pago-local-tarjeta',
     'bre-b': 'pago-local-breb',
-    volver: '__back__',
-    atras: '__back__',
+    volver: 'tu-carrito-local',
+    atras: 'tu-carrito-local',
   },
   'pago-local-tarjeta': {
     confirmar: 'pedido-enviado-local',
@@ -584,8 +585,8 @@ const BY_SCREEN_RAW: Record<string, Record<string, NavTarget>> = {
     efectivo: 'pago-local-efectivo',
     tarjeta: 'pago-local-tarjeta',
     'bre-b': 'pago-local-breb',
-    volver: '__back__',
-    atras: '__back__',
+    volver: 'tu-carrito-local',
+    atras: 'tu-carrito-local',
   },
   'pago-local-breb': {
     confirmar: 'pedido-enviado-local',
@@ -596,8 +597,8 @@ const BY_SCREEN_RAW: Record<string, Record<string, NavTarget>> = {
     efectivo: 'pago-local-efectivo',
     tarjeta: 'pago-local-tarjeta',
     'bre-b': 'pago-local-breb',
-    volver: '__back__',
-    atras: '__back__',
+    volver: 'tu-carrito-local',
+    atras: 'tu-carrito-local',
   },
   'pago-dom-nequi': {
     confirmar: 'pedido-enviado-domicilio',
@@ -607,8 +608,8 @@ const BY_SCREEN_RAW: Record<string, Record<string, NavTarget>> = {
     efectivo: 'pago-dom-efectivo',
     tarjeta: 'pago-dom-tarjeta',
     'bre-b': 'pago-dom-breb',
-    volver: '__back__',
-    atras: '__back__',
+    volver: 'tu-carrito-domicilio',
+    atras: 'tu-carrito-domicilio',
   },
   'pago-dom-efectivo': {
     confirmar: 'pedido-enviado-domicilio',
@@ -618,8 +619,8 @@ const BY_SCREEN_RAW: Record<string, Record<string, NavTarget>> = {
     efectivo: 'pago-dom-efectivo',
     tarjeta: 'pago-dom-tarjeta',
     'bre-b': 'pago-dom-breb',
-    volver: '__back__',
-    atras: '__back__',
+    volver: 'tu-carrito-domicilio',
+    atras: 'tu-carrito-domicilio',
   },
   'pago-dom-tarjeta': {
     confirmar: 'pedido-enviado-domicilio',
@@ -629,8 +630,8 @@ const BY_SCREEN_RAW: Record<string, Record<string, NavTarget>> = {
     efectivo: 'pago-dom-efectivo',
     tarjeta: 'pago-dom-tarjeta',
     'bre-b': 'pago-dom-breb',
-    volver: '__back__',
-    atras: '__back__',
+    volver: 'tu-carrito-domicilio',
+    atras: 'tu-carrito-domicilio',
   },
   'pago-dom-breb': {
     confirmar: 'pedido-enviado-domicilio',
@@ -640,8 +641,8 @@ const BY_SCREEN_RAW: Record<string, Record<string, NavTarget>> = {
     efectivo: 'pago-dom-efectivo',
     tarjeta: 'pago-dom-tarjeta',
     'bre-b': 'pago-dom-breb',
-    volver: '__back__',
-    atras: '__back__',
+    volver: 'tu-carrito-domicilio',
+    atras: 'tu-carrito-domicilio',
   },
   'pedido-enviado-local': {
     finalizar: 'whopper-inicio',
@@ -1138,6 +1139,13 @@ const REPLACE_VARIANT_SCREENS = new Set([
   'pago-dom-breb',
 ]);
 
+const PEDIDO_RESULT_SCREENS = new Set([
+  'pedido-enviado-local',
+  'pedido-enviado-domicilio',
+  'pedido-exitoso-local',
+  'fallo-pago',
+]);
+
 /** Destinos que deben reemplazar la pantalla actual en el historial (selector / combos / pago). */
 export function shouldReplaceHistory(fromId: string, toId: string): boolean {
   const pair = new Set([fromId, toId]);
@@ -1145,5 +1153,9 @@ export function shouldReplaceHistory(fromId: string, toId: string): boolean {
   // Tabs Favoritos ↔ Hamburguesas
   if (pair.has('menu-burgers') && pair.has('menu-burgers-00')) return true;
   if (pair.has('menu-burgers') && pair.has('menu-hamburguesas')) return true;
+  // Volver a pagar desde “pedido en preparación” no debe apilarse sobre el resultado
+  if (PEDIDO_RESULT_SCREENS.has(fromId) && REPLACE_VARIANT_SCREENS.has(toId)) return true;
+  // Tras pagar, el resultado reemplaza la pantalla de pago (atrás ≠ volver al pago)
+  if (REPLACE_VARIANT_SCREENS.has(fromId) && PEDIDO_RESULT_SCREENS.has(toId)) return true;
   return REPLACE_VARIANT_SCREENS.has(fromId) && REPLACE_VARIANT_SCREENS.has(toId);
 }
