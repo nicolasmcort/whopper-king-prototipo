@@ -137,6 +137,69 @@ function markPressable(el: HTMLElement) {
   el.setAttribute('role', 'button');
 }
 
+/** Barra inferior Inicio / Buscar / Carrito / Mi cuenta — fija al phone-frame. */
+function pinClientTabBar(root: HTMLElement) {
+  const candidates = Array.from(root.querySelectorAll('div')).filter((el) => {
+    const raw = (el.textContent || '').replace(/\s+/g, ' ').trim();
+    if (!/\bInicio\b/.test(raw) || !/Mi cuenta/i.test(raw)) return false;
+    if (!/\b(Buscar|Carrito)\b/i.test(raw)) return false;
+    // Evitar el árbol completo de la pantalla
+    if (raw.length > 80) return false;
+    const h = el.offsetHeight;
+    const w = el.offsetWidth;
+    return h >= 55 && h <= 120 && w >= 280;
+  }) as HTMLElement[];
+
+  if (candidates.length === 0) return;
+
+  // Preferir el contenedor blanco de la barra (no un ítem suelto)
+  candidates.sort((a, b) => {
+    const score = (el: HTMLElement) => el.offsetHeight + (el.children.length >= 3 ? 40 : 0);
+    return score(b) - score(a);
+  });
+
+  let tab = candidates[0];
+  const parent = tab.parentElement;
+  // Subir al wrapper blanco de la tab bar si el match fue la fila interna
+  if (
+    parent &&
+    parent !== root &&
+    parent.offsetHeight >= 70 &&
+    parent.offsetHeight <= 120 &&
+    /Inicio/i.test(parent.textContent || '') &&
+    /Mi cuenta/i.test(parent.textContent || '')
+  ) {
+    tab = parent;
+  }
+
+  const wasInFlow = getComputedStyle(tab).position !== 'absolute' && getComputedStyle(tab).position !== 'fixed';
+  const barH = tab.offsetHeight || 79;
+
+  tab.setAttribute('data-proto-fixed-tabbar', '1');
+  tab.style.setProperty('position', 'fixed', 'important');
+  tab.style.setProperty('left', '0', 'important');
+  tab.style.setProperty('right', '0', 'important');
+  tab.style.setProperty('bottom', '0', 'important');
+  tab.style.setProperty('width', '100%', 'important');
+  tab.style.setProperty('max-width', '100%', 'important');
+  tab.style.setProperty('top', 'auto', 'important');
+  tab.style.setProperty('z-index', '60', 'important');
+
+  // Spacer para que el contenido no quede bajo la barra
+  if (!root.querySelector('[data-proto-tabbar-spacer]')) {
+    const spacer = document.createElement('div');
+    spacer.setAttribute('data-proto-tabbar-spacer', '1');
+    spacer.style.cssText = `height:${barH}px;flex-shrink:0;width:100%;pointer-events:none;`;
+    if (wasInFlow && tab.parentElement) {
+      tab.parentElement.insertBefore(spacer, tab);
+    } else {
+      // Tabbar absolute: añadir al final del contenido scrolleable
+      const host = (root.firstElementChild as HTMLElement | null) || root;
+      host.appendChild(spacer);
+    }
+  }
+}
+
 /** Expande el hit area a la tarjeta/opción contenedora (pago, combo, etc.). */
 function expandOptionHitArea(el: HTMLElement, actionLabel: string, root: HTMLElement) {
   let node: HTMLElement | null = el.parentElement;
@@ -178,7 +241,10 @@ export function enhanceFrame(
 ): () => void {
   const candidates = root.querySelectorAll<HTMLElement>('div, span, p, button, a, label');
 
-  // Barra "Tu carrito…" / acceso: fijar al borde inferior del phone-frame
+  // Tab bar Inicio / Buscar / Carrito / Mi cuenta → fija al scrollear
+  pinClientTabBar(root);
+
+  // Barra "Tu carrito…" sticky al borde inferior
   root.querySelectorAll<HTMLElement>('span, div, p').forEach((el) => {
     const t = (el.textContent || '').replace(/\s+/g, ' ').trim().toLowerCase();
     if (t !== 'tu carrito está vacío' && t !== 'tu carrito esta vacio') return;
@@ -190,7 +256,6 @@ export function enhanceFrame(
         node.setAttribute('data-proto-sticky-cart', '1');
         break;
       }
-      // Contenedor blanco del footer (altura ~98)
       if (h >= 90 && h <= 120) {
         node.setAttribute('data-proto-sticky-cart', '1');
         break;

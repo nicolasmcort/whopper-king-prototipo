@@ -115,6 +115,8 @@ function App() {
           height: 'min(844px, calc(100vh - 32px))',
           background: '#f7f9fb',
           position: 'relative',
+          // containing block para position:fixed de la tab bar
+          transform: 'translateZ(0)',
           overflowX: 'hidden',
           overflowY: 'auto',
           boxShadow: '0 12px 40px rgba(0,0,0,0.35)',
