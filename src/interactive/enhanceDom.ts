@@ -467,6 +467,35 @@ function disableDeadControls(root: HTMLElement) {
   markDead(root.querySelector<HTMLElement>('[data-figma-id="342:1130"]'));
   markDead(root.querySelector<HTMLElement>('[data-figma-id="342:1131"]'));
   markDead(root.querySelector<HTMLElement>('[data-figma-id="342:1132"]'));
+
+  // Iconos Contáctanos (WhatsApp / llamada / Instagram / ubicación) en Inicio
+  [
+    '596:2760',
+    '596:2761',
+    '596:2762',
+    '720:2626',
+    '720:2627',
+    '720:2628',
+    '720:2630',
+    '720:2631',
+    '720:2634',
+    '720:2635',
+    '720:2636',
+    '802:4020',
+  ].forEach((id) => {
+    markDead(root.querySelector<HTMLElement>(`[data-figma-id="${id}"]`));
+  });
+
+  // Título de sección: no abrir sheet de contactos
+  root.querySelectorAll('span').forEach((el) => {
+    if (el.childElementCount > 0) return;
+    const t = (el.textContent || '').replace(/\s+/g, ' ').trim().toLowerCase();
+    if (t === 'contáctanos por acá' || t === 'contactanos por aca') {
+      markDead(el);
+      const row = el.parentElement as HTMLElement | null;
+      if (row) markDead(row);
+    }
+  });
 }
 
 /**

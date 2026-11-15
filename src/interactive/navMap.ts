@@ -5,6 +5,7 @@ function n(s: string) {
   return s
     .normalize('NFD')
     .replace(/[\u0300-\u036f]/g, '')
+    .replace(/[¡!¿?.,;:…«»"'“”]/g, '')
     .replace(/\s+/g, ' ')
     .trim()
     .toLowerCase();
@@ -51,11 +52,10 @@ const CLIENT_GLOBAL = normMap({
   'agregar direccion': 'agregar-direccion',
   'agregar dirección': 'agregar-direccion',
   privacidad: 'privacidad',
-  contactos: 'contactos',
-  contactanos: 'contactos',
-  'contáctanos': 'contactos',
+  // contactos / WhatsApp / etc. no navegan desde el prototipo (quedan visuales)
   'sobre nosotros': 'sobre-nosotros',
   conocernos: 'sobre-nosotros',
+  'da clic aqui para conocernos': 'sobre-nosotros',
   pqrs: 'pqrs',
   'iniciar sesion': 'login',
   'iniciar sesión': 'login',
@@ -300,10 +300,11 @@ const BY_SCREEN_RAW: Record<string, Record<string, NavTarget>> = {
     'mi cuenta': 'mi-cuenta',
     'sobre nosotros': 'sobre-nosotros',
     conocernos: 'sobre-nosotros',
-    contactanos: 'contactos',
-    'contáctanos': 'contactos',
-    'contactanos por aca': 'contactos',
-    'contáctanos por acá': 'contactos',
+    'da clic aqui para conocernos': 'sobre-nosotros',
+    'da clic aquí para conocernos': 'sobre-nosotros',
+    '¡da clic aqui para conocernos!': 'sobre-nosotros',
+    '¡da clic aquí para conocernos!': 'sobre-nosotros',
+    // Iconos de contacto en inicio: sin navegación (prototipo)
     pqrs: 'pqrs',
     carrito: 'tu-carrito-local',
     whoppers: 'menu-burgers',
@@ -788,8 +789,8 @@ const BY_SCREEN_RAW: Record<string, Record<string, NavTarget>> = {
   'sobre-nosotros': {
     inicio: 'whopper-inicio',
     menu: 'menu',
-    volver: 'whopper-inicio',
-    atras: 'whopper-inicio',
+    volver: '__back__',
+    atras: '__back__',
   },
   'escaneo-qr': {
     continuar: 'pago-local-nequi',
@@ -1053,6 +1054,10 @@ const FIGMA_ID_ACTIONS: Record<string, string> = {
   '679:1638': 'carrito',
   '679:1642': 'carrito',
   '679:1643': 'carrito',
+  // CTA «¡Da clic aquí para conocernos!» → Sobre nosotros
+  '595:2642': 'conocernos',
+  '595:2644': 'conocernos',
+  '595:2645': 'conocernos',
   // Filas de inventario → detalle (clic en toda la fila)
   '752:1956': 'tocineta',
   '752:1977': 'carne de res',
