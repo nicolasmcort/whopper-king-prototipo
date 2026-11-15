@@ -14,6 +14,8 @@ export const DELIVERY_FEE = 4000;
 export type CartState = {
   items: CartItem[];
   fulfillment: Fulfillment;
+  /** Mesa elegida en el flujo local (1–10). */
+  tableNumber: number;
 };
 
 /** Pedido confirmado (congelado para pantallas de éxito / preparación). */
@@ -81,6 +83,7 @@ export const PRODUCT_BY_SCREEN: Record<
 
 const INITIAL: CartState = {
   fulfillment: 'local',
+  tableNumber: 1,
   items: [
     {
       id: 'whopper-sencilla',
@@ -167,6 +170,17 @@ export function setFulfillment(fulfillment: Fulfillment) {
   if (state.fulfillment === fulfillment) return;
   state = { ...state, fulfillment };
   emit();
+}
+
+export function setTableNumber(tableNumber: number) {
+  const n = Math.min(10, Math.max(1, Math.round(tableNumber)));
+  if (state.tableNumber === n) return;
+  state = { ...state, tableNumber: n };
+  emit();
+}
+
+export function getTableNumber(): number {
+  return state.tableNumber;
 }
 
 export function payScreenForCart(method = 'nequi'): string {

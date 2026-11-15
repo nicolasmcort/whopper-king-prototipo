@@ -251,14 +251,14 @@ export function TuCarritoLocal() {
               flexShrink: 0,
               alignSelf: "stretch"
             }}>
-            <div data-figma-id="650:2728" data-proto-action="mesa 7" style={{
+            <div data-figma-id="650:2728" style={{
                 minWidth: 0,
                 display: "flex",
                 position: "relative",
                 height: "max-content",
                 flexShrink: 0,
                 alignSelf: "stretch",
-                cursor: "pointer"
+                pointerEvents: "none"
               }}>
               <div data-figma-id="650:2729" style={fixedLayer("max-content", 22, {
                   display: "flex",
@@ -314,7 +314,7 @@ export function TuCarritoLocal() {
                         flexShrink: 0,
                         alignSelf: "stretch"
                       }}>
-                      {"Mesa 7 · Pedido en el local"}
+                      {"Pedido en el local"}
                     </span>
                   </div>
                   <div data-figma-id="650:2736" style={{
@@ -344,7 +344,7 @@ export function TuCarritoLocal() {
                           lineHeight: "15px",
                           left: 0,
                           textAlign: "left"
-                        }}>{"Escaneaste el código QR de tu mesa · Whopper King\nLas Cuadras"}</span>
+                        }}>{"Whopper King Las Cuadras\nIndica tu mesa al continuar al pago"}</span>
                     </span>
                   </div>
                 </div>

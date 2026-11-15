@@ -1,11 +1,13 @@
 import {
   addProductFromScreen,
   commitOrder,
+  getCart,
   payScreenForCart,
   PRODUCT_BY_SCREEN,
 } from '../cart/store';
 import { mountLiveCart, syncMenuCartBars } from '../components/ClientLiveCart';
 import { mountOrderSummary } from '../components/ClientOrderSummary';
+import { mountTableSelect } from '../components/ClientTableSelect';
 import {
   isButtonish,
   isEditableLabel,
@@ -384,10 +386,26 @@ export function enhanceFrame(
     }
 
     let next: NavTarget = dest;
-    if (typeof next === 'string' && /^pago-(local|dom)-/.test(next)) {
+
+    // Desde carrito: local → QR/mesa; domicilio → pago directo
+    if (
+      typeof next === 'string' &&
+      (next === 'escaneo-qr' || /^pago-/.test(next)) &&
+      (screenId === 'tu-carrito-local' ||
+        screenId === 'tu-carrito-domicilio' ||
+        screenId === 'carrito-local' ||
+        screenId === 'carrito-domicilio')
+    ) {
+      if (getCart().fulfillment === 'domicilio') {
+        next = payScreenForCart('nequi');
+      } else {
+        next = 'escaneo-qr';
+      }
+    } else if (typeof next === 'string' && /^pago-(local|dom)-/.test(next)) {
       const method = next.replace(/^pago-(local|dom)-/, '') || 'nequi';
       next = payScreenForCart(method);
     }
+
     // Al confirmar pedido, congelar el carrito para el resumen
     if (typeof next === 'string' && next.startsWith('pedido-')) {
       commitOrder();
@@ -401,10 +419,12 @@ export function enhanceFrame(
     if (target.closest(`input, textarea, select, [${MARK}="field"], [${MARK}="input"]`)) {
       return;
     }
-    // Controles vivos del carrito (cantidades / local·domicilio) manejan su propio click
+    // Controles vivos del carrito / mesa manejan su propio click
     if (
       target.closest('[data-proto-live-cart="host"]') ||
-      target.closest('[data-proto-fulfillment]')
+      target.closest('[data-proto-fulfillment]') ||
+      target.closest('[data-proto-table-select]') ||
+      target.closest('select')
     ) {
       return;
     }
@@ -445,6 +465,8 @@ export function enhanceFrame(
         navigate(id);
       }),
     );
+  } else if (screenId === 'escaneo-qr') {
+    cleanups.push(mountTableSelect(root));
   } else if (
     screenId === 'pedido-exitoso-local' ||
     screenId === 'pedido-enviado-local' ||

@@ -318,7 +318,7 @@ export function PantallaDeEscaneoDeQR() {
         <div data-figma-id="646:2375" style={fixedLayer(16, 16, {
           overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center"
         })}>
-          <ClientClockIcon size={16} color="#2d8659" />
+          <ClientBackIcon size={20} color="#29241f" />
           </div>
       </div>
     </div>
@@ -445,7 +445,7 @@ export function PantallaDeEscaneoDeQR() {
             flexShrink: 0,
             alignSelf: "stretch"
           }}>
-            {"Está en la placa del centro de tu mesa (1 a 16)."}
+            {"Está en la placa del centro de tu mesa (1 a 10)."}
           </span>
         </div>
       </div>
@@ -554,7 +554,7 @@ export function PantallaDeEscaneoDeQR() {
           position: "relative",
           flexShrink: 0
         }}>
-          {"Continuar con la mesa 7"}
+          {"Continuar con la mesa 1"}
         </span>
       </div>
       <div data-figma-id="646:2405" style={{
