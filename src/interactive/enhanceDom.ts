@@ -66,8 +66,12 @@ function resolveFromClick(
   root: HTMLElement,
   screenId: string,
 ): NavTarget | null {
+  // Zona muerta / status: no navegar
+  if (target.closest('[data-proto-dead], [data-proto-status-bar]')) return null;
+
   let el: Element | null = target;
   while (el && el !== root) {
+    if (el.getAttribute('data-proto-dead') === '1') return null;
     const action = el.getAttribute('data-proto-action');
     // Flecha atrás siempre = pantalla anterior (historial), no un destino fijo
     if (action === 'volver' || action === 'atras') return '__back__';
@@ -83,29 +87,36 @@ function resolveFromClick(
     el = el.parentElement;
   }
 
-  // Subir el árbol: preferir nombres de producto sobre pestañas de categoría
-  // (p. ej. no elegir “Hamburguesas” del encabezado de sección al tocar una tarjeta).
-  const categoryTabs = new Set(['hamburguesas', 'los favoritos', 'favoritos', 'whoppers']);
-  el = target;
-  while (el && el !== root) {
-    const labels = ownShortLabels(el);
-    let fallback: NavTarget | null = null;
-    for (const label of labels) {
-      const dest = resolveNav(screenId, label);
-      if (!dest) continue;
-      if (categoryTabs.has(normalizeLabel(label))) {
-        fallback ??= dest;
-        continue;
-      }
-      return dest;
+  // Solo resolver por texto si el clic fue sobre un control marcado como interactivo.
+  // Evita que un fondo vacío “herede” el label «Whopper King» del logo/tarjeta.
+  const pressable = target.closest(
+    `[${MARK}="btn"], .proto-pressable`,
+  ) as HTMLElement | null;
+  if (!pressable || pressable === root) return null;
+  if (pressable.closest('[data-proto-dead], [data-proto-status-bar]')) return null;
+
+  const categoryTabs = new Set([
+    'hamburguesas',
+    'los favoritos',
+    'favoritos',
+    'whoppers',
+  ]);
+  const labels = ownShortLabels(pressable);
+  let fallback: NavTarget | null = null;
+  for (const label of labels) {
+    const dest = resolveNav(screenId, label);
+    if (!dest) continue;
+    if (categoryTabs.has(normalizeLabel(label))) {
+      fallback ??= dest;
+      continue;
     }
-    if (fallback) return fallback;
-    const t = leafText(el);
-    if (t) {
-      const dest = resolveNav(screenId, t);
-      if (dest) return dest;
-    }
-    el = el.parentElement;
+    return dest;
+  }
+  if (fallback) return fallback;
+  const t = leafText(pressable);
+  if (t) {
+    const dest = resolveNav(screenId, t);
+    if (dest) return dest;
   }
   return null;
 }
@@ -468,6 +479,17 @@ function disableDeadControls(root: HTMLElement) {
   markDead(root.querySelector<HTMLElement>('[data-figma-id="342:1131"]'));
   markDead(root.querySelector<HTMLElement>('[data-figma-id="342:1132"]'));
 
+  // Logo de marca «Whopper King» (no es la tarjeta de producto)
+  markDead(root.querySelector<HTMLElement>('[data-figma-id="342:1127"]'));
+  // Footer copyright
+  root.querySelectorAll('span').forEach((el) => {
+    if (el.childElementCount > 0) return;
+    const t = (el.textContent || '').replace(/\s+/g, ' ').trim().toLowerCase();
+    if (t.includes('©') || /^©/.test(t) || t.includes('pasto, nariño')) {
+      markDead(el);
+    }
+  });
+
   // Iconos Contáctanos (WhatsApp / llamada / Instagram / ubicación) en Inicio
   [
     '596:2760',
@@ -669,6 +691,10 @@ export function enhanceFrame(
     const figmaId = el.getAttribute('data-figma-id');
     if (figmaId && resolveFigmaNav(screenId, figmaId)) {
       markPressable(el);
+      // Tarjeta de producto: el contenedor completo es el hit area
+      if (figmaId === '342:1172') {
+        el.setAttribute('data-proto-action', 'whopper');
+      }
       return;
     }
 
@@ -692,8 +718,29 @@ export function enhanceFrame(
     // Navegación gana sobre inputs: filas de inventario deben ir a detalle
     if (resolveNav(screenId, text) || isButtonish(text)) {
       markPressable(el);
-      if (resolveNav(screenId, text) && text.length <= 40) {
+      // No expandir «Whopper King» del logo de marca a todo el layout
+      if (
+        resolveNav(screenId, text) &&
+        text.length <= 40 &&
+        norm !== 'whopper king'
+      ) {
         expandOptionHitArea(el, text, root);
+      }
+      // En inicio, la tarjeta favorita se marca por figma-id (342:1172)
+      if (screenId === 'whopper-inicio' && (norm === 'whopper' || norm === 'whopper king')) {
+        const card = el.closest(
+          '[data-figma-id="342:1172"]',
+        ) as HTMLElement | null;
+        if (card) {
+          card.setAttribute('data-proto-action', 'whopper');
+          markPressable(card);
+        } else {
+          // Logo u otro «Whopper King» suelto: no navegable
+          el.setAttribute('data-proto-dead', '1');
+          el.classList.remove('proto-pressable');
+          el.style.cursor = 'default';
+        }
+        return;
       }
       return;
     }

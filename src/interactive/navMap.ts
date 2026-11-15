@@ -1058,6 +1058,14 @@ const FIGMA_ID_ACTIONS: Record<string, string> = {
   '595:2642': 'conocernos',
   '595:2644': 'conocernos',
   '595:2645': 'conocernos',
+  // Tarjeta favorita #1 en Inicio → detalle Whopper
+  '342:1172': 'whopper',
+  '342:1173': 'whopper',
+  '342:1174': 'whopper',
+  '342:1175': 'whopper',
+  '342:1184': 'whopper',
+  '342:1186': 'whopper',
+
   // Flecha atrás Sobre nosotros
   '464:1737': 'volver',
   '464:1738': 'volver',
