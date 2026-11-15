@@ -219,6 +219,18 @@ input.proto-field {
   height: 0 !important;
   overflow: hidden !important;
   pointer-events: none !important;
+  visibility: hidden !important;
+}
+
+/* Header con flecha atrás: por encima del contenido (evita clic absorbido) */
+[data-proto-top-chrome] {
+  z-index: 45 !important;
+  pointer-events: auto !important;
+}
+
+[data-proto-action="volver"] {
+  cursor: pointer !important;
+  pointer-events: auto !important;
 }
 
 /* Barra «Tu carrito…» de categoría: clon anclado al borde inferior del phone */

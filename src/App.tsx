@@ -34,6 +34,10 @@ function App() {
     return id === 'whopper-inicio' ? ['whopper-inicio'] : ['whopper-inicio', id];
   });
   const frameRef = useRef<HTMLDivElement>(null);
+  const historyRef = useRef(history);
+  historyRef.current = history;
+  const currentIdRef = useRef(currentId);
+  currentIdRef.current = currentId;
 
   const current = screenById[currentId] ?? screens[0];
   const Screen = current.Component;
@@ -49,44 +53,44 @@ function App() {
 
   const skipHashPush = useRef(false);
 
-  const go = useCallback((id: string, replace = false) => {
+  const applyScreen = useCallback((id: string, nextHistory: string[]) => {
     if (!screenById[id]) return;
+    historyRef.current = nextHistory;
+    currentIdRef.current = id;
+    setHistory(nextHistory);
     setCurrentId(id);
-    setHistory((h) => {
-      if (h[h.length - 1] === id) return h;
-      if (replace && h.length > 0) return [...h.slice(0, -1), id];
-      return [...h, id];
-    });
     const nextHash = `/${id}`;
-    // Solo marcar skip si el hash cambia (si no, hashchange no dispara y el flag quedaría pegado)
     if (window.location.hash.replace(/^#/, '') !== nextHash) {
       skipHashPush.current = true;
       window.location.hash = nextHash;
     }
   }, []);
 
+  const go = useCallback(
+    (id: string, replace = false) => {
+      if (!screenById[id]) return;
+      const h = historyRef.current;
+      let next: string[];
+      if (h[h.length - 1] === id) next = h;
+      else if (replace && h.length > 0) next = [...h.slice(0, -1), id];
+      else next = [...h, id];
+      applyScreen(id, next);
+    },
+    [applyScreen],
+  );
+
   const back = useCallback(() => {
-    setHistory((h) => {
-      // Alinear historial si el tope no es la pantalla actual
-      let stack = h;
-      if (stack[stack.length - 1] !== currentId) {
-        stack = [...stack, currentId];
-      }
-      if (stack.length <= 1) {
-        if (currentId !== 'whopper-inicio') go('whopper-inicio');
-        return stack.length ? stack : ['whopper-inicio'];
-      }
-      const next = stack.slice(0, -1);
-      const id = next[next.length - 1];
-      setCurrentId(id);
-      const nextHash = `/${id}`;
-      if (window.location.hash.replace(/^#/, '') !== nextHash) {
-        skipHashPush.current = true;
-        window.location.hash = nextHash;
-      }
-      return next;
-    });
-  }, [go, currentId]);
+    const here = currentIdRef.current;
+    let stack = [...historyRef.current];
+    if (stack[stack.length - 1] !== here) stack.push(here);
+    // Quitar la pantalla actual (y duplicados)
+    while (stack.length > 0 && stack[stack.length - 1] === here) {
+      stack.pop();
+    }
+    const id = stack.length > 0 ? stack[stack.length - 1] : 'whopper-inicio';
+    if (!stack.length) stack = ['whopper-inicio'];
+    applyScreen(id, stack);
+  }, [applyScreen]);
 
   const navigate = useCallback(
     (target: NavTarget) => {
@@ -95,22 +99,29 @@ function App() {
         return;
       }
       // Misma pantalla (p. ej. − en carrito): no remount
-      if (target === currentId) return;
-      const replace = shouldReplaceHistory(currentId, target);
+      if (target === currentIdRef.current) return;
+      const replace = shouldReplaceHistory(currentIdRef.current, target);
       go(target, replace);
     },
-    [back, go, currentId],
+    [back, go],
   );
 
   useEffect(() => {
     const onHash = () => {
       const id = readHash();
-      setCurrentId(id);
       if (skipHashPush.current) {
         skipHashPush.current = false;
+        currentIdRef.current = id;
+        setCurrentId(id);
         return;
       }
-      setHistory((h) => (h[h.length - 1] === id ? h : [...h, id]));
+      // Navegación externa / botón atrás del browser
+      const h = historyRef.current;
+      const next = h[h.length - 1] === id ? h : [...h, id];
+      historyRef.current = next;
+      currentIdRef.current = id;
+      setHistory(next);
+      setCurrentId(id);
     };
     window.addEventListener('hashchange', onHash);
     if (!window.location.hash) window.location.hash = '/whopper-inicio';

@@ -394,18 +394,21 @@ function hideStatusBars(root: HTMLElement) {
         node.offsetHeight || Number.parseFloat(node.style.height) || 0;
       const top = node.style.top;
       const svgCount = node.querySelectorAll('svg').length;
+      // Barra de status: fila corta con hora + ≥2 iconos (señal/wifi/batería)
       const looksStatus =
         svgCount >= 2 &&
-        ((h >= 36 && h <= 56) ||
-          top === '0px' ||
+        (h === 0 || h >= 36) &&
+        (h === 0 || h <= 56) &&
+        (top === '0px' ||
           top === '0' ||
-          node.style.position === 'absolute');
+          node.style.position === 'absolute' ||
+          node.style.position === 'relative' ||
+          !node.style.position);
 
       if (looksStatus) {
         node.setAttribute('data-proto-status-bar', '1');
         node.style.setProperty('display', 'none', 'important');
 
-        // Headers absolutos que vivían bajo la status bar → subirlos
         const parent = node.parentElement;
         if (parent) {
           Array.from(parent.children).forEach((sib) => {
@@ -423,16 +426,38 @@ function hideStatusBars(root: HTMLElement) {
   });
 }
 
-/** Asegura hit area clicable en flechas atrás (círculo ~40px). */
+/**
+ * Flechas atrás: hit area + z-index alto.
+ * En carrito/pago el contenido en flujo tapa el header absolute y se come el clic.
+ */
 function pinBackButtons(root: HTMLElement) {
   const markBack = (hit: HTMLElement) => {
     hit.setAttribute('data-proto-action', 'volver');
-    hit.style.setProperty('z-index', '30', 'important');
+    hit.style.setProperty('z-index', '50', 'important');
     hit.style.setProperty('pointer-events', 'auto', 'important');
     if (!hit.style.position || hit.style.position === 'static') {
       hit.style.position = 'relative';
     }
     markPressable(hit);
+
+    // Subir el header absolute completo para que quede sobre el contenido
+    let header: HTMLElement | null = hit.parentElement;
+    for (let i = 0; i < 4 && header && header !== root; i++) {
+      const pos = header.style.position;
+      const top = header.style.top;
+      if (
+        (pos === 'absolute' || pos === 'fixed') &&
+        (top === '0px' ||
+          top === '0' ||
+          (!!top && Number.parseFloat(top) >= 0 && Number.parseFloat(top) <= 80))
+      ) {
+        header.setAttribute('data-proto-top-chrome', '1');
+        header.style.setProperty('z-index', '45', 'important');
+        header.style.setProperty('pointer-events', 'auto', 'important');
+        break;
+      }
+      header = header.parentElement;
+    }
   };
 
   root.querySelectorAll<HTMLElement>('[data-proto-action="volver"]').forEach((el) => {
@@ -450,7 +475,6 @@ function pinBackButtons(root: HTMLElement) {
     markBack(found || (el.closest('[data-figma-id]') as HTMLElement) || el);
   });
 
-  // Wrappers mapeados a volver por figma-id (por si el SVG aún no montó el attr)
   root.querySelectorAll<HTMLElement>('[data-figma-id]').forEach((el) => {
     const id = el.getAttribute('data-figma-id');
     if (!id) return;
@@ -514,6 +538,17 @@ export function enhanceFrame(
 
   // Flechas atrás: hit area amplia + z-index para que no las tape el contenido
   pinBackButtons(root);
+
+  // Contenido con padding-top bajo header absolute: el padding capturaba el clic de la flecha
+  root.querySelectorAll<HTMLElement>('[data-proto-scroll] div').forEach((el) => {
+    const pt = Number.parseFloat(el.style.paddingTop || '');
+    if (Number.isNaN(pt) || pt < 60 || pt > 140) return;
+    if (el.style.position === 'absolute' || el.style.position === 'fixed') return;
+    el.style.pointerEvents = 'none';
+    Array.from(el.children).forEach((child) => {
+      (child as HTMLElement).style.pointerEvents = 'auto';
+    });
+  });
 
   // data-proto-action: marcar hit area (flechas atrás y opciones de combo)
   root.querySelectorAll<HTMLElement>('[data-proto-action]').forEach((el) => {
@@ -615,6 +650,18 @@ export function enhanceFrame(
     if (target.closest(`input, textarea, select, [${MARK}="field"], [${MARK}="input"]`)) {
       return;
     }
+
+    // Flecha atrás gana siempre (aunque haya overlays / mismo screenId)
+    if (
+      target.closest('[data-proto-action="volver"]') ||
+      target.closest('[data-proto-action="atras"]')
+    ) {
+      e.preventDefault();
+      e.stopPropagation();
+      navigate('__back__');
+      return;
+    }
+
     // Controles vivos del carrito / mesa manejan su propio click
     if (
       target.closest('[data-proto-live-cart="host"]') ||
@@ -629,6 +676,8 @@ export function enhanceFrame(
     if (!dest) {
       return;
     }
+    // Destino = misma pantalla: no es navegación útil (p. ej. título «Tu carrito»)
+    if (dest === screenId) return;
     e.preventDefault();
     e.stopPropagation();
     goWithCart(target, dest);
