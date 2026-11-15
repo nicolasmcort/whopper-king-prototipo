@@ -1,5 +1,4 @@
 import React from 'react';
-import { ClientCartIcon, ClientCartIconOutline } from '../ClientCartIcon';
 import {
   ClientBackIcon,
   ClientUtensilsIcon,
@@ -212,19 +211,10 @@ export function TuCarritoLocal() {
             {"Tu carrito"}
           </span>
         </div>
-        <div data-figma-id="650:2720" style={fixedLayer(40, 40, {
-            ...surface1,
-            ...row2
-          })}>
-          <div data-figma-id="650:2721" style={fixedLayer(20, 20, {
-              overflow: "hidden",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center"
-            })}>
-            <ClientCartIconOutline size={20} color="#82776e" />
-          </div>
-        </div>
+        <div data-figma-id="650:2720" aria-hidden="true" style={fixedLayer(40, 40, {
+            visibility: "hidden",
+            pointerEvents: "none"
+          })} />
       </div>
       <div data-figma-id="650:2725" style={{
           overflow: "hidden",
@@ -260,13 +250,14 @@ export function TuCarritoLocal() {
               flexShrink: 0,
               alignSelf: "stretch"
             }}>
-            <div data-figma-id="650:2728" style={{
+            <div data-figma-id="650:2728" data-proto-action="mesa 7" style={{
                 minWidth: 0,
                 display: "flex",
                 position: "relative",
                 height: "max-content",
                 flexShrink: 0,
-                alignSelf: "stretch"
+                alignSelf: "stretch",
+                cursor: "pointer"
               }}>
               <div data-figma-id="650:2729" style={fixedLayer("max-content", 22, {
                   display: "flex",
@@ -422,7 +413,7 @@ export function TuCarritoLocal() {
                     position: "relative",
                     flexShrink: 0
                   }}>
-                  {"Whopper King"}
+                  {"Platos seleccionados"}
                 </span>
               </div>
               <div data-figma-id="653:4332" style={fixedLayer(74.8, 19.5)}>
@@ -770,7 +761,7 @@ export function TuCarritoLocal() {
             <div data-figma-id="653:4377" style={{
                 ...row1,
                 minWidth: 0,
-                padding: "8px 0 0",
+                padding: "8px 0 0 28px",
                 boxSizing: "border-box",
                 justifyContent: "space-between",
                 position: "relative",

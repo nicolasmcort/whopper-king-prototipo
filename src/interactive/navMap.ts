@@ -72,6 +72,7 @@ const CLIENT_GLOBAL = normMap({
   'modo administrador': 'inventario',
   'acceder al modo administrador': 'inventario',
   texana: 'desc-texana',
+  whopper: 'personaliza-whopper',
 });
 
 const GLOBAL = normMap({
@@ -476,7 +477,16 @@ const BY_SCREEN_RAW: Record<string, Record<string, NavTarget>> = {
     'continuar a pago': 'pago-local-nequi',
     'a domicilio': 'tu-carrito-domicilio',
     'escanear qr': 'escaneo-qr',
+    'mesa 7': 'escaneo-qr',
+    'pedido en el local': 'escaneo-qr',
+    'mesa 7 · pedido en el local': 'escaneo-qr',
     quitar: 'quitar-producto-cliente',
+    'añadir algo mas': 'menu',
+    'añadir algo más': 'menu',
+    // En carrito, no saltar a ficha de producto (evita − / fila → descripción)
+    texana: 'tu-carrito-local',
+    'texana especial': 'tu-carrito-local',
+    whopper: 'tu-carrito-local',
     menu: 'menu',
     inicio: 'whopper-inicio',
     'mi cuenta': 'mi-cuenta',
@@ -491,6 +501,11 @@ const BY_SCREEN_RAW: Record<string, Record<string, NavTarget>> = {
     'continuar a pago': 'pago-dom-nequi',
     local: 'tu-carrito-local',
     'en el local': 'tu-carrito-local',
+    'añadir algo mas': 'menu',
+    'añadir algo más': 'menu',
+    texana: 'tu-carrito-domicilio',
+    'texana especial': 'tu-carrito-domicilio',
+    whopper: 'tu-carrito-domicilio',
     menu: 'menu',
     inicio: 'whopper-inicio',
     'mi cuenta': 'mi-cuenta',
@@ -963,8 +978,9 @@ function partialHit(key: string, k: string): boolean {
   if (key === k) return true;
   if (key.startsWith(k + ' ') || key.endsWith(' ' + k)) return true;
   if (key.includes(' ' + k + ' ')) return true;
-  // "whopper" debe poder abrir "whoppers"
-  if (k.startsWith(key) && key.length >= 4) return true;
+  // Etiqueta clicada empieza por la clave del mapa (“Whoppers” ⊃ “whopper” solo si la clave es más corta)
+  // Evita que “Whopper” (producto) abra “whoppers” (menú de categoría).
+  if (key.startsWith(k) && k.length >= 4 && key.length > k.length) return true;
   // Etiqueta corta de tab/botón contenida solo como palabra completa
   if (k.length >= 4) {
     const re = new RegExp(`(?:^|\\s|:)${k.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}(?:\\s|$|:|-)`, 'i');

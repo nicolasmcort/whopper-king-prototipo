@@ -1,5 +1,4 @@
 import React from 'react';
-import { ClientCartIconOutline } from '../ClientCartIcon';
 import {
   ClientBackIcon,
   ClientUtensilsIcon,
@@ -283,18 +282,10 @@ export function TuCarritoADomicilio() {
             {"Tu carrito"}
           </span>
         </div>
-        <div data-figma-id="650:2601" style={fixedLayer(40, 40, {
-            ...surface1,
-            background: "#ffffff",
-            borderRadius: 9999,
-            ...row2
-          })}>
-          <div data-figma-id="650:2602" style={fixedLayer(20, 20, {
-              overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center"
-            })}>
-            <ClientCartIconOutline size={20} color="#82776e" />
-          </div>
-        </div>
+        <div data-figma-id="650:2601" aria-hidden="true" style={fixedLayer(40, 40, {
+            visibility: "hidden",
+            pointerEvents: "none"
+          })} />
       </div>
       <div data-figma-id="650:2604" style={{
           minWidth: 0,
@@ -443,7 +434,7 @@ export function TuCarritoADomicilio() {
                   position: "relative",
                   flexShrink: 0
                 }}>
-                {"Whopper King"}
+                {"Platos seleccionados"}
               </span>
             </div>
             <div data-figma-id="653:4392" style={fixedLayer(74.8, 19.5)}>
@@ -787,7 +778,7 @@ export function TuCarritoADomicilio() {
           <div data-figma-id="653:4437" style={{
               ...row1,
               ...layout1,
-              padding: "8px 0 0",
+              padding: "8px 0 0 28px",
               boxSizing: "border-box",
               position: "relative",
               height: "max-content",

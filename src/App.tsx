@@ -66,6 +66,8 @@ function App() {
         back();
         return;
       }
+      // Misma pantalla (p. ej. − en carrito): no remount
+      if (target === currentId) return;
       const replace = shouldReplaceHistory(currentId, target);
       go(target, replace);
     },
