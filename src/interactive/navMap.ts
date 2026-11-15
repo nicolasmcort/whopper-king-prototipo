@@ -353,6 +353,10 @@ const BY_SCREEN_RAW: Record<string, Record<string, NavTarget>> = {
     atras: 'whopper-inicio',
   },
   'menu-burgers': {
+    // Tabs: Favoritos (esta pantalla) ↔ Hamburguesas (lista completa)
+    hamburguesas: 'menu-burgers-00',
+    'los favoritos': 'menu-burgers',
+    favoritos: 'menu-burgers',
     whopper: 'personaliza-whopper',
     carrito: 'tu-carrito-local',
     'tu carrito esta vacio': 'tu-carrito-local',
@@ -364,6 +368,9 @@ const BY_SCREEN_RAW: Record<string, Record<string, NavTarget>> = {
     atras: 'whopper-inicio',
   },
   'menu-burgers-00': {
+    hamburguesas: 'menu-burgers-00',
+    'los favoritos': 'menu-burgers',
+    favoritos: 'menu-burgers',
     whopper: 'personaliza-whopper',
     carrito: 'tu-carrito-local',
     'tu carrito esta vacio': 'tu-carrito-local',
@@ -426,6 +433,9 @@ const BY_SCREEN_RAW: Record<string, Record<string, NavTarget>> = {
     atras: 'whopper-inicio',
   },
   'menu-hamburguesas': {
+    hamburguesas: 'menu-burgers-00',
+    'los favoritos': 'menu-burgers',
+    favoritos: 'menu-burgers',
     menu: 'menu',
     buscar: 'menu',
     whopper: 'personaliza-whopper',
@@ -909,6 +919,11 @@ const FIGMA_ID_ACTIONS: Record<string, string> = {
   '711:1141': 'volver', // flecha atrás en headers de menú/categoría
   '679:1635': 'carrito', // carrito header inicio
   '679:1637': 'carrito',
+  // Tabs Whoppers: Favoritos ↔ Hamburguesas
+  '748:1852': 'hamburguesas',
+  '748:1853': 'hamburguesas',
+  '748:1850': 'los favoritos',
+  '748:1851': 'los favoritos',
   '585:2333': 'volver', // X / atrás en login
   '585:2334': 'volver',
   // Flechas atrás carrito / pago
@@ -1127,5 +1142,8 @@ const REPLACE_VARIANT_SCREENS = new Set([
 export function shouldReplaceHistory(fromId: string, toId: string): boolean {
   const pair = new Set([fromId, toId]);
   if (pair.has('agregar-existente') && pair.has('agregar-nuevo')) return true;
+  // Tabs Favoritos ↔ Hamburguesas
+  if (pair.has('menu-burgers') && pair.has('menu-burgers-00')) return true;
+  if (pair.has('menu-burgers') && pair.has('menu-hamburguesas')) return true;
   return REPLACE_VARIANT_SCREENS.has(fromId) && REPLACE_VARIANT_SCREENS.has(toId);
 }

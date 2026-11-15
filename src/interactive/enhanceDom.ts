@@ -279,10 +279,23 @@ export function enhanceFrame(
       const bg = (node.style.background || '').toLowerCase();
       if (h >= 80 && h <= 130 && (bg.includes('#fff') || bg.includes('ffffff') || getComputedStyle(node).backgroundColor !== 'rgba(0, 0, 0, 0)')) {
         node.setAttribute('data-proto-sticky-cart', '1');
+        // Espacio antes del carrito para que los últimos platos no queden tapados
+        if (!node.previousElementSibling?.hasAttribute('data-proto-cart-clearance')) {
+          const gap = document.createElement('div');
+          gap.setAttribute('data-proto-cart-clearance', '1');
+          gap.style.cssText = 'height:24px;width:100%;flex-shrink:0;pointer-events:none;';
+          node.parentElement?.insertBefore(gap, node);
+        }
         break;
       }
       if (h >= 90 && h <= 120) {
         node.setAttribute('data-proto-sticky-cart', '1');
+        if (!node.previousElementSibling?.hasAttribute('data-proto-cart-clearance')) {
+          const gap = document.createElement('div');
+          gap.setAttribute('data-proto-cart-clearance', '1');
+          gap.style.cssText = 'height:24px;width:100%;flex-shrink:0;pointer-events:none;';
+          node.parentElement?.insertBefore(gap, node);
+        }
         break;
       }
       node = node.parentElement;
