@@ -168,12 +168,14 @@ export function TuCarritoADomicilio() {
         <path id="figma-vector-401-corners-2-0" d="M0 5.251L10.501 5.251M5.251 0L5.251 10.501" fillRule="nonzero" />
       </defs>
     </svg>
-  <div data-figma-id="650:2573" style={rootLayer("100%", 884, {
+  <div data-figma-id="650:2573" style={rootLayer("100%", "auto", {
       background: "linear-gradient(#fffcf8, #fffcf8), linear-gradient(#f0ece6, #f0ece6)",
       backgroundColor: "#ffffff",
       ...layout1,
       display: "flex",
-      flexDirection: "column"
+      flexDirection: "column",
+      minHeight: 884,
+      overflow: "visible"
     })}>
     <div data-figma-id="650:2574" style={{
         background: "rgba(255, 255, 255, 0.002)",
@@ -186,13 +188,13 @@ export function TuCarritoADomicilio() {
       }} />
     <div data-figma-id="650:2575" style={{
         minWidth: 0,
-        overflow: "hidden",
+        overflow: "visible",
         display: "flex",
         padding: "0 0 16px",
         boxSizing: "border-box",
         flexDirection: "column",
         position: "relative",
-        height: 637,
+        height: "auto",
         flexShrink: 0,
         alignSelf: "stretch"
       }}>
@@ -842,17 +844,21 @@ export function TuCarritoADomicilio() {
         ...col2,
         padding: "13px 20px 8px",
         position: "relative",
-        height: 247,
+        height: "auto",
         flexShrink: 0,
-        alignSelf: "stretch"
+        alignSelf: "stretch",
+        overflow: "visible",
+        gap: 12
       }}>
       <div data-figma-id="650:2682" style={{
           ...col2,
           padding: "0 0 6px",
           position: "relative",
-          height: 112,
+          height: "auto",
           flexShrink: 0,
-          alignSelf: "stretch"
+          alignSelf: "stretch",
+          overflow: "visible",
+          gap: 6
         }}>
         <div data-figma-id="650:2683" style={{
             ...row1,

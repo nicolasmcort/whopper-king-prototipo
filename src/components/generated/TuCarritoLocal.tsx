@@ -167,12 +167,13 @@ export function TuCarritoLocal() {
       boxSizing: "border-box",
       justifyContent: "center"
     })}>
-    <div data-figma-id="650:2713" style={fixedLayer(402, 874, {
+    <div data-figma-id="650:2713" style={fixedLayer(402, "auto", {
         background: "#fffcf8",
         filter: "drop-shadow(0px 10px 25px rgba(0, 0, 0, 0.08))",
         minWidth: 0,
         minHeight: 874,
-        overflow: "hidden"
+        overflow: "visible",
+        height: "auto"
       })}>
       <div data-figma-id="650:2714" style={{
           ...row1,
@@ -217,16 +218,15 @@ export function TuCarritoLocal() {
           })} />
       </div>
       <div data-figma-id="650:2725" style={{
-          overflow: "hidden",
+          overflow: "visible",
           display: "flex",
-          padding: "8px 20px 0",
+          padding: "98.5px 20px 16px",
           boxSizing: "border-box",
           flexDirection: "column",
-          position: "absolute",
-          left: 0,
-          top: 98.5,
-          right: 0,
-          bottom: 0
+          position: "relative",
+          width: "100%",
+          height: "auto",
+          gap: 8
         }}>
         <div data-figma-id="650:2726" style={{
             minWidth: 0,
@@ -236,9 +236,10 @@ export function TuCarritoLocal() {
             flexDirection: "column",
             gap: 16,
             position: "relative",
-            height: 429,
+            height: "auto",
             flexShrink: 0,
-            alignSelf: "stretch"
+            alignSelf: "stretch",
+            overflow: "visible"
           }}>
           <div data-figma-id="650:2727" style={{
               background: "rgba(245, 239, 233, 0.7)",
@@ -819,17 +820,21 @@ export function TuCarritoLocal() {
               ...col2,
               padding: "13px 20px 8px",
               position: "relative",
-              height: 216,
+              height: "auto",
               flexShrink: 0,
-              alignSelf: "stretch"
+              alignSelf: "stretch",
+              overflow: "visible",
+              gap: 12
             }}>
             <div data-figma-id="650:2882" style={{
                 ...col2,
                 padding: "0 0 6px",
                 position: "relative",
-                height: 81,
+                height: "auto",
                 flexShrink: 0,
-                alignSelf: "stretch"
+                alignSelf: "stretch",
+                overflow: "visible",
+                gap: 6
               }}>
               <div data-figma-id="650:2883" style={{
                   ...row1,

@@ -644,12 +644,26 @@ export function mountLiveCart(
     liberate = liberate.parentElement;
   }
 
-  // El bloque del footer no debe tapar el selector (padding enorme de Figma)
-  root.querySelectorAll<HTMLElement>('[data-figma-id="650:2802"], [data-figma-id="650:2681"]').forEach((el) => {
-    el.style.paddingTop = '20px';
+  // Footer de totales/CTA: altura automática para no tapar Subtotal/Total
+  root.querySelectorAll<HTMLElement>(
+    '[data-figma-id="650:2802"], [data-figma-id="650:2681"], [data-figma-id="650:2881"], [data-figma-id="650:2882"], [data-figma-id="650:2682"], [data-figma-id="650:2713"], [data-figma-id="650:2725"], [data-figma-id="650:2726"]',
+  ).forEach((el) => {
+    el.style.height = 'auto';
+    el.style.minHeight = '0';
+    el.style.overflow = 'visible';
     el.style.flexGrow = '0';
     el.style.flexShrink = '0';
-    el.style.minHeight = '0';
+    if (el.getAttribute('data-figma-id') === '650:2802') {
+      el.style.paddingTop = '20px';
+    }
+    // Si quedó absolute (export Figma), volver al flujo
+    if (el.style.position === 'absolute') {
+      el.style.position = 'relative';
+      el.style.left = 'auto';
+      el.style.right = 'auto';
+      el.style.top = 'auto';
+      el.style.bottom = 'auto';
+    }
   });
 
   const host = document.createElement('div');
