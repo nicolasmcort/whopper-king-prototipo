@@ -997,15 +997,19 @@ export function CarritoLocal() {
         </div>
       </div>
     </div>
-    <div data-figma-id="823:3706" style={{
+  </div>
+    <div data-figma-id="823:3706" data-proto-fixed-tabbar="1" style={{
         background: "#ffffff",
         boxShadow: "inset 0 1px 0 0 #ebe4dc",
         ...col3,
-        position: "absolute",
-        left: "calc(50% + -202px)",
-        width: 402,
+        position: "fixed",
+        left: 0,
+        right: 0,
+        width: "100%",
+        maxWidth: 402,
         height: 78,
-        bottom: 0
+        bottom: 0,
+        zIndex: 60
       }}>
       <div data-figma-id="342:1198" style={{
           ...row1,
@@ -1069,7 +1073,6 @@ export function CarritoLocal() {
           })} />
       </div>
     </div>
-  </div>
   </>;
 }
 export default CarritoLocal;

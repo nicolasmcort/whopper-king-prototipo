@@ -1139,15 +1139,22 @@ export function MiCuenta() {
         </span>
       </div>
     </div>
-    <div data-figma-id="342:2208" style={{
+  </div>
+    <div data-figma-id="342:2208" data-proto-fixed-tabbar="1" style={{
         background: "#ffffff",
         boxShadow: "inset 0 1px 0 0 #ebe4dc",
         ...col1,
         minWidth: 0,
         overflow: "hidden",
-        marginTop: -1.5,
-        position: "relative",
+        marginTop: 0,
+        position: "fixed",
+        left: 0,
+        right: 0,
+        bottom: 0,
+        width: "100%",
+        maxWidth: 402,
         height: 84,
+        zIndex: 60,
         flexShrink: 0,
         alignSelf: "stretch"
       }}>
@@ -1285,7 +1292,6 @@ export function MiCuenta() {
           })} />
       </div>
     </div>
-  </div>
   </>;
 }
 export default MiCuenta;

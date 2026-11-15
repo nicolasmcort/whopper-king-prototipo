@@ -139,41 +139,45 @@ function markPressable(el: HTMLElement) {
 
 /** Barra inferior Inicio / Buscar / Carrito / Mi cuenta — fija al phone-frame. */
 function pinClientTabBar(root: HTMLElement) {
-  const candidates = Array.from(root.querySelectorAll('div')).filter((el) => {
-    const raw = (el.textContent || '').replace(/\s+/g, ' ').trim();
-    if (!/\bInicio\b/.test(raw) || !/Mi cuenta/i.test(raw)) return false;
-    if (!/\b(Buscar|Carrito)\b/i.test(raw)) return false;
-    // Evitar el árbol completo de la pantalla
-    if (raw.length > 80) return false;
-    const h = el.offsetHeight;
-    const w = el.offsetWidth;
-    return h >= 55 && h <= 120 && w >= 280;
-  }) as HTMLElement[];
+  const byId = root.querySelector<HTMLElement>(
+    '[data-figma-id="505:1853"], [data-figma-id="342:2208"], [data-figma-id="823:3706"], [data-figma-id="822:3630"], [data-proto-fixed-tabbar]',
+  );
 
-  if (candidates.length === 0) return;
+  let tab: HTMLElement | null = byId;
 
-  // Preferir el contenedor blanco de la barra (no un ítem suelto)
-  candidates.sort((a, b) => {
-    const score = (el: HTMLElement) => el.offsetHeight + (el.children.length >= 3 ? 40 : 0);
-    return score(b) - score(a);
-  });
+  if (!tab) {
+    const candidates = Array.from(root.querySelectorAll('div')).filter((el) => {
+      const raw = (el.textContent || '').replace(/\s+/g, ' ').trim();
+      if (!/\bInicio\b/.test(raw) || !/Mi cuenta/i.test(raw)) return false;
+      if (!/\b(Buscar|Carrito)\b/i.test(raw)) return false;
+      if (raw.length > 80) return false;
+      const h = el.offsetHeight || Number.parseFloat(el.style.height) || 0;
+      const w = el.offsetWidth || Number.parseFloat(el.style.width) || 0;
+      return (h === 0 || (h >= 55 && h <= 120)) && (w === 0 || w >= 280);
+    }) as HTMLElement[];
 
-  let tab = candidates[0];
-  const parent = tab.parentElement;
-  // Subir al wrapper blanco de la tab bar si el match fue la fila interna
-  if (
-    parent &&
-    parent !== root &&
-    parent.offsetHeight >= 70 &&
-    parent.offsetHeight <= 120 &&
-    /Inicio/i.test(parent.textContent || '') &&
-    /Mi cuenta/i.test(parent.textContent || '')
-  ) {
-    tab = parent;
+    if (candidates.length === 0) return;
+
+    candidates.sort((a, b) => {
+      const score = (el: HTMLElement) =>
+        (el.offsetHeight || 70) + (el.children.length >= 3 ? 40 : 0);
+      return score(b) - score(a);
+    });
+
+    tab = candidates[0];
+    const parent = tab.parentElement;
+    if (
+      parent &&
+      parent !== root &&
+      (parent.offsetHeight === 0 || (parent.offsetHeight >= 70 && parent.offsetHeight <= 120)) &&
+      /Inicio/i.test(parent.textContent || '') &&
+      /Mi cuenta/i.test(parent.textContent || '')
+    ) {
+      tab = parent;
+    }
   }
 
-  const wasInFlow = getComputedStyle(tab).position !== 'absolute' && getComputedStyle(tab).position !== 'fixed';
-  const barH = tab.offsetHeight || 79;
+  const barH = tab.offsetHeight || Number.parseFloat(tab.style.height) || 79;
 
   tab.setAttribute('data-proto-fixed-tabbar', '1');
   tab.style.setProperty('position', 'fixed', 'important');
@@ -185,18 +189,12 @@ function pinClientTabBar(root: HTMLElement) {
   tab.style.setProperty('top', 'auto', 'important');
   tab.style.setProperty('z-index', '60', 'important');
 
-  // Spacer para que el contenido no quede bajo la barra
   if (!root.querySelector('[data-proto-tabbar-spacer]')) {
     const spacer = document.createElement('div');
     spacer.setAttribute('data-proto-tabbar-spacer', '1');
     spacer.style.cssText = `height:${barH}px;flex-shrink:0;width:100%;pointer-events:none;`;
-    if (wasInFlow && tab.parentElement) {
-      tab.parentElement.insertBefore(spacer, tab);
-    } else {
-      // Tabbar absolute: añadir al final del contenido scrolleable
-      const host = (root.firstElementChild as HTMLElement | null) || root;
-      host.appendChild(spacer);
-    }
+    const host = (root.querySelector('[data-figma-id]') as HTMLElement | null) || root;
+    host.appendChild(spacer);
   }
 }
 

@@ -999,15 +999,19 @@ export function CarritoDomicilio() {
         </div>
       </div>
     </div>
-    <div data-figma-id="822:3630" style={{
+  </div>
+    <div data-figma-id="822:3630" data-proto-fixed-tabbar="1" style={{
         background: "#ffffff",
         boxShadow: "inset 0 1px 0 0 #ebe4dc",
         ...col3,
-        position: "absolute",
-        left: "calc(50% + -202px)",
-        width: 402,
+        position: "fixed",
+        left: 0,
+        right: 0,
+        width: "100%",
+        maxWidth: 402,
         height: 80,
-        bottom: -2
+        bottom: 0,
+        zIndex: 60
       }}>
       <div data-figma-id="342:1198" style={{
           ...row1,
@@ -1071,7 +1075,6 @@ export function CarritoDomicilio() {
           })} />
       </div>
     </div>
-  </div>
   </>;
 }
 export default CarritoDomicilio;

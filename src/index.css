@@ -222,7 +222,11 @@ input.proto-field {
 }
 
 /* Tab bar Inicio / Buscar / Carrito / Mi cuenta: fija en todo el scroll */
-.phone-frame [data-proto-fixed-tabbar] {
+.phone-frame [data-proto-fixed-tabbar],
+.phone-frame [data-figma-id="505:1853"],
+.phone-frame [data-figma-id="342:2208"],
+.phone-frame [data-figma-id="823:3706"],
+.phone-frame [data-figma-id="822:3630"] {
   position: fixed !important;
   left: 0 !important;
   right: 0 !important;

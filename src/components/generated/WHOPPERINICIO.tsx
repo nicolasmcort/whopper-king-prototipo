@@ -1058,17 +1058,22 @@ export function WHOPPERINICIO() {
           borderTop: "1px solid #ebe4dc"
         })} />
     </div>
-    <div data-figma-id="505:1853" style={{
+  </div>
+    {/* Tab bar fuera del root overflow: fija al phone-frame en todo el scroll */}
+    <div data-figma-id="505:1853" data-proto-fixed-tabbar="1" style={{
         background: "#ffffff",
         boxShadow: "inset 0 1px 0 0 #ebe4dc",
         overflow: "hidden",
         display: "flex",
         flexDirection: "column",
-        position: "absolute",
-        left: "calc(50% + -201px)",
-        width: 402,
+        position: "fixed",
+        left: 0,
+        right: 0,
+        width: "100%",
+        maxWidth: 402,
         height: 79,
-        bottom: 0
+        bottom: 0,
+        zIndex: 60
       }}>
       <div data-figma-id="342:1198" style={{
           ...row1,
@@ -1136,7 +1141,6 @@ export function WHOPPERINICIO() {
           })} />
       </div>
     </div>
-  </div>
   </>;
 }
 export default WHOPPERINICIO;
