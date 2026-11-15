@@ -676,10 +676,17 @@ export function mountLiveCart(
   });
   section.appendChild(host);
 
-  // Default: local al abrir carrito local; domicilio solo si la URL ya es domicilio
+  // Solo forzar domicilio si la URL ya es la pantalla de domicilio
   const hash = window.location.hash;
   if (/tu-carrito-domicilio|carrito-domicilio/.test(hash)) setFulfillment('domicilio');
-  else setFulfillment('local');
+
+  const syncStatusCard = () => {
+    const card = root.querySelector('[data-figma-id="650:2727"]') as HTMLElement | null;
+    if (!card) return;
+    const { fulfillment } = getCart();
+    // Con domicilio no mostrar el cuadro de «Pedido en el local»
+    card.style.display = fulfillment === 'domicilio' ? 'none' : '';
+  };
 
   const reactRoot: Root = createRoot(host);
   const render = () => {
@@ -695,6 +702,7 @@ export function mountLiveCart(
       />,
     );
     patchCartFooter(root);
+    syncStatusCard();
   };
 
   render();

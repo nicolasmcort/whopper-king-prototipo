@@ -7,6 +7,7 @@ import {
 } from '../cart/store';
 import { mountLiveCart, syncMenuCartBars } from '../components/ClientLiveCart';
 import { mountOrderSummary } from '../components/ClientOrderSummary';
+import { mountPaymentHeader } from '../components/ClientPaymentHeader';
 import { mountTableSelect } from '../components/ClientTableSelect';
 import {
   isButtonish,
@@ -467,6 +468,8 @@ export function enhanceFrame(
     );
   } else if (screenId === 'escaneo-qr') {
     cleanups.push(mountTableSelect(root));
+  } else if (screenId.startsWith('pago-')) {
+    cleanups.push(mountPaymentHeader(root));
   } else if (
     screenId === 'pedido-exitoso-local' ||
     screenId === 'pedido-enviado-local' ||

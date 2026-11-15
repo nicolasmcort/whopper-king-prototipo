@@ -2,6 +2,7 @@ import { createRoot, type Root } from 'react-dom/client';
 import {
   formatCOP,
   getOrderForSummary,
+  getTableNumber,
   subscribeCart,
   type OrderSnapshot,
 } from '../cart/store';
@@ -191,9 +192,24 @@ export function mountOrderSummary(root: HTMLElement): () => void {
   });
   card.appendChild(host);
 
+  const patchMesaLabels = () => {
+    const table = getTableNumber();
+    root.querySelectorAll('span').forEach((el) => {
+      if (el.children.length > 0) return;
+      const t = (el.textContent || '').replace(/\s+/g, ' ').trim();
+      if (/^Mesa\s+\d+\s*·\s*Pedido en el local$/i.test(t)) {
+        el.textContent = `Mesa ${table} · Pedido en el local`;
+      }
+      if (/Te lo llevamos\s*a la Mesa/i.test(t) || /a la Mesa\s+\d+/i.test(t)) {
+        el.textContent = t.replace(/Mesa\s+\d+/i, `Mesa ${table}`);
+      }
+    });
+  };
+
   const reactRoot: Root = createRoot(host);
   const render = () => {
     reactRoot.render(<OrderSummaryView order={getOrderForSummary()} />);
+    patchMesaLabels();
   };
   render();
   const unsub = subscribeCart(render);
