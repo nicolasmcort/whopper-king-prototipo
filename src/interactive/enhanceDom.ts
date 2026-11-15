@@ -1,3 +1,5 @@
+import { addProductFromScreen, PRODUCT_BY_SCREEN } from '../cart/store';
+import { mountLiveCart, syncMenuCartBars } from '../components/ClientLiveCart';
 import {
   isButtonish,
   isEditableLabel,
@@ -342,6 +344,14 @@ export function enhanceFrame(
     if (text.length > 70) return;
     if (childElements.length > 6) return;
 
+    const norm = normalizeLabel(text);
+    if (norm === 'agregar al pedido' || norm === 'agregar') {
+      el.setAttribute('data-proto-action', 'agregar');
+      markPressable(el);
+      expandOptionHitArea(el, 'agregar', root);
+      return;
+    }
+
     // Navegación gana sobre inputs: filas de inventario deben ir a detalle
     if (resolveNav(screenId, text) || isButtonish(text)) {
       markPressable(el);
@@ -356,39 +366,70 @@ export function enhanceFrame(
     }
   });
 
+  const goWithCart = (target: HTMLElement, dest: NavTarget) => {
+    const addHit = target.closest('[data-proto-action="agregar"]');
+    if (
+      addHit &&
+      typeof dest === 'string' &&
+      dest.startsWith('tu-carrito') &&
+      (PRODUCT_BY_SCREEN[screenId] || screenId.startsWith('personaliza-') || screenId.startsWith('desc-'))
+    ) {
+      addProductFromScreen(screenId);
+    }
+    navigate(dest);
+  };
+
   const onClick = (e: MouseEvent) => {
     const target = e.target as HTMLElement | null;
     if (!target) return;
     if (target.closest(`input, textarea, select, [${MARK}="field"], [${MARK}="input"]`)) {
       return;
     }
+    // Controles vivos del carrito (React) manejan su propio click
+    if (target.closest('[data-proto-live-cart="host"]')) return;
 
     const dest = resolveFromClick(target, root, screenId);
     if (!dest) {
-      // still give press feedback for buttonish
       return;
     }
     e.preventDefault();
     e.stopPropagation();
-    navigate(dest);
+    goWithCart(target, dest);
   };
 
   const onKey = (e: KeyboardEvent) => {
     if (e.key !== 'Enter' && e.key !== ' ') return;
     const target = e.target as HTMLElement | null;
     if (!target || target.getAttribute(MARK) !== 'btn') return;
+    if (target.closest('[data-proto-live-cart="host"]')) return;
     const dest = resolveFromClick(target, root, screenId);
     if (!dest) return;
     e.preventDefault();
-    navigate(dest);
+    goWithCart(target, dest);
   };
 
   root.addEventListener('click', onClick, true);
   root.addEventListener('keydown', onKey, true);
 
+  const cleanups: Array<() => void> = [
+    () => {
+      root.removeEventListener('click', onClick, true);
+      root.removeEventListener('keydown', onKey, true);
+    },
+  ];
+
+  if (screenId === 'tu-carrito-local' || screenId === 'tu-carrito-domicilio') {
+    cleanups.push(
+      mountLiveCart(root, (id) => {
+        navigate(id);
+      }),
+    );
+  } else {
+    syncMenuCartBars(root);
+  }
+
   return () => {
-    root.removeEventListener('click', onClick, true);
-    root.removeEventListener('keydown', onKey, true);
+    cleanups.forEach((fn) => fn());
   };
 }
 

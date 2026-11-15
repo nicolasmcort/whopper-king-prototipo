@@ -1,0 +1,164 @@
+export type CartItem = {
+  id: string;
+  name: string;
+  variant: string;
+  unitPrice: number;
+  qty: number;
+  image: string;
+};
+
+export type CartState = {
+  items: CartItem[];
+};
+
+const WHOPPER_IMG =
+  'https://storage.googleapis.com/storage.magicpath.ai/user/426091581041446912/figma-assets/961948be-e1a8-485b-bc9d-b272387ae3a6.jpg';
+const TEXANA_IMG =
+  'https://storage.googleapis.com/storage.magicpath.ai/user/426091581041446912/figma-assets/787e0899-fa0d-4dd6-9659-85d325bcf7a8.jpg';
+
+/** Catálogo por pantalla de personalización / detalle. */
+export const PRODUCT_BY_SCREEN: Record<
+  string,
+  Omit<CartItem, 'qty'>
+> = {
+  'personaliza-whopper': {
+    id: 'whopper-sencilla',
+    name: 'Whopper',
+    variant: 'Sencilla',
+    unitPrice: 10400,
+    image: WHOPPER_IMG,
+  },
+  'personaliza-whopper-mini': {
+    id: 'whopper-mini',
+    name: 'Whopper',
+    variant: 'Mini Combo',
+    unitPrice: 17100,
+    image: WHOPPER_IMG,
+  },
+  'personaliza-whopper-maxi': {
+    id: 'whopper-maxi',
+    name: 'Whopper',
+    variant: 'Maxi Combo',
+    unitPrice: 19600,
+    image: WHOPPER_IMG,
+  },
+  'desc-texana': {
+    id: 'texana-sencilla',
+    name: 'Texana Especial',
+    variant: 'Sencilla',
+    unitPrice: 23500,
+    image: TEXANA_IMG,
+  },
+  'personaliza-texana-mini': {
+    id: 'texana-mini',
+    name: 'Texana Especial',
+    variant: 'Mini Combo',
+    unitPrice: 30200,
+    image: TEXANA_IMG,
+  },
+  'personaliza-texana-maxi': {
+    id: 'texana-maxi',
+    name: 'Texana Especial',
+    variant: 'Maxi Combo',
+    unitPrice: 32700,
+    image: TEXANA_IMG,
+  },
+};
+
+const INITIAL: CartState = {
+  items: [
+    {
+      id: 'whopper-sencilla',
+      name: 'Whopper',
+      variant: 'Sencilla',
+      unitPrice: 10400,
+      qty: 1,
+      image: WHOPPER_IMG,
+    },
+    {
+      id: 'texana-sencilla',
+      name: 'Texana Especial',
+      variant: 'Sencilla',
+      unitPrice: 23500,
+      qty: 2,
+      image: TEXANA_IMG,
+    },
+  ],
+};
+
+let state: CartState = structuredClone(INITIAL);
+const listeners = new Set<() => void>();
+
+function emit() {
+  listeners.forEach((l) => l());
+}
+
+export function getCart(): CartState {
+  return state;
+}
+
+export function subscribeCart(listener: () => void): () => void {
+  listeners.add(listener);
+  return () => listeners.delete(listener);
+}
+
+export function formatCOP(n: number): string {
+  return `$ ${n.toLocaleString('es-CO')}`;
+}
+
+export function cartTotals(items = state.items) {
+  const count = items.reduce((s, i) => s + i.qty, 0);
+  const total = items.reduce((s, i) => s + i.unitPrice * i.qty, 0);
+  return { count, total };
+}
+
+export function addProductFromScreen(screenId: string, qty = 1) {
+  const product = PRODUCT_BY_SCREEN[screenId];
+  if (!product) {
+    // Fallback: si vienen de menú de burgers sin personalizar, suma Whopper sencilla
+    const fallback = PRODUCT_BY_SCREEN['personaliza-whopper'];
+    if (!fallback) return;
+    addOrInc({ ...fallback, qty });
+    return;
+  }
+  addOrInc({ ...product, qty });
+}
+
+function addOrInc(item: CartItem) {
+  const existing = state.items.find((i) => i.id === item.id);
+  if (existing) {
+    state = {
+      items: state.items.map((i) =>
+        i.id === item.id ? { ...i, qty: i.qty + item.qty } : i,
+      ),
+    };
+  } else {
+    state = { items: [...state.items, item] };
+  }
+  emit();
+}
+
+export function incItem(id: string) {
+  state = {
+    items: state.items.map((i) => (i.id === id ? { ...i, qty: i.qty + 1 } : i)),
+  };
+  emit();
+}
+
+export function decItem(id: string) {
+  const target = state.items.find((i) => i.id === id);
+  if (!target) return;
+  if (target.qty <= 1) {
+    state = { items: state.items.filter((i) => i.id !== id) };
+  } else {
+    state = {
+      items: state.items.map((i) => (i.id === id ? { ...i, qty: i.qty - 1 } : i)),
+    };
+  }
+  emit();
+}
+
+export function removeItem(id: string) {
+  state = { items: state.items.filter((i) => i.id !== id) };
+  emit();
+}
