@@ -221,13 +221,9 @@ input.proto-field {
   margin-top: auto;
 }
 
-/* Tab bar Inicio / Buscar / Carrito / Mi cuenta: fija en todo el scroll */
-.phone-frame [data-proto-fixed-tabbar],
-.phone-frame [data-figma-id="505:1853"],
-.phone-frame [data-figma-id="342:2208"],
-.phone-frame [data-figma-id="823:3706"],
-.phone-frame [data-figma-id="822:3630"] {
-  position: fixed !important;
+/* Tab bar clonada: anclada al phone-frame, fuera del scroll */
+.phone-frame > [data-proto-tabbar-clone] {
+  position: absolute !important;
   left: 0 !important;
   right: 0 !important;
   bottom: 0 !important;
@@ -236,4 +232,12 @@ input.proto-field {
   z-index: 60 !important;
   margin: 0 !important;
   top: auto !important;
+  visibility: visible !important;
+  pointer-events: auto !important;
+}
+
+/* Original dentro del scroll: invisible (React la sigue controlando) */
+.phone-scroll [data-proto-tabbar-source] {
+  visibility: hidden !important;
+  pointer-events: none !important;
 }

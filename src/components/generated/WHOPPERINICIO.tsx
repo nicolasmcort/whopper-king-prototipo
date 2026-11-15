@@ -722,11 +722,12 @@ export function WHOPPERINICIO() {
         flexDirection: "column",
         justifyContent: "center",
         gap: 10,
-        position: "absolute",
+        position: "relative",
         left: 0,
         width: 402,
-        height: 550,
-        bottom: 0
+        height: "auto",
+        minHeight: 550,
+        flexShrink: 0
       }}>
       <div data-figma-id="595:2632" style={{
           ...row1,

@@ -115,39 +115,48 @@ function App() {
           height: 'min(844px, calc(100vh - 32px))',
           background: '#f7f9fb',
           position: 'relative',
-          // containing block para position:fixed de la tab bar
-          transform: 'translateZ(0)',
-          overflowX: 'hidden',
-          overflowY: 'auto',
+          overflow: 'hidden',
           boxShadow: '0 12px 40px rgba(0,0,0,0.35)',
         }}
       >
-        {isSheet && Under ? (
-          <>
-            <div style={{ pointerEvents: 'none', filter: 'brightness(0.72)' }}>
-              <Under />
-            </div>
-            <div
-              style={{
-                position: 'absolute',
-                inset: 0,
-                background: 'rgba(15, 23, 42, 0.45)',
-                display: 'flex',
-                alignItems: 'flex-end',
-                justifyContent: 'center',
-                padding: 16,
-                boxSizing: 'border-box',
-                zIndex: 5,
-              }}
-            >
-              <div style={{ width: '100%', maxWidth: PHONE_W }}>
-                <Screen />
+        {/* El scroll vive aquí; la tab bar se ancla al phone-frame (no scrollea) */}
+        <div
+          className="phone-scroll"
+          data-proto-scroll="1"
+          style={{
+            position: 'absolute',
+            inset: 0,
+            overflowX: 'hidden',
+            overflowY: 'auto',
+          }}
+        >
+          {isSheet && Under ? (
+            <>
+              <div style={{ pointerEvents: 'none', filter: 'brightness(0.72)' }}>
+                <Under />
               </div>
-            </div>
-          </>
-        ) : (
-          <Screen />
-        )}
+              <div
+                style={{
+                  position: 'absolute',
+                  inset: 0,
+                  background: 'rgba(15, 23, 42, 0.45)',
+                  display: 'flex',
+                  alignItems: 'flex-end',
+                  justifyContent: 'center',
+                  padding: 16,
+                  boxSizing: 'border-box',
+                  zIndex: 5,
+                }}
+              >
+                <div style={{ width: '100%', maxWidth: PHONE_W }}>
+                  <Screen />
+                </div>
+              </div>
+            </>
+          ) : (
+            <Screen />
+          )}
+        </div>
       </div>
     </div>
   );
