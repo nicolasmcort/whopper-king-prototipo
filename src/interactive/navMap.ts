@@ -519,7 +519,10 @@ const BY_SCREEN_RAW: Record<string, Record<string, NavTarget>> = {
     'elegir pago': 'pago-local-nequi',
     'continuar al pago': 'pago-local-nequi',
     'continuar a pago': 'pago-local-nequi',
-    'a domicilio': 'tu-carrito-domicilio',
+    comprar: 'pago-local-nequi',
+    // El selector vivo maneja local/domicilio; no navegar al cambiar opción
+    'a domicilio': 'tu-carrito-local',
+    'en el local': 'tu-carrito-local',
     'escanear qr': 'escaneo-qr',
     'mesa 7': 'escaneo-qr',
     'pedido en el local': 'escaneo-qr',
@@ -543,8 +546,10 @@ const BY_SCREEN_RAW: Record<string, Record<string, NavTarget>> = {
     'elegir pago': 'pago-dom-nequi',
     'continuar al pago': 'pago-dom-nequi',
     'continuar a pago': 'pago-dom-nequi',
-    local: 'tu-carrito-local',
-    'en el local': 'tu-carrito-local',
+    comprar: 'pago-dom-nequi',
+    local: 'tu-carrito-domicilio',
+    'en el local': 'tu-carrito-domicilio',
+    'a domicilio': 'tu-carrito-domicilio',
     'añadir algo mas': 'menu',
     'añadir algo más': 'menu',
     texana: 'tu-carrito-domicilio',
@@ -559,12 +564,18 @@ const BY_SCREEN_RAW: Record<string, Record<string, NavTarget>> = {
   },
   'carrito-local': {
     pagar: 'pago-local-nequi',
+    comprar: 'pago-local-nequi',
+    'a domicilio': 'carrito-domicilio',
+    'en el local': 'carrito-local',
     menu: 'menu',
     'mi cuenta': 'mi-cuenta',
     carrito: 'tu-carrito-local',
   },
   'carrito-domicilio': {
     pagar: 'pago-dom-nequi',
+    comprar: 'pago-dom-nequi',
+    'a domicilio': 'carrito-domicilio',
+    'en el local': 'carrito-local',
     menu: 'menu',
     'mi cuenta': 'mi-cuenta',
     carrito: 'tu-carrito-domicilio',
@@ -1175,5 +1186,13 @@ export function shouldReplaceHistory(fromId: string, toId: string): boolean {
   if (PEDIDO_RESULT_SCREENS.has(fromId) && REPLACE_VARIANT_SCREENS.has(toId)) return true;
   // Tras pagar, el resultado reemplaza la pantalla de pago (atrás ≠ volver al pago)
   if (REPLACE_VARIANT_SCREENS.has(fromId) && PEDIDO_RESULT_SCREENS.has(toId)) return true;
+  // Local ↔ domicilio en carrito
+  const cartPair = new Set([fromId, toId]);
+  if (
+    (cartPair.has('tu-carrito-local') && cartPair.has('tu-carrito-domicilio')) ||
+    (cartPair.has('carrito-local') && cartPair.has('carrito-domicilio'))
+  ) {
+    return true;
+  }
   return REPLACE_VARIANT_SCREENS.has(fromId) && REPLACE_VARIANT_SCREENS.has(toId);
 }

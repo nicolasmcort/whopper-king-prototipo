@@ -1,4 +1,8 @@
-import { addProductFromScreen, PRODUCT_BY_SCREEN } from '../cart/store';
+import {
+  addProductFromScreen,
+  payScreenForCart,
+  PRODUCT_BY_SCREEN,
+} from '../cart/store';
 import { mountLiveCart, syncMenuCartBars } from '../components/ClientLiveCart';
 import {
   isButtonish,
@@ -376,7 +380,13 @@ export function enhanceFrame(
     ) {
       addProductFromScreen(screenId);
     }
-    navigate(dest);
+
+    let next: NavTarget = dest;
+    if (typeof next === 'string' && /^pago-(local|dom)-/.test(next)) {
+      const method = next.replace(/^pago-(local|dom)-/, '') || 'nequi';
+      next = payScreenForCart(method);
+    }
+    navigate(next);
   };
 
   const onClick = (e: MouseEvent) => {

@@ -1,19 +1,27 @@
-import { useSyncExternalStore, type CSSProperties } from 'react';
+import { useSyncExternalStore, type CSSProperties, type ReactNode } from 'react';
 import { createRoot, type Root } from 'react-dom/client';
 import {
   cartTotals,
   decItem,
+  DELIVERY_FEE,
   formatCOP,
   getCart,
   incItem,
+  setFulfillment,
   subscribeCart,
   type CartItem,
+  type Fulfillment,
 } from '../cart/store';
+import { ClientUtensilsIcon } from './ClientUiIcons';
 
 const CORAL = '#ed6047';
+const CORAL_SOFT = '#fff1eb';
+const CORAL_ICON_BG = '#ffe5da';
 const INK = '#29241f';
 const MUTED = '#82776e';
 const PILL_BG = '#f7ebe7';
+const BORDER = '#ebe4dc';
+const DELIVERY_LABEL = '#bd412d';
 
 function TrashIcon() {
   return (
@@ -22,6 +30,29 @@ function TrashIcon() {
         d="M3.5 4.5h9M6.5 4.5V3.5a1 1 0 0 1 1-1h1a1 1 0 0 1 1 1v1M5 4.5l.5 8.5a1 1 0 0 0 1 .9h3a1 1 0 0 0 1-.9L11 4.5"
         stroke={CORAL}
         strokeWidth="1.333"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+function ScooterIcon({ color = CORAL }: { color?: string }) {
+  return (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden>
+      <circle cx="6.5" cy="17.5" r="2.25" stroke={color} strokeWidth="1.5" />
+      <circle cx="17.5" cy="17.5" r="2.25" stroke={color} strokeWidth="1.5" />
+      <path
+        d="M8.5 17.5h5.2L16 10.5h2.5M16 10.5l-1.8-4H11"
+        stroke={color}
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M8.5 17.5 10 11h3"
+        stroke={color}
+        strokeWidth="1.5"
         strokeLinecap="round"
         strokeLinejoin="round"
       />
@@ -169,9 +200,161 @@ function CartRow({ item }: { item: CartItem }) {
   );
 }
 
-function LiveCartBody({ onAddMore }: { onAddMore: () => void }) {
+function FulfillmentCard({
+  selected,
+  title,
+  subtitle,
+  subtitleColor,
+  icon,
+  onSelect,
+}: {
+  selected: boolean;
+  title: string;
+  subtitle: string;
+  subtitleColor?: string;
+  icon: ReactNode;
+  onSelect: () => void;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={(e) => {
+        e.stopPropagation();
+        onSelect();
+      }}
+      style={{
+        flex: 1,
+        minWidth: 0,
+        height: 104,
+        border: 'none',
+        cursor: 'pointer',
+        textAlign: 'left',
+        background: selected ? CORAL_SOFT : '#ffffff',
+        boxShadow: selected ? `inset 0 0 0 1px ${CORAL}` : `inset 0 0 0 1px ${BORDER}`,
+        borderRadius: 16,
+        filter: selected ? 'drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.05))' : undefined,
+        padding: 12,
+        boxSizing: 'border-box',
+        display: 'flex',
+        flexDirection: 'column',
+        gap: 10,
+      }}
+    >
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+        <div
+          style={{
+            width: 32,
+            height: 32,
+            borderRadius: 9999,
+            background: selected ? CORAL_ICON_BG : '#f5efeb',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
+          {icon}
+        </div>
+        <div
+          style={{
+            width: 20,
+            height: 20,
+            borderRadius: 9999,
+            boxSizing: 'border-box',
+            border: selected ? 'none' : `2px solid ${BORDER}`,
+            boxShadow: selected ? `inset 0 0 0 2px ${CORAL}` : undefined,
+            padding: selected ? 2 : 0,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
+          {selected ? (
+            <div style={{ width: 10, height: 10, borderRadius: 9999, background: CORAL }} />
+          ) : null}
+        </div>
+      </div>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+        <span
+          style={{
+            fontFamily: "'Inter', system-ui, sans-serif",
+            fontWeight: 700,
+            fontSize: 14,
+            color: INK,
+            lineHeight: '17.5px',
+          }}
+        >
+          {title}
+        </span>
+        <span
+          style={{
+            fontFamily: "'Inter', system-ui, sans-serif",
+            fontWeight: selected && subtitleColor ? 500 : 400,
+            fontSize: 11,
+            color: subtitleColor ?? MUTED,
+            lineHeight: '16.5px',
+          }}
+        >
+          {subtitle}
+        </span>
+      </div>
+    </button>
+  );
+}
+
+function FulfillmentPicker({
+  value,
+  onChange,
+}: {
+  value: Fulfillment;
+  onChange: (next: Fulfillment) => void;
+}) {
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 12, width: '100%', marginTop: 8 }}>
+      <span
+        style={{
+          fontFamily: "'Manrope', system-ui, sans-serif",
+          fontWeight: 800,
+          fontSize: 18,
+          color: INK,
+          lineHeight: '27px',
+        }}
+      >
+        ¿Dónde quieres tu pedido?
+      </span>
+      <div style={{ display: 'flex', gap: 12, width: '100%' }}>
+        <FulfillmentCard
+          selected={value === 'local'}
+          title="En el local"
+          subtitle="Escanea el QR de tu mesa"
+          icon={<ClientUtensilsIcon size={16} color={CORAL} />}
+          onSelect={() => onChange('local')}
+        />
+        <FulfillmentCard
+          selected={value === 'domicilio'}
+          title="A domicilio"
+          subtitle={
+            value === 'domicilio'
+              ? `Pasto · Envío ${formatCOP(DELIVERY_FEE)}`
+              : 'Pasto'
+          }
+          subtitleColor={value === 'domicilio' ? DELIVERY_LABEL : undefined}
+          icon={<ScooterIcon color={CORAL} />}
+          onSelect={() => onChange('domicilio')}
+        />
+      </div>
+    </div>
+  );
+}
+
+function LiveCartBody({
+  onAddMore,
+  onFulfillment,
+}: {
+  onAddMore: () => void;
+  onFulfillment: (next: Fulfillment) => void;
+}) {
   const cart = useSyncExternalStore(subscribeCart, getCart, getCart);
-  const { count } = cartTotals(cart.items);
+  const { count } = cartTotals(cart.items, cart.fulfillment);
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 16, width: '100%' }}>
@@ -243,53 +426,120 @@ function LiveCartBody({ onAddMore }: { onAddMore: () => void }) {
         <span>+</span>
         <span>Añadir algo más</span>
       </button>
+
+      <FulfillmentPicker value={cart.fulfillment} onChange={onFulfillment} />
     </div>
   );
 }
 
+function ensureDeliveryRow(root: HTMLElement, delivery: number) {
+  const existing = root.querySelector('[data-proto-delivery-row]') as HTMLElement | null;
+  const nativeDomicilio = Array.from(root.querySelectorAll('span')).some(
+    (el) => (el.textContent || '').trim() === 'Domicilio' && !el.closest('[data-proto-delivery-row]'),
+  );
+
+  if (delivery <= 0 || nativeDomicilio) {
+    existing?.remove();
+    return;
+  }
+
+  if (existing) {
+    const money = existing.querySelector('[data-proto-delivery-amount]');
+    if (money) money.textContent = formatCOP(delivery);
+    return;
+  }
+
+  const subtotalLabel = Array.from(root.querySelectorAll('span')).find((el) =>
+    /^Subtotal\s*\(/i.test((el.textContent || '').trim()),
+  );
+  const row: HTMLElement | null = subtotalLabel?.parentElement?.parentElement ?? null;
+  if (!row) return;
+
+  const deliveryRow = document.createElement('div');
+  deliveryRow.setAttribute('data-proto-delivery-row', '1');
+  deliveryRow.style.cssText = [
+    'display:flex',
+    'align-items:center',
+    'justify-content:space-between',
+    'width:100%',
+    'min-width:0',
+    'flex-shrink:0',
+    'margin-top:6px',
+  ].join(';');
+  deliveryRow.innerHTML = `
+    <span style="font-family:'Inter',system-ui,sans-serif;font-size:14px;font-weight:400;color:${MUTED};line-height:21px">Domicilio</span>
+    <span data-proto-delivery-amount style="font-family:'Inter',system-ui,sans-serif;font-size:14px;font-weight:500;color:${INK};line-height:21px">${formatCOP(delivery)}</span>
+  `;
+  row.insertAdjacentElement('afterend', deliveryRow);
+}
+
 function patchCartFooter(root: HTMLElement) {
-  const { count, total } = cartTotals();
-  const money = formatCOP(total);
+  const { count, subtotal, delivery, total } = cartTotals();
+  const subMoney = formatCOP(subtotal);
+  const grandMoney = formatCOP(total);
   const countLabel =
-    count === 0 ? 'Subtotal (0 productos)' : count === 1 ? 'Subtotal (1 producto)' : `Subtotal (${count} productos)`;
+    count === 0
+      ? 'Subtotal (0 productos)'
+      : count === 1
+        ? 'Subtotal (1 producto)'
+        : `Subtotal (${count} productos)`;
+
+  ensureDeliveryRow(root, delivery);
+
+  // Fila "Domicilio" ya existente en TuCarritoADomicilio
+  root.querySelectorAll('span').forEach((el) => {
+    if (el.children.length > 0) return;
+    const t = (el.textContent || '').trim();
+    if (t === 'Domicilio') {
+      const row = el.parentElement?.parentElement;
+      const money = row
+        ? Array.from(row.querySelectorAll('span')).find((s) =>
+            /^\$\s*[\d.]+$/.test((s.textContent || '').trim()),
+          )
+        : null;
+      if (money) {
+        money.textContent = delivery > 0 ? formatCOP(delivery) : formatCOP(0);
+        const rowEl = row as HTMLElement;
+        rowEl.style.display = delivery > 0 ? '' : 'none';
+      }
+    }
+  });
 
   root.querySelectorAll('span, div, p, button').forEach((el) => {
     const t = (el.textContent || '').replace(/\s+/g, ' ').trim();
     if (!t) return;
-
-    // Solo nodos hoja (sin hijos elemento) para no romper contenedores
     if (el.children.length > 0 && el.tagName !== 'BUTTON') return;
 
     if (/^Subtotal\s*\(/i.test(t)) {
       el.textContent = countLabel;
       return;
     }
-    if (/^Total a pagar$/i.test(t)) return;
-    if (/^Continuar al pago$/i.test(t)) return;
+    if (/^Total a pagar$/i.test(t) || /^Continuar al pago$/i.test(t) || /^Comprar$/i.test(t)) {
+      return;
+    }
 
-    // Totales monetarios del footer (no precios unitarios de filas estáticas ya ocultas)
     const parentText = (el.parentElement?.textContent || '').replace(/\s+/g, ' ');
-    if (
-      /^\$\s*[\d.]+$/.test(t) &&
-      (/Total a pagar/i.test(parentText) ||
-        /Continuar al pago/i.test(parentText) ||
-        /Subtotal/i.test(parentText))
-    ) {
-      el.textContent = money;
+    if (!/^\$\s*[\d.]+$/.test(t)) return;
+
+    if (/Subtotal/i.test(parentText) && !/Total a pagar/i.test(parentText)) {
+      el.textContent = subMoney;
+      return;
+    }
+    if (/Total a pagar/i.test(parentText) || /Continuar al pago/i.test(parentText) || /Comprar/i.test(parentText)) {
+      el.textContent = grandMoney;
     }
   });
 
-  // CTA compuesto: "Continuar al pago" + precio en spans hermanos
   root.querySelectorAll('span').forEach((el) => {
     const t = (el.textContent || '').trim();
-    if (t === 'Continuar al pago' || t === 'Continuar a pago') {
+    if (t === 'Continuar al pago' || t === 'Continuar a pago' || t === 'Comprar') {
       let node: HTMLElement | null = el.parentElement;
       for (let i = 0; i < 5 && node; i++) {
         const moneySpan = Array.from(node.querySelectorAll('span')).find((s) =>
           /^\$\s*[\d.]+$/.test((s.textContent || '').trim()),
         );
         if (moneySpan) {
-          moneySpan.textContent = money;
+          moneySpan.textContent = grandMoney;
           break;
         }
         node = node.parentElement;
@@ -310,7 +560,6 @@ export function mountLiveCart(
   );
   if (!title) return () => {};
 
-  // Contenedor de la sección (header + filas + añadir)
   let section: HTMLElement | null = title.parentElement;
   for (let i = 0; i < 6 && section; i++) {
     const hasAdd = /Añadir algo más/i.test(section.textContent || '');
@@ -327,7 +576,6 @@ export function mountLiveCart(
   section.style.height = 'auto';
   section.style.minHeight = '0';
 
-  // Ocultar contenido Figma y montar React encima
   const host = document.createElement('div');
   host.setAttribute(mountAttr, 'host');
   host.style.cssText = 'width:100%;position:relative;';
@@ -337,12 +585,23 @@ export function mountLiveCart(
   });
   section.appendChild(host);
 
+  // Sincroniza modo según pantalla (local vs domicilio)
+  if (root.ownerDocument.defaultView) {
+    const hash = window.location.hash;
+    if (/tu-carrito-domicilio|carrito-domicilio/.test(hash)) setFulfillment('domicilio');
+    else if (/tu-carrito-local|carrito-local/.test(hash)) setFulfillment('local');
+  }
+
   const reactRoot: Root = createRoot(host);
   const render = () => {
     reactRoot.render(
       <LiveCartBody
         onAddMore={() => {
           navigate('menu');
+        }}
+        onFulfillment={(next) => {
+          setFulfillment(next);
+          navigate(next === 'domicilio' ? 'tu-carrito-domicilio' : 'tu-carrito-local');
         }}
       />,
     );
@@ -358,6 +617,7 @@ export function mountLiveCart(
     unsub();
     reactRoot.unmount();
     host.remove();
+    root.querySelector('[data-proto-delivery-row]')?.remove();
     section.removeAttribute(mountAttr);
     Array.from(section.children).forEach((child) => {
       (child as HTMLElement).style.display = '';
@@ -379,12 +639,15 @@ export function syncMenuCartBars(root: HTMLElement) {
   root.querySelectorAll('span, div').forEach((el) => {
     if (el.children.length > 0) return;
     const t = (el.textContent || '').replace(/\s+/g, ' ').trim().toLowerCase();
-    if (t === 'tu carrito está vacío' || t === 'tu carrito esta vacio' || /productos en tu carrito/.test(t)) {
+    if (
+      t === 'tu carrito está vacío' ||
+      t === 'tu carrito esta vacio' ||
+      /productos en tu carrito/.test(t)
+    ) {
       el.textContent = label;
     }
   });
 
-  // Badge de cantidad a la izquierda de la barra
   root.querySelectorAll('[data-proto-end-cart], [data-proto-sticky-cart]').forEach((bar) => {
     const spans = Array.from(bar.querySelectorAll('span'));
     for (const s of spans) {

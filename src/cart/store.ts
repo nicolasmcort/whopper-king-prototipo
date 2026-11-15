@@ -7,8 +7,13 @@ export type CartItem = {
   image: string;
 };
 
+export type Fulfillment = 'local' | 'domicilio';
+
+export const DELIVERY_FEE = 4000;
+
 export type CartState = {
   items: CartItem[];
+  fulfillment: Fulfillment;
 };
 
 const WHOPPER_IMG =
@@ -66,6 +71,7 @@ export const PRODUCT_BY_SCREEN: Record<
 };
 
 const INITIAL: CartState = {
+  fulfillment: 'local',
   items: [
     {
       id: 'whopper-sencilla',
@@ -106,10 +112,25 @@ export function formatCOP(n: number): string {
   return `$ ${n.toLocaleString('es-CO')}`;
 }
 
-export function cartTotals(items = state.items) {
+export function cartTotals(
+  items = state.items,
+  fulfillment = state.fulfillment,
+) {
   const count = items.reduce((s, i) => s + i.qty, 0);
-  const total = items.reduce((s, i) => s + i.unitPrice * i.qty, 0);
-  return { count, total };
+  const subtotal = items.reduce((s, i) => s + i.unitPrice * i.qty, 0);
+  const delivery = fulfillment === 'domicilio' ? DELIVERY_FEE : 0;
+  return { count, subtotal, delivery, total: subtotal + delivery };
+}
+
+export function setFulfillment(fulfillment: Fulfillment) {
+  if (state.fulfillment === fulfillment) return;
+  state = { ...state, fulfillment };
+  emit();
+}
+
+export function payScreenForCart(method = 'nequi'): string {
+  const prefix = state.fulfillment === 'domicilio' ? 'pago-dom' : 'pago-local';
+  return `${prefix}-${method}`;
 }
 
 export function addProductFromScreen(screenId: string, qty = 1) {
@@ -128,18 +149,20 @@ function addOrInc(item: CartItem) {
   const existing = state.items.find((i) => i.id === item.id);
   if (existing) {
     state = {
+      ...state,
       items: state.items.map((i) =>
         i.id === item.id ? { ...i, qty: i.qty + item.qty } : i,
       ),
     };
   } else {
-    state = { items: [...state.items, item] };
+    state = { ...state, items: [...state.items, item] };
   }
   emit();
 }
 
 export function incItem(id: string) {
   state = {
+    ...state,
     items: state.items.map((i) => (i.id === id ? { ...i, qty: i.qty + 1 } : i)),
   };
   emit();
@@ -149,9 +172,10 @@ export function decItem(id: string) {
   const target = state.items.find((i) => i.id === id);
   if (!target) return;
   if (target.qty <= 1) {
-    state = { items: state.items.filter((i) => i.id !== id) };
+    state = { ...state, items: state.items.filter((i) => i.id !== id) };
   } else {
     state = {
+      ...state,
       items: state.items.map((i) => (i.id === id ? { ...i, qty: i.qty - 1 } : i)),
     };
   }
@@ -159,6 +183,6 @@ export function decItem(id: string) {
 }
 
 export function removeItem(id: string) {
-  state = { items: state.items.filter((i) => i.id !== id) };
+  state = { ...state, items: state.items.filter((i) => i.id !== id) };
   emit();
 }
