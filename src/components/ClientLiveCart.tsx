@@ -441,13 +441,59 @@ function LiveCartBody({
   );
 }
 
+/** Monto ($) hermano del label en la misma fila space-between. */
+function findAmountSibling(labelEl: HTMLElement): HTMLElement | null {
+  let row: HTMLElement | null = labelEl.parentElement;
+  for (let i = 0; i < 5 && row; i++) {
+    const style = row.getAttribute('style') || '';
+    const looksRow =
+      style.includes('space-between') ||
+      getComputedStyle(row).justifyContent === 'space-between';
+    if (looksRow) {
+      const moneys = Array.from(row.querySelectorAll('span')).filter((s) => {
+        if (s === labelEl || labelEl.contains(s)) return false;
+        // El monto no debe estar bajo el mismo wrapper inmediato del label
+        if (labelEl.parentElement?.contains(s) && labelEl.parentElement !== row) return false;
+        return /^\$\s*[\d.]+$/.test((s.textContent || '').trim());
+      });
+      if (moneys.length === 1) return moneys[0] as HTMLElement;
+      if (moneys.length > 1) {
+        // El más cercano al label en el DOM (después del label)
+        const after = moneys.find((s) =>
+          Boolean(labelEl.compareDocumentPosition(s) & Node.DOCUMENT_POSITION_FOLLOWING),
+        );
+        return (after || moneys[0]) as HTMLElement;
+      }
+    }
+    row = row.parentElement;
+  }
+  return null;
+}
+
 function ensureDeliveryRow(root: HTMLElement, delivery: number) {
   const existing = root.querySelector('[data-proto-delivery-row]') as HTMLElement | null;
-  const nativeDomicilio = Array.from(root.querySelectorAll('span')).some(
-    (el) => (el.textContent || '').trim() === 'Domicilio' && !el.closest('[data-proto-delivery-row]'),
+  const nativeDomicilioLabel = Array.from(root.querySelectorAll('span')).find(
+    (el) =>
+      (el.textContent || '').trim() === 'Domicilio' && !el.closest('[data-proto-delivery-row]'),
   );
 
-  if (delivery <= 0 || nativeDomicilio) {
+  if (nativeDomicilioLabel) {
+    existing?.remove();
+    const money = findAmountSibling(nativeDomicilioLabel);
+    const row =
+      (nativeDomicilioLabel.closest('[style*="space-between"]') as HTMLElement | null) ||
+      nativeDomicilioLabel.parentElement?.parentElement ||
+      null;
+    if (delivery > 0) {
+      if (row) row.style.display = '';
+      if (money) money.textContent = formatCOP(delivery);
+    } else if (row) {
+      row.style.display = 'none';
+    }
+    return;
+  }
+
+  if (delivery <= 0) {
     existing?.remove();
     return;
   }
@@ -495,66 +541,64 @@ function patchCartFooter(root: HTMLElement) {
 
   ensureDeliveryRow(root, delivery);
 
-  // Fila "Domicilio" ya existente en TuCarritoADomicilio
-  root.querySelectorAll('span').forEach((el) => {
-    if (el.children.length > 0) return;
+  // 1) Label Subtotal + su monto hermano
+  const subtotalLabel = Array.from(root.querySelectorAll('span')).find((el) =>
+    /^Subtotal\s*\(/i.test((el.textContent || '').replace(/\s+/g, ' ').trim()),
+  );
+  if (subtotalLabel) {
+    subtotalLabel.textContent = countLabel;
+    const money = findAmountSibling(subtotalLabel);
+    if (money) money.textContent = subMoney;
+  }
+
+  // 2) Label Total a pagar + su monto hermano
+  const totalLabel = Array.from(root.querySelectorAll('span')).find(
+    (el) => (el.textContent || '').trim() === 'Total a pagar',
+  );
+  if (totalLabel) {
+    const money = findAmountSibling(totalLabel);
+    if (money) money.textContent = grandMoney;
+  }
+
+  // 3) Botón Continuar al pago / Comprar
+  const ctaLabel = Array.from(root.querySelectorAll('span')).find((el) => {
     const t = (el.textContent || '').trim();
-    if (t === 'Domicilio') {
-      const row = el.parentElement?.parentElement;
-      const money = row
-        ? Array.from(row.querySelectorAll('span')).find((s) =>
-            /^\$\s*[\d.]+$/.test((s.textContent || '').trim()),
-          )
-        : null;
-      if (money) {
-        money.textContent = delivery > 0 ? formatCOP(delivery) : formatCOP(0);
-        const rowEl = row as HTMLElement;
-        rowEl.style.display = delivery > 0 ? '' : 'none';
-      }
-    }
+    return t === 'Continuar al pago' || t === 'Continuar a pago' || t === 'Comprar';
   });
-
-  root.querySelectorAll('span, div, p, button').forEach((el) => {
-    const t = (el.textContent || '').replace(/\s+/g, ' ').trim();
-    if (!t) return;
-    if (el.children.length > 0 && el.tagName !== 'BUTTON') return;
-
-    if (/^Subtotal\s*\(/i.test(t)) {
-      el.textContent = countLabel;
-      return;
-    }
-    if (/^Total a pagar$/i.test(t) || /^Continuar al pago$/i.test(t) || /^Comprar$/i.test(t)) {
-      return;
-    }
-
-    const parentText = (el.parentElement?.textContent || '').replace(/\s+/g, ' ');
-    if (!/^\$\s*[\d.]+$/.test(t)) return;
-
-    if (/Subtotal/i.test(parentText) && !/Total a pagar/i.test(parentText)) {
-      el.textContent = subMoney;
-      return;
-    }
-    if (/Total a pagar/i.test(parentText) || /Continuar al pago/i.test(parentText) || /Comprar/i.test(parentText)) {
-      el.textContent = grandMoney;
-    }
-  });
-
-  root.querySelectorAll('span').forEach((el) => {
-    const t = (el.textContent || '').trim();
-    if (t === 'Continuar al pago' || t === 'Continuar a pago' || t === 'Comprar') {
-      let node: HTMLElement | null = el.parentElement;
-      for (let i = 0; i < 5 && node; i++) {
-        const moneySpan = Array.from(node.querySelectorAll('span')).find((s) =>
-          /^\$\s*[\d.]+$/.test((s.textContent || '').trim()),
-        );
-        if (moneySpan) {
-          moneySpan.textContent = grandMoney;
-          break;
+  if (ctaLabel) {
+    let node: HTMLElement | null = ctaLabel.parentElement;
+    for (let i = 0; i < 5 && node; i++) {
+      // Buscar el span de precio blanco del CTA (hermanos del label, no el total de arriba)
+      const candidates = Array.from(node.querySelectorAll('span')).filter((s) =>
+        /^\$\s*[\d.]+$/.test((s.textContent || '').trim()),
+      );
+      // Preferir el que esté dentro del botón coral
+      const inButton = candidates.find((s) => {
+        let p: HTMLElement | null = s.parentElement;
+        for (let j = 0; j < 6 && p; j++) {
+          const bg = (p.style.background || '').toLowerCase();
+          if (bg.includes('#ed6047') || bg.includes('237, 96, 71')) return true;
+          p = p.parentElement;
         }
-        node = node.parentElement;
+        return false;
+      });
+      const money = inButton || candidates[candidates.length - 1];
+      if (money) {
+        money.textContent = grandMoney;
+        break;
       }
+      node = node.parentElement;
     }
-  });
+  }
+
+  // Fallback por figma-id conocidos (Tu carrito local)
+  const byId = (id: string) => root.querySelector(`[data-figma-id="${id}"]`) as HTMLElement | null;
+  const subAmt = byId('650:2887') || byId('650:2687');
+  const totAmt = byId('650:2897') || byId('650:2697');
+  const ctaAmt = byId('650:2903') || byId('650:2703');
+  if (subAmt) subAmt.textContent = subMoney;
+  if (totAmt) totAmt.textContent = grandMoney;
+  if (ctaAmt) ctaAmt.textContent = grandMoney;
 }
 
 const mountAttr = 'data-proto-live-cart';
