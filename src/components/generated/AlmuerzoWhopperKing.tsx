@@ -159,12 +159,12 @@ export function AlmuerzoWhopperKing() {
         <path id="figma-derived-871" d="M0 4.351C-0.497 4.351 -0.9 4.754 -0.9 5.251C-0.9 5.748 -0.497 6.151 0 6.151L0 5.251L0 4.351ZM10.501 6.151C10.998 6.151 11.401 5.748 11.401 5.251C11.401 4.754 10.998 4.351 10.501 4.351L10.501 5.251L10.501 6.151ZM6.151 0C6.151 -0.497 5.748 -0.9 5.251 -0.9C4.754 -0.9 4.351 -0.497 4.351 0L5.251 0L6.151 0ZM4.351 10.501C4.351 10.998 4.754 11.401 5.251 11.401C5.748 11.401 6.151 10.998 6.151 10.501L5.251 10.501L4.351 10.501ZM0 5.251L0 6.151L10.501 6.151L10.501 5.251L10.501 4.351L0 4.351L0 5.251ZM5.251 0L4.351 0L4.351 10.501L5.251 10.501L6.151 10.501L6.151 0L5.251 0Z" fillRule="nonzero" />
       </defs>
     </svg>
-  <div data-figma-id="425:2649" style={rootLayer("100%", 1648, {
+  <div data-figma-id="425:2649" style={rootLayer("100%", "auto", {
       background: "#fffcf8",
       ...col1,
       minWidth: 0,
-      minHeight: 940,
-      overflow: "hidden"
+      minHeight: 0,
+      overflow: "visible"
     })}>
     <div data-figma-id="425:2650" style={{
         ...row1,
@@ -1013,8 +1013,9 @@ export function AlmuerzoWhopperKing() {
         </div>
       </div>
     </div>
-    <div data-figma-id="711:2486" style={fixedLayer(402, 267, row2)}>
-      <div data-figma-id="711:1573~5" style={absoluteLayer(208, 4, 176.078, 241, {
+    {/* Última fila: altura de fila Figma corta el texto; dejamos aire real */}
+    <div data-figma-id="711:2486" style={fixedLayer(402, 280, { ...row2, marginBottom: 16 })}>
+      <div data-figma-id="711:1573~5" style={absoluteLayer(208, 4, 176.078, 260, {
           ...surface2,
           ...col3
         })}>
@@ -1098,7 +1099,7 @@ export function AlmuerzoWhopperKing() {
           </div>
         </div>
       </div>
-      <div data-figma-id="711:1572~5" style={absoluteLayer(10, 4, 179, 245, {
+      <div data-figma-id="711:1572~5" style={absoluteLayer(10, 4, 179, 260, {
           ...surface2,
           ...col3
         })}>
@@ -1183,19 +1184,20 @@ export function AlmuerzoWhopperKing() {
         </div>
       </div>
     </div>
-    <div data-figma-id="425:2828" style={{
-        background: "#ffffff",
-        boxShadow: "inset 0 1px 0 0 #ebe4dc",
+    {/* Espacio para scrollear los últimos platos por encima del carrito + tab bar */}
+    <div data-proto-cart-clearance="1" style={{ height: 160, width: '100%', flexShrink: 0, pointerEvents: 'none' }} />
+    <div data-figma-id="425:2828" data-proto-sticky-cart="1" style={{
+        background: "transparent",
         ...col1,
         minWidth: 0,
         overflow: "hidden",
-        padding: "12px 20px 0",
+        padding: "0 20px 8px",
         boxSizing: "border-box",
-        gap: 8,
+        gap: 0,
         position: "sticky",
-        bottom: 0,
+        bottom: 79,
         zIndex: 40,
-        height: 98,
+        height: 62,
         flexShrink: 0,
         alignSelf: "stretch"
       }}>
@@ -1248,21 +1250,6 @@ export function AlmuerzoWhopperKing() {
           }}>
           {"$ 0"}
         </span>
-      </div>
-      <div data-figma-id="425:2834" style={{
-          ...col1,
-          ...layout1,
-          minWidth: 0,
-          overflow: "hidden",
-          position: "relative",
-          height: 24,
-          flexShrink: 0,
-          alignSelf: "stretch"
-        }}>
-        <div data-figma-id="425:2835" style={fixedLayer(126, 4, {
-            background: "#29241f",
-            borderRadius: 4
-          })} />
       </div>
     </div>
   </div>

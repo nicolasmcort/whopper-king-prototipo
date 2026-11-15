@@ -143,8 +143,8 @@ function App() {
             inset: 0,
             overflowX: 'hidden',
             overflowY: 'auto',
-            // Tab bar (79) + hueco para que el carrito sticky no tape los últimos platos (~100)
-            paddingBottom: showInjectedTabBar ? 180 : undefined,
+            // Tab bar (79); el clearance de platos va en el contenido (antes del carrito)
+            paddingBottom: showInjectedTabBar ? 88 : undefined,
             boxSizing: 'border-box',
           }}
         >

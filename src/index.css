@@ -223,12 +223,24 @@ input.proto-field {
 
 /* Con tab bar inyectada, el carrito sticky queda encima de la tab bar */
 .phone-scroll[data-proto-has-tabbar] [data-proto-sticky-cart] {
+  position: sticky !important;
   bottom: 79px !important;
+  z-index: 40 !important;
+  height: auto !important;
+  min-height: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  padding-bottom: 8px !important;
 }
 
-/* Evitar que el último bloque de productos quede sin aire bajo el carrito sticky */
+/* Ocultar home-indicator del carrito (la tab bar ya lo trae) */
+.phone-scroll[data-proto-has-tabbar] [data-proto-sticky-cart] > div:last-child:not([style*="ed6047"]) {
+  display: none !important;
+}
+
 .phone-scroll[data-proto-has-tabbar] [data-proto-cart-clearance] {
-  height: 48px !important;
+  height: 160px !important;
+  flex-shrink: 0 !important;
 }
 
 /* Tab bar clonada: anclada al phone-frame, fuera del scroll */

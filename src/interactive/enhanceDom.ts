@@ -283,18 +283,25 @@ export function enhanceFrame(
         if (!node.previousElementSibling?.hasAttribute('data-proto-cart-clearance')) {
           const gap = document.createElement('div');
           gap.setAttribute('data-proto-cart-clearance', '1');
-          gap.style.cssText = 'height:24px;width:100%;flex-shrink:0;pointer-events:none;';
+          gap.style.cssText = 'height:160px;width:100%;flex-shrink:0;pointer-events:none;';
           node.parentElement?.insertBefore(gap, node);
+        }
+        // Subir el sticky por encima de la tab bar inyectada
+        if (root.querySelector('[data-proto-injected-tabbar]')) {
+          node.style.setProperty('bottom', '79px', 'important');
         }
         break;
       }
-      if (h >= 90 && h <= 120) {
+      if (h >= 90 && h <= 130) {
         node.setAttribute('data-proto-sticky-cart', '1');
         if (!node.previousElementSibling?.hasAttribute('data-proto-cart-clearance')) {
           const gap = document.createElement('div');
           gap.setAttribute('data-proto-cart-clearance', '1');
-          gap.style.cssText = 'height:24px;width:100%;flex-shrink:0;pointer-events:none;';
+          gap.style.cssText = 'height:160px;width:100%;flex-shrink:0;pointer-events:none;';
           node.parentElement?.insertBefore(gap, node);
+        }
+        if (root.querySelector('[data-proto-injected-tabbar]')) {
+          node.style.setProperty('bottom', '79px', 'important');
         }
         break;
       }
