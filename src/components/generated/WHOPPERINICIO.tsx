@@ -173,10 +173,10 @@ export function WHOPPERINICIO() {
         <path id="figma-vector-110-corners-2-0" d="M8 10C10.761 10 13 7.761 13 5C13 2.239 10.761 0 8 0C5.239 0 3 2.239 3 5C3 7.761 5.239 10 8 10C10.122 10 12.157 10.843 13.657 12.343C15.157 13.843 16 15.878 16 18M8 10C5.878 10 3.843 10.843 2.343 12.343C0.843 13.843 0 15.878 0 18" fillRule="nonzero" />
       </defs>
     </svg>
-  <div data-figma-id="342:1114" style={rootLayer("max-content", 1310, {
+  <div data-figma-id="342:1114" style={rootLayer(402, "auto", {
       background: "#fffcf8",
       minWidth: 0,
-      minHeight: 940,
+      minHeight: 0,
       overflow: "hidden",
       display: "flex",
       flexDirection: "column"
@@ -233,12 +233,12 @@ export function WHOPPERINICIO() {
         </div>
       </div>
     </div>
-    <div data-figma-id="342:1125" style={fixedLayer(402, 808, {
+    <div data-figma-id="342:1125" style={fixedLayer(402, "auto", {
         minWidth: 0,
-        minHeight: 808,
+        minHeight: 0,
         overflow: "hidden",
         display: "flex",
-        padding: "8px 20px 20px",
+        padding: "8px 20px 12px",
         boxSizing: "border-box",
         flexDirection: "column",
         gap: 18
@@ -709,7 +709,9 @@ export function WHOPPERINICIO() {
           ...row3,
           position: "relative",
           width: 358,
-          flexShrink: 0
+          flexShrink: 0,
+          paddingTop: 4,
+          paddingBottom: 8
         }}>
         {"Ingredientes Artesanales "}
       </span>
@@ -717,16 +719,16 @@ export function WHOPPERINICIO() {
     <div data-figma-id="597:2842" style={{
         background: "#ffffff",
         ...row1,
-        padding: "0 20px 24px",
+        padding: "20px 20px 24px",
         boxSizing: "border-box",
         flexDirection: "column",
-        justifyContent: "center",
+        justifyContent: "flex-start",
         gap: 10,
         position: "relative",
         left: 0,
         width: 402,
         height: "auto",
-        minHeight: 550,
+        minHeight: 0,
         flexShrink: 0
       }}>
       <div data-figma-id="595:2632" style={{
