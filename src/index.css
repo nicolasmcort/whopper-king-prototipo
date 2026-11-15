@@ -221,6 +221,11 @@ input.proto-field {
   margin-top: auto;
 }
 
+/* Con tab bar inyectada, el carrito sticky queda encima de la tab bar */
+.phone-scroll[data-proto-has-tabbar] [data-proto-sticky-cart] {
+  bottom: 79px !important;
+}
+
 /* Tab bar clonada: anclada al phone-frame, fuera del scroll */
 .phone-frame > [data-proto-tabbar-clone] {
   position: absolute !important;

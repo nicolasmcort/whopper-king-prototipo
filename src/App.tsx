@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { ClientBottomTabBar } from './components/ClientBottomTabBar';
 import { enhanceFrame } from './interactive/enhanceDom';
 import { shouldReplaceHistory, type NavTarget } from './interactive/navMap';
 import { screenById, screens } from './screens';
@@ -14,6 +15,18 @@ const SHEETS = new Set([
   'eliminacion-mov-184',
 ]);
 
+/** Menús de categoría: no traen tab bar en Figma; la inyectamos. */
+const INJECT_TAB_BAR = new Set([
+  'menu-burgers',
+  'menu-burgers-00',
+  'menu-hamburguesas',
+  'menu-almuerzo',
+  'menu-pollo',
+  'menu-carne',
+  'menu-pescado',
+  'menu-bebidas',
+]);
+
 function readHash(): string {
   const h = window.location.hash.replace(/^#\/?/, '').trim();
   return h && screenById[h] ? h : 'whopper-inicio';
@@ -27,6 +40,7 @@ function App() {
   const current = screenById[currentId] ?? screens[0];
   const Screen = current.Component;
   const isSheet = SHEETS.has(current.id);
+  const showInjectedTabBar = INJECT_TAB_BAR.has(current.id);
 
   const underId =
     isSheet
@@ -123,11 +137,14 @@ function App() {
         <div
           className="phone-scroll"
           data-proto-scroll="1"
+          data-proto-has-tabbar={showInjectedTabBar ? '1' : undefined}
           style={{
             position: 'absolute',
             inset: 0,
             overflowX: 'hidden',
             overflowY: 'auto',
+            paddingBottom: showInjectedTabBar ? 79 : undefined,
+            boxSizing: 'border-box',
           }}
         >
           {isSheet && Under ? (
@@ -157,6 +174,7 @@ function App() {
             <Screen />
           )}
         </div>
+        {showInjectedTabBar ? <ClientBottomTabBar active="inicio" /> : null}
       </div>
     </div>
   );
