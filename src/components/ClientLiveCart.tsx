@@ -218,7 +218,12 @@ function FulfillmentCard({
   return (
     <button
       type="button"
+      data-proto-fulfillment="1"
+      onPointerDown={(e) => {
+        e.stopPropagation();
+      }}
       onClick={(e) => {
+        e.preventDefault();
         e.stopPropagation();
         onSelect();
       }}
@@ -238,6 +243,10 @@ function FulfillmentCard({
         display: 'flex',
         flexDirection: 'column',
         gap: 10,
+        position: 'relative',
+        zIndex: 2,
+        pointerEvents: 'auto',
+        WebkitTapHighlightColor: 'transparent',
       }}
     >
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
@@ -575,22 +584,44 @@ export function mountLiveCart(
   section.setAttribute(mountAttr, '1');
   section.style.height = 'auto';
   section.style.minHeight = '0';
+  section.style.overflow = 'visible';
+  section.style.flexShrink = '0';
+
+  // Liberar ancestros que recortan el selector local/domicilio
+  let liberate: HTMLElement | null = section.parentElement;
+  for (let i = 0; i < 8 && liberate && liberate !== root; i++) {
+    const h = liberate.style.height;
+    if (h && h !== 'auto' && h !== 'max-content' && !h.includes('%')) {
+      liberate.style.height = 'auto';
+    }
+    if (liberate.style.overflow === 'hidden') {
+      liberate.style.overflow = 'visible';
+    }
+    liberate = liberate.parentElement;
+  }
+
+  // El bloque del footer no debe tapar el selector (padding enorme de Figma)
+  root.querySelectorAll<HTMLElement>('[data-figma-id="650:2802"], [data-figma-id="650:2681"]').forEach((el) => {
+    el.style.paddingTop = '20px';
+    el.style.flexGrow = '0';
+    el.style.flexShrink = '0';
+    el.style.minHeight = '0';
+  });
 
   const host = document.createElement('div');
   host.setAttribute(mountAttr, 'host');
-  host.style.cssText = 'width:100%;position:relative;';
+  host.style.cssText =
+    'width:100%;position:relative;z-index:3;overflow:visible;pointer-events:auto;';
 
   Array.from(section.children).forEach((child) => {
     (child as HTMLElement).style.display = 'none';
   });
   section.appendChild(host);
 
-  // Sincroniza modo según pantalla (local vs domicilio)
-  if (root.ownerDocument.defaultView) {
-    const hash = window.location.hash;
-    if (/tu-carrito-domicilio|carrito-domicilio/.test(hash)) setFulfillment('domicilio');
-    else if (/tu-carrito-local|carrito-local/.test(hash)) setFulfillment('local');
-  }
+  // Default: local al abrir carrito local; domicilio solo si la URL ya es domicilio
+  const hash = window.location.hash;
+  if (/tu-carrito-domicilio|carrito-domicilio/.test(hash)) setFulfillment('domicilio');
+  else setFulfillment('local');
 
   const reactRoot: Root = createRoot(host);
   const render = () => {
@@ -600,8 +631,8 @@ export function mountLiveCart(
           navigate('menu');
         }}
         onFulfillment={(next) => {
+          // Solo cambia modo en sitio (sin remount) para que el clic responda
           setFulfillment(next);
-          navigate(next === 'domicilio' ? 'tu-carrito-domicilio' : 'tu-carrito-local');
         }}
       />,
     );

@@ -395,8 +395,13 @@ export function enhanceFrame(
     if (target.closest(`input, textarea, select, [${MARK}="field"], [${MARK}="input"]`)) {
       return;
     }
-    // Controles vivos del carrito (React) manejan su propio click
-    if (target.closest('[data-proto-live-cart="host"]')) return;
+    // Controles vivos del carrito (cantidades / local·domicilio) manejan su propio click
+    if (
+      target.closest('[data-proto-live-cart="host"]') ||
+      target.closest('[data-proto-fulfillment]')
+    ) {
+      return;
+    }
 
     const dest = resolveFromClick(target, root, screenId);
     if (!dest) {

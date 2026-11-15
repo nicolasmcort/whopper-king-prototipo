@@ -413,9 +413,10 @@ export function TuCarritoADomicilio() {
             flexDirection: "column",
             gap: 16,
             position: "relative",
-            height: 289,
+            height: "auto",
             flexShrink: 0,
-            alignSelf: "stretch"
+            alignSelf: "stretch",
+            overflow: "visible"
           }}>
           <div data-figma-id="653:4389" style={{
               ...row1,

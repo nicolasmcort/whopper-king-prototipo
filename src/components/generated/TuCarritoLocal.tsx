@@ -389,9 +389,10 @@ export function TuCarritoLocal() {
               flexDirection: "column",
               gap: 16,
               position: "relative",
-              height: 289,
+              height: "auto",
               flexShrink: 0,
-              alignSelf: "stretch"
+              alignSelf: "stretch",
+              overflow: "visible"
             }}>
             <div data-figma-id="653:4329" style={{
                 ...row1,
@@ -800,16 +801,16 @@ export function TuCarritoLocal() {
         </div>
         <div data-figma-id="650:2802" style={{
             minWidth: 0,
-            minHeight: 209.5,
+            minHeight: 0,
             display: "flex",
-            padding: "163.75px 0 0",
+            padding: "20px 0 0",
             boxSizing: "border-box",
             flexDirection: "column",
             justifyContent: "flex-end",
             position: "relative",
-            flexShrink: 1,
-            flexGrow: 1,
-            flexBasis: 0,
+            flexShrink: 0,
+            flexGrow: 0,
+            flexBasis: "auto",
             alignSelf: "stretch"
           }}>
           <div data-figma-id="650:2881" style={{
