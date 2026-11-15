@@ -526,9 +526,10 @@ const BY_SCREEN_RAW: Record<string, Record<string, NavTarget>> = {
     carrito: 'tu-carrito-domicilio',
   },
   'pago-local-nequi': {
-    confirmar: 'pedido-exitoso-local',
-    'pagar con nequi': 'pedido-exitoso-local',
-    'pagar con': 'pedido-exitoso-local',
+    // Pago online → pedido enviado (ya pagado)
+    confirmar: 'pedido-enviado-local',
+    'pagar con nequi': 'pedido-enviado-local',
+    'pagar con': 'pedido-enviado-local',
     nequi: 'pago-local-nequi',
     efectivo: 'pago-local-efectivo',
     tarjeta: 'pago-local-tarjeta',
@@ -538,6 +539,7 @@ const BY_SCREEN_RAW: Record<string, Record<string, NavTarget>> = {
     atras: '__back__',
   },
   'pago-local-efectivo': {
+    // Efectivo → pendiente de cobro en caja
     confirmar: 'pedido-exitoso-local',
     'pagar con efectivo': 'pedido-exitoso-local',
     'pagar con': 'pedido-exitoso-local',
@@ -549,9 +551,9 @@ const BY_SCREEN_RAW: Record<string, Record<string, NavTarget>> = {
     atras: '__back__',
   },
   'pago-local-tarjeta': {
-    confirmar: 'pedido-exitoso-local',
-    'pagar con tarjeta': 'pedido-exitoso-local',
-    'pagar con': 'pedido-exitoso-local',
+    confirmar: 'pedido-enviado-local',
+    'pagar con tarjeta': 'pedido-enviado-local',
+    'pagar con': 'pedido-enviado-local',
     nequi: 'pago-local-nequi',
     efectivo: 'pago-local-efectivo',
     tarjeta: 'pago-local-tarjeta',
@@ -560,10 +562,10 @@ const BY_SCREEN_RAW: Record<string, Record<string, NavTarget>> = {
     atras: '__back__',
   },
   'pago-local-breb': {
-    confirmar: 'pedido-exitoso-local',
-    'pagar con bre-b': 'pedido-exitoso-local',
-    'pagar con breb': 'pedido-exitoso-local',
-    'pagar con': 'pedido-exitoso-local',
+    confirmar: 'pedido-enviado-local',
+    'pagar con bre-b': 'pedido-enviado-local',
+    'pagar con breb': 'pedido-enviado-local',
+    'pagar con': 'pedido-enviado-local',
     nequi: 'pago-local-nequi',
     efectivo: 'pago-local-efectivo',
     tarjeta: 'pago-local-tarjeta',
@@ -620,6 +622,11 @@ const BY_SCREEN_RAW: Record<string, Record<string, NavTarget>> = {
     inicio: 'whopper-inicio',
     menu: 'menu',
     continuar: 'whopper-inicio',
+    // Mesa / local: no salir ni volver al pago
+    'mesa 7': 'pedido-enviado-local',
+    'pedido en el local': 'pedido-enviado-local',
+    'en el local': 'pedido-enviado-local',
+    'mesa 7 · pedido en el local': 'pedido-enviado-local',
     volver: 'whopper-inicio',
     atras: 'whopper-inicio',
   },
@@ -642,6 +649,11 @@ const BY_SCREEN_RAW: Record<string, Record<string, NavTarget>> = {
     'pagar en línea ahora': 'pago-local-nequi',
     'pagar en linea': 'pago-local-nequi',
     'pagar en línea': 'pago-local-nequi',
+    // Mesa / local: no disparar “atrás” ni carrito
+    'mesa 7': 'pedido-exitoso-local',
+    'pedido en el local': 'pedido-exitoso-local',
+    'en el local': 'pedido-exitoso-local',
+    'mesa 7 · pedido en el local': 'pedido-exitoso-local',
     volver: 'whopper-inicio',
     atras: 'whopper-inicio',
   },

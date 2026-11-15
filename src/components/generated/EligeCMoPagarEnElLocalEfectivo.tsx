@@ -561,7 +561,7 @@ export function EligeCMoPagarEnElLocalEfectivo() {
                         left: 0,
                         top: -1
                       }}>
-                      {"Pagas desde tu app de Nequi"}
+                      {"Paga desde tu app Nequi"}
                     </span>
                   </div>
                 </div>

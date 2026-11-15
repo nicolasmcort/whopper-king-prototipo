@@ -1,6 +1,5 @@
 import React from 'react';
 import {
-  ClientBackIcon,
   ClientUtensilsIcon,
   ClientPinIcon,
   ClientClockIcon,
@@ -181,22 +180,10 @@ export function PedidoExitosoLocal() {
           flexShrink: 0,
           alignSelf: "stretch"
         }}>
-        <div data-figma-id="654:4482" style={fixedLayer(40, 40, {
-            background: "#ffffff",
-            boxShadow: "inset 0 0 0 1px #ebe4dc",
-            borderRadius: 9999,
-            filter: "drop-shadow(0px 2px 8px rgba(0, 0, 0, 0.06))",
-            ...row1,
-            padding: 1,
-            boxSizing: "border-box",
-            justifyContent: "center"
-          })}>
-          <div data-figma-id="654:4483" style={fixedLayer(16, 16, {
-              overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center"
-            })}>
-            <ClientClockIcon size={16} color="#2d8659" />
-          </div>
-        </div>
+        <div data-figma-id="654:4482" aria-hidden="true" style={fixedLayer(40, 40, {
+            visibility: "hidden",
+            pointerEvents: "none"
+          })} />
       </div>
       <div data-figma-id="654:4485" style={{
           minWidth: 0,
@@ -409,7 +396,7 @@ export function PedidoExitosoLocal() {
                 <div data-figma-id="654:4511" style={fixedLayer(20, 20, {
                     overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center"
                   })}>
-                  <ClientBackIcon size={20} color="#29241f" />
+                  <ClientClockIcon size={20} color="#34745c" />
           </div>
               </div>
               <div data-figma-id="654:4514" style={fixedLayer("max-content", 20, col1)}>
