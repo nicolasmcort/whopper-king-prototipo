@@ -794,16 +794,12 @@ const BY_SCREEN_RAW: Record<string, Record<string, NavTarget>> = {
   'escaneo-qr': {
     continuar: 'pago-local-nequi',
     'continuar con la mesa': 'pago-local-nequi',
-    'continuar con la mesa 1': 'pago-local-nequi',
-    'continuar con la mesa 2': 'pago-local-nequi',
-    'continuar con la mesa 3': 'pago-local-nequi',
-    'continuar con la mesa 4': 'pago-local-nequi',
-    'continuar con la mesa 5': 'pago-local-nequi',
-    'continuar con la mesa 6': 'pago-local-nequi',
-    'continuar con la mesa 7': 'pago-local-nequi',
-    'continuar con la mesa 8': 'pago-local-nequi',
-    'continuar con la mesa 9': 'pago-local-nequi',
-    'continuar con la mesa 10': 'pago-local-nequi',
+    ...Object.fromEntries(
+      Array.from({ length: 16 }, (_, i) => [
+        `continuar con la mesa ${i + 1}`,
+        'pago-local-nequi',
+      ]),
+    ),
     cancelar: 'tu-carrito-local',
     volver: 'tu-carrito-local',
     atras: 'tu-carrito-local',

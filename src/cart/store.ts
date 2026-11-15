@@ -10,6 +10,7 @@ export type CartItem = {
 export type Fulfillment = 'local' | 'domicilio';
 
 export const DELIVERY_FEE = 4000;
+export const TABLE_COUNT = 16;
 
 export type CartState = {
   items: CartItem[];
@@ -166,14 +167,19 @@ export function cartTotals(
   return { count, subtotal, delivery, total: subtotal + delivery };
 }
 
+function invalidateLastOrder() {
+  lastOrder = null;
+}
+
 export function setFulfillment(fulfillment: Fulfillment) {
   if (state.fulfillment === fulfillment) return;
+  invalidateLastOrder();
   state = { ...state, fulfillment };
   emit();
 }
 
 export function setTableNumber(tableNumber: number) {
-  const n = Math.min(10, Math.max(1, Math.round(tableNumber)));
+  const n = Math.min(TABLE_COUNT, Math.max(1, Math.round(tableNumber)));
   if (state.tableNumber === n) return;
   state = { ...state, tableNumber: n };
   emit();
@@ -201,6 +207,7 @@ export function addProductFromScreen(screenId: string, qty = 1) {
 }
 
 function addOrInc(item: CartItem) {
+  invalidateLastOrder();
   const existing = state.items.find((i) => i.id === item.id);
   if (existing) {
     state = {
@@ -216,6 +223,7 @@ function addOrInc(item: CartItem) {
 }
 
 export function incItem(id: string) {
+  invalidateLastOrder();
   state = {
     ...state,
     items: state.items.map((i) => (i.id === id ? { ...i, qty: i.qty + 1 } : i)),
@@ -226,6 +234,7 @@ export function incItem(id: string) {
 export function decItem(id: string) {
   const target = state.items.find((i) => i.id === id);
   if (!target) return;
+  invalidateLastOrder();
   if (target.qty <= 1) {
     state = { ...state, items: state.items.filter((i) => i.id !== id) };
   } else {
@@ -238,6 +247,7 @@ export function decItem(id: string) {
 }
 
 export function removeItem(id: string) {
+  invalidateLastOrder();
   state = { ...state, items: state.items.filter((i) => i.id !== id) };
   emit();
 }

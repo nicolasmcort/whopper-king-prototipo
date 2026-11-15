@@ -445,7 +445,7 @@ export function PantallaDeEscaneoDeQR() {
             flexShrink: 0,
             alignSelf: "stretch"
           }}>
-            {"Está en la placa del centro de tu mesa (1 a 10)."}
+            {"Está en la placa del centro de tu mesa (1 a 16)."}
           </span>
         </div>
       </div>

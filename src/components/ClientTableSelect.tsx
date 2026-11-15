@@ -5,9 +5,9 @@ import {
   getTableNumber,
   setTableNumber,
   subscribeCart,
+  TABLE_COUNT,
 } from '../cart/store';
 
-const CORAL = '#ed6047';
 const INK = '#29241f';
 const MUTED = '#82776e';
 
@@ -60,7 +60,7 @@ function TableSelectControl() {
           appearance: 'auto',
         }}
       >
-        {Array.from({ length: 10 }, (_, i) => i + 1).map((n) => (
+        {Array.from({ length: TABLE_COUNT }, (_, i) => i + 1).map((n) => (
           <option key={n} value={n}>
             {n}
           </option>
@@ -71,19 +71,17 @@ function TableSelectControl() {
 }
 
 function patchQrChrome(root: HTMLElement, table: number) {
-  // Hint: 1 a 10
   root.querySelectorAll('span').forEach((el) => {
-    if (el.children.length > 0) return;
+    if (el.childElementCount > 0) return;
     const t = (el.textContent || '').trim();
-    if (/Está en la placa/i.test(t) || /\(1 a 16\)/.test(t)) {
-      el.textContent = 'Está en la placa del centro de tu mesa (1 a 10).';
+    if (/Está en la placa/i.test(t) || /\(1 a \d+\)/.test(t)) {
+      el.textContent = `Está en la placa del centro de tu mesa (1 a ${TABLE_COUNT}).`;
     }
     if (/^Continuar con la mesa/i.test(t) || /^Continuar$/i.test(t)) {
       el.textContent = `Continuar con la mesa ${table}`;
     }
   });
 
-  // Botón CTA: marcar acción continuar
   const cta = Array.from(root.querySelectorAll('span')).find((el) =>
     /^Continuar con la mesa/i.test((el.textContent || '').trim()),
   );
@@ -100,12 +98,13 @@ function patchQrChrome(root: HTMLElement, table: number) {
 
 const mountAttr = 'data-proto-table-select';
 
-/** Sustituye el campo fijo «7» por un desplegable de mesas 1–10. */
+/** Sustituye el campo fijo «7» por un desplegable de mesas 1–16. */
 export function mountTableSelect(root: HTMLElement): () => void {
   const field =
     (root.querySelector('[data-figma-id="646:2383"]') as HTMLElement | null) ||
-    Array.from(root.querySelectorAll('span')).find((el) => (el.textContent || '').trim() === '7')
-      ?.closest('[style*="borderRadius"]') as HTMLElement | null;
+    (Array.from(root.querySelectorAll('span'))
+      .find((el) => (el.textContent || '').trim() === '7')
+      ?.closest('[style*="borderRadius"]') as HTMLElement | null);
 
   if (!field) {
     patchQrChrome(root, getCart().tableNumber);
@@ -132,8 +131,9 @@ export function mountTableSelect(root: HTMLElement): () => void {
   render();
   const unsub = subscribeCart(render);
 
-  // Flecha atrás del header → volver (si era el reloj de Figma)
-  const backWrap = root.querySelector('[data-figma-id="646:2373"]') as HTMLElement | null;
+  const backWrap = root.querySelector(
+    '[data-figma-id="646:2373"]',
+  ) as HTMLElement | null;
   if (backWrap) {
     backWrap.setAttribute('data-proto-action', 'volver');
     backWrap.style.cursor = 'pointer';
