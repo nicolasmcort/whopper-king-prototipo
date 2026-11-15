@@ -213,34 +213,37 @@ input.proto-field {
   background: rgba(59, 130, 246, 0.06) !important;
 }
 
-/* Barra de carrito sticky al scrollear */
-.phone-frame [data-proto-sticky-cart] {
-  position: sticky !important;
-  bottom: 0 !important;
-  z-index: 40 !important;
-  margin-top: auto;
-}
-
-/* Con tab bar inyectada, el carrito sticky queda encima de la tab bar */
-.phone-scroll[data-proto-has-tabbar] [data-proto-sticky-cart] {
-  position: sticky !important;
-  bottom: 79px !important;
-  z-index: 40 !important;
+/*
+ * Carrito de categoría: siempre al final del contenido (flujo normal).
+ * Con tab bar fija, no usamos sticky para no tapar platos.
+ */
+.phone-scroll[data-proto-has-tabbar] [data-proto-sticky-cart],
+.phone-scroll[data-proto-has-tabbar] [data-proto-end-cart] {
+  position: relative !important;
+  bottom: auto !important;
+  top: auto !important;
+  z-index: 1 !important;
+  margin-top: 8px !important;
   height: auto !important;
-  min-height: 0 !important;
-  background: transparent !important;
-  box-shadow: none !important;
-  padding-bottom: 8px !important;
+  flex-shrink: 0 !important;
 }
 
-/* Ocultar home-indicator del carrito (la tab bar ya lo trae) */
-.phone-scroll[data-proto-has-tabbar] [data-proto-sticky-cart] > div:last-child:not([style*="ed6047"]) {
+/* Home indicator del carrito: la tab bar ya lo trae */
+.phone-scroll[data-proto-has-tabbar] [data-proto-sticky-cart] > div:last-child:not([style*="#ed6047"]):not([style*="ed6047"]),
+.phone-scroll[data-proto-has-tabbar] [data-proto-end-cart] > div:last-child:not([style*="#ed6047"]):not([style*="ed6047"]) {
   display: none !important;
 }
 
-.phone-scroll[data-proto-has-tabbar] [data-proto-cart-clearance] {
-  height: 160px !important;
-  flex-shrink: 0 !important;
+.phone-scroll [data-proto-cart-clearance] {
+  display: none !important;
+  height: 0 !important;
+}
+
+/* Sin tab bar inyectada ( pantallas viejas ): sticky opcional al borde */
+.phone-scroll:not([data-proto-has-tabbar]) [data-proto-sticky-cart] {
+  position: sticky !important;
+  bottom: 0 !important;
+  z-index: 40 !important;
 }
 
 /* Tab bar clonada: anclada al phone-frame, fuera del scroll */

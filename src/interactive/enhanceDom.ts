@@ -269,43 +269,34 @@ export function enhanceFrame(
   // Tab bar Inicio / Buscar / Carrito / Mi cuenta → fija al scrollear
   pinClientTabBar(root);
 
-  // Barra "Tu carrito…" sticky al borde inferior
+  // Barra "Tu carrito…": al final del contenido (sin sticky si hay tab bar)
+  const hasInjectedTab = !!root.querySelector('[data-proto-injected-tabbar]');
   root.querySelectorAll<HTMLElement>('span, div, p').forEach((el) => {
     const t = (el.textContent || '').replace(/\s+/g, ' ').trim().toLowerCase();
     if (t !== 'tu carrito está vacío' && t !== 'tu carrito esta vacio') return;
     let node: HTMLElement | null = el.parentElement;
     while (node && node !== root) {
-      const h = node.offsetHeight;
+      const h = node.offsetHeight || Number.parseFloat(node.style.height) || 0;
       const bg = (node.style.background || '').toLowerCase();
-      if (h >= 80 && h <= 130 && (bg.includes('#fff') || bg.includes('ffffff') || getComputedStyle(node).backgroundColor !== 'rgba(0, 0, 0, 0)')) {
-        node.setAttribute('data-proto-sticky-cart', '1');
-        // Espacio antes del carrito para que los últimos platos no queden tapados
-        if (!node.previousElementSibling?.hasAttribute('data-proto-cart-clearance')) {
-          const gap = document.createElement('div');
-          gap.setAttribute('data-proto-cart-clearance', '1');
-          gap.style.cssText = 'height:160px;width:100%;flex-shrink:0;pointer-events:none;';
-          node.parentElement?.insertBefore(gap, node);
-        }
-        // Subir el sticky por encima de la tab bar inyectada
-        if (root.querySelector('[data-proto-injected-tabbar]')) {
-          node.style.setProperty('bottom', '79px', 'important');
-        }
-        break;
+      const looksCartBar =
+        (h >= 50 && h <= 130) &&
+        (bg.includes('#fff') ||
+          bg.includes('ffffff') ||
+          bg.includes('transparent') ||
+          getComputedStyle(node).backgroundColor !== 'rgba(0, 0, 0, 0)' ||
+          node.style.position === 'sticky' ||
+          node.getAttribute('data-proto-end-cart') === '1');
+      if (!looksCartBar && !(h >= 50 && h <= 130 && node.querySelector('[style*="ed6047"], [style*="#ed6047"]'))) {
+        node = node.parentElement;
+        continue;
       }
-      if (h >= 90 && h <= 130) {
-        node.setAttribute('data-proto-sticky-cart', '1');
-        if (!node.previousElementSibling?.hasAttribute('data-proto-cart-clearance')) {
-          const gap = document.createElement('div');
-          gap.setAttribute('data-proto-cart-clearance', '1');
-          gap.style.cssText = 'height:160px;width:100%;flex-shrink:0;pointer-events:none;';
-          node.parentElement?.insertBefore(gap, node);
-        }
-        if (root.querySelector('[data-proto-injected-tabbar]')) {
-          node.style.setProperty('bottom', '79px', 'important');
-        }
-        break;
+      node.setAttribute(hasInjectedTab ? 'data-proto-end-cart' : 'data-proto-sticky-cart', '1');
+      if (hasInjectedTab) {
+        node.style.setProperty('position', 'relative', 'important');
+        node.style.setProperty('bottom', 'auto', 'important');
+        node.style.setProperty('height', 'auto', 'important');
       }
-      node = node.parentElement;
+      break;
     }
   });
 

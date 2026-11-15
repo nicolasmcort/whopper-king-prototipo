@@ -143,8 +143,8 @@ function App() {
             inset: 0,
             overflowX: 'hidden',
             overflowY: 'auto',
-            // Tab bar (79); el clearance de platos va en el contenido (antes del carrito)
-            paddingBottom: showInjectedTabBar ? 88 : undefined,
+            // Tab bar fija (~79): padding para poder scrollear hasta ver el carrito completo
+            paddingBottom: showInjectedTabBar ? 96 : undefined,
             boxSizing: 'border-box',
           }}
         >

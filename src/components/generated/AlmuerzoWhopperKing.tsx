@@ -1184,22 +1184,22 @@ export function AlmuerzoWhopperKing() {
         </div>
       </div>
     </div>
-    {/* Espacio para scrollear los últimos platos por encima del carrito + tab bar */}
-    <div data-proto-cart-clearance="1" style={{ height: 160, width: '100%', flexShrink: 0, pointerEvents: 'none' }} />
-    <div data-figma-id="425:2828" data-proto-sticky-cart="1" style={{
-        background: "transparent",
+    {/* Carrito al final del flujo: debajo del último plato, sin tapar nada */}
+    <div data-figma-id="425:2828" data-proto-end-cart="1" style={{
+        background: "#ffffff",
+        boxShadow: "inset 0 1px 0 0 #ebe4dc",
         ...col1,
         minWidth: 0,
         overflow: "hidden",
-        padding: "0 20px 8px",
+        padding: "12px 20px 16px",
         boxSizing: "border-box",
-        gap: 0,
-        position: "sticky",
-        bottom: 79,
-        zIndex: 40,
-        height: 62,
+        gap: 8,
+        position: "relative",
+        zIndex: 1,
+        height: "auto",
         flexShrink: 0,
-        alignSelf: "stretch"
+        alignSelf: "stretch",
+        marginTop: 8
       }}>
       <div data-figma-id="425:2829" style={{
           background: "#ed6047",
