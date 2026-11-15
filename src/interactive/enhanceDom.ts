@@ -383,47 +383,90 @@ function hideStatusBars(root: HTMLElement) {
   const scope =
     root.querySelector<HTMLElement>('[data-proto-scroll]') || root;
 
+  const hideBar = (node: HTMLElement) => {
+    if (node.getAttribute('data-proto-status-bar') === '1') return;
+    // No ocultar el header de navegación real (título + flecha circular grande)
+    if (node.querySelector('[data-proto-top-chrome], [data-proto-action="volver"]')) {
+      const realBack = Array.from(
+        node.querySelectorAll<HTMLElement>('[data-proto-action="volver"]'),
+      ).some((b) => {
+        const w = b.offsetWidth || Number.parseFloat(b.style.width) || 0;
+        return w >= 28;
+      });
+      // Si el único «volver» es el icono chico mal exportado dentro del status, sí ocultar
+      if (realBack && (node.offsetHeight || 0) > 56) return;
+    }
+
+    node.setAttribute('data-proto-status-bar', '1');
+    node.style.setProperty('display', 'none', 'important');
+
+    const parent = node.parentElement;
+    if (!parent) return;
+    Array.from(parent.children).forEach((sib) => {
+      if (!(sib instanceof HTMLElement) || sib === node) return;
+      const sibTop = Number.parseFloat(sib.style.top || '');
+      if (!Number.isNaN(sibTop) && sibTop >= 20 && sibTop <= 72) {
+        sib.style.top = '8px';
+      }
+    });
+  };
+
   scope.querySelectorAll('span').forEach((el) => {
     if (el.childElementCount > 0) return;
     const t = (el.textContent || '').trim();
+    // Solo hora tipo 9:41 / 09:41 (no fechas largas de admin)
     if (!/^\d{1,2}:\d{2}$/.test(t)) return;
 
+    let best: HTMLElement | null = null;
     let node: HTMLElement | null = el.parentElement;
-    for (let i = 0; i < 6 && node && node !== root; i++) {
+    for (let i = 0; i < 8 && node && node !== root && node !== scope; i++) {
       const h =
         node.offsetHeight || Number.parseFloat(node.style.height) || 0;
       const top = node.style.top;
       const svgCount = node.querySelectorAll('svg').length;
-      // Barra de status: fila corta con hora + ≥2 iconos (señal/wifi/batería)
-      const looksStatus =
-        svgCount >= 2 &&
-        (h === 0 || h >= 36) &&
-        (h === 0 || h <= 56) &&
-        (top === '0px' ||
-          top === '0' ||
-          node.style.position === 'absolute' ||
-          node.style.position === 'relative' ||
-          !node.style.position);
+      const atTop =
+        top === '0px' ||
+        top === '0' ||
+        (node.style.position === 'absolute' &&
+          (top === '' || Number.parseFloat(top || '0') <= 4));
+      // Filas cortas: status clásico (48px) o max-content (~30–40) en detalle producto
+      const shortEnough = h === 0 || h <= 56;
+      const hasStatusChrome = svgCount >= 1;
 
-      if (looksStatus) {
-        node.setAttribute('data-proto-status-bar', '1');
-        node.style.setProperty('display', 'none', 'important');
-
-        const parent = node.parentElement;
-        if (parent) {
-          Array.from(parent.children).forEach((sib) => {
-            if (!(sib instanceof HTMLElement) || sib === node) return;
-            const sibTop = Number.parseFloat(sib.style.top || '');
-            if (!Number.isNaN(sibTop) && sibTop >= 24 && sibTop <= 64) {
-              sib.style.top = '8px';
-            }
-          });
+      if (shortEnough && hasStatusChrome && (atTop || svgCount >= 2 || i >= 1)) {
+        best = node;
+        // Preferir el contenedor fila completo (absolute top 0 o stretch)
+        if (
+          atTop ||
+          node.style.alignSelf === 'stretch' ||
+          node.style.justifyContent.includes('space') ||
+          (node.offsetWidth || 0) >= 300
+        ) {
+          break;
         }
-        break;
       }
       node = node.parentElement;
     }
+    if (best) hideBar(best);
   });
+}
+
+/** Campana y controles sin función: absorben el clic sin navegar. */
+function disableDeadControls(root: HTMLElement) {
+  const markDead = (el: HTMLElement | null) => {
+    if (!el) return;
+    el.setAttribute('data-proto-dead', '1');
+    el.classList.remove('proto-pressable');
+    el.removeAttribute('role');
+    el.removeAttribute('tabindex');
+    el.style.cursor = 'default';
+    el.style.pointerEvents = 'auto';
+  };
+
+  // Campana de notificaciones en Inicio
+  markDead(root.querySelector<HTMLElement>('[data-figma-id="342:1130"]'));
+  markDead(root.querySelector<HTMLElement>('[data-figma-id="342:1131"]'));
+  markDead(root.querySelector<HTMLElement>('[data-figma-id="342:1132"]'));
 }
 
 /**
@@ -460,7 +503,25 @@ function pinBackButtons(root: HTMLElement) {
     }
   };
 
+  const nearClock = (el: Element) => {
+    let n: Element | null = el;
+    for (let i = 0; i < 5 && n; i++) {
+      const text = (n.textContent || '').replace(/\s+/g, ' ');
+      if (/\b\d{1,2}:\d{2}\b/.test(text) && n.querySelectorAll('svg').length >= 1) {
+        // Fila tipo status bar (hora + iconos), no es la flecha real
+        const h =
+          (n as HTMLElement).offsetHeight ||
+          Number.parseFloat((n as HTMLElement).style.height) ||
+          0;
+        if (h === 0 || h <= 56) return true;
+      }
+      n = n.parentElement;
+    }
+    return false;
+  };
+
   root.querySelectorAll<HTMLElement>('[data-proto-action="volver"]').forEach((el) => {
+    if (nearClock(el)) return; // chevron fantasma dentro del status bar
     let btn: HTMLElement | null = el.parentElement;
     let found: HTMLElement | null = null;
     while (btn && btn !== root) {
@@ -479,6 +540,7 @@ function pinBackButtons(root: HTMLElement) {
     const id = el.getAttribute('data-figma-id');
     if (!id) return;
     if (resolveFigmaNav('__any__', id) !== '__back__') return;
+    if (nearClock(el)) return;
     markBack(el);
   });
 }
@@ -533,11 +595,11 @@ export function enhanceFrame(
   // Barra «Tu carrito…» de menús de categoría → anclada al borde inferior
   pinCategoryCartBar(root);
 
+  // Flechas atrás primero (para no confundir iconos chicos del status con la flecha real)
+  pinBackButtons(root);
+
   // Quitar status bar (hora / señal / batería) de todas las pantallas
   hideStatusBars(root);
-
-  // Flechas atrás: hit area amplia + z-index para que no las tape el contenido
-  pinBackButtons(root);
 
   // Contenido con padding-top bajo header absolute: el padding capturaba el clic de la flecha
   root.querySelectorAll<HTMLElement>('[data-proto-scroll] div').forEach((el) => {
@@ -552,12 +614,13 @@ export function enhanceFrame(
 
   // data-proto-action: marcar hit area (flechas atrás y opciones de combo)
   root.querySelectorAll<HTMLElement>('[data-proto-action]').forEach((el) => {
+    if (el.closest('[data-proto-status-bar], [data-proto-dead]')) return;
     const action = el.getAttribute('data-proto-action');
     if (action === 'volver' || action === 'atras') {
       const hit =
         (el.closest('[data-figma-id]') as HTMLElement | null) ||
         (el.parentElement as HTMLElement | null);
-      if (hit) {
+      if (hit && !hit.closest('[data-proto-status-bar]')) {
         hit.setAttribute('data-proto-action', 'volver');
         markPressable(hit);
       }
@@ -568,6 +631,7 @@ export function enhanceFrame(
   });
 
   candidates.forEach((el) => {
+    if (el.closest('[data-proto-dead], [data-proto-status-bar]')) return;
     const figmaId = el.getAttribute('data-figma-id');
     if (figmaId && resolveFigmaNav(screenId, figmaId)) {
       markPressable(el);
@@ -604,6 +668,9 @@ export function enhanceFrame(
       makeEditable(el);
     }
   });
+
+  // Después de markPressable: campana y controles sin función
+  disableDeadControls(root);
 
   const goWithCart = (target: HTMLElement, dest: NavTarget) => {
     const addHit = target.closest('[data-proto-action="agregar"]');
@@ -651,11 +718,19 @@ export function enhanceFrame(
       return;
     }
 
+    // Controles sin función (campana, etc.): no navegar
+    if (target.closest('[data-proto-dead]')) {
+      e.preventDefault();
+      e.stopPropagation();
+      return;
+    }
+
     // Flecha atrás gana siempre (aunque haya overlays / mismo screenId)
-    if (
-      target.closest('[data-proto-action="volver"]') ||
-      target.closest('[data-proto-action="atras"]')
-    ) {
+    // Ignorar el chevron chico que a veces viene dentro del status bar
+    const backHit = target.closest(
+      '[data-proto-action="volver"], [data-proto-action="atras"]',
+    ) as HTMLElement | null;
+    if (backHit && !backHit.closest('[data-proto-status-bar]')) {
       e.preventDefault();
       e.stopPropagation();
       navigate('__back__');

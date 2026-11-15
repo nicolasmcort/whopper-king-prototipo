@@ -217,9 +217,21 @@ input.proto-field {
 [data-proto-status-bar] {
   display: none !important;
   height: 0 !important;
+  max-height: 0 !important;
   overflow: hidden !important;
   pointer-events: none !important;
   visibility: hidden !important;
+  opacity: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* Controles sin función (campana de notificaciones, etc.) */
+[data-proto-dead] {
+  cursor: default !important;
+}
+[data-proto-dead].proto-pressable {
+  cursor: default !important;
 }
 
 /* Header con flecha atrás: por encima del contenido (evita clic absorbido) */
