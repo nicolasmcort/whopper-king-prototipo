@@ -69,10 +69,11 @@ function resolveFromClick(
   let el: Element | null = target;
   while (el && el !== root) {
     const action = el.getAttribute('data-proto-action');
+    // Flecha atrás siempre = pantalla anterior (historial), no un destino fijo
+    if (action === 'volver' || action === 'atras') return '__back__';
     if (action) {
       const byAction = resolveNav(screenId, action);
       if (byAction) return byAction;
-      if (action === 'volver') return '__back__';
     }
     const figmaId = el.getAttribute('data-figma-id');
     if (figmaId) {
@@ -377,6 +378,87 @@ function pinClientTabBar(root: HTMLElement) {
   }
 }
 
+/** Oculta la barra de estado del mockup (hora 9:41 + iconos de señal/batería). */
+function hideStatusBars(root: HTMLElement) {
+  const scope =
+    root.querySelector<HTMLElement>('[data-proto-scroll]') || root;
+
+  scope.querySelectorAll('span').forEach((el) => {
+    if (el.childElementCount > 0) return;
+    const t = (el.textContent || '').trim();
+    if (!/^\d{1,2}:\d{2}$/.test(t)) return;
+
+    let node: HTMLElement | null = el.parentElement;
+    for (let i = 0; i < 6 && node && node !== root; i++) {
+      const h =
+        node.offsetHeight || Number.parseFloat(node.style.height) || 0;
+      const top = node.style.top;
+      const svgCount = node.querySelectorAll('svg').length;
+      const looksStatus =
+        svgCount >= 2 &&
+        ((h >= 36 && h <= 56) ||
+          top === '0px' ||
+          top === '0' ||
+          node.style.position === 'absolute');
+
+      if (looksStatus) {
+        node.setAttribute('data-proto-status-bar', '1');
+        node.style.setProperty('display', 'none', 'important');
+
+        // Headers absolutos que vivían bajo la status bar → subirlos
+        const parent = node.parentElement;
+        if (parent) {
+          Array.from(parent.children).forEach((sib) => {
+            if (!(sib instanceof HTMLElement) || sib === node) return;
+            const sibTop = Number.parseFloat(sib.style.top || '');
+            if (!Number.isNaN(sibTop) && sibTop >= 24 && sibTop <= 64) {
+              sib.style.top = '8px';
+            }
+          });
+        }
+        break;
+      }
+      node = node.parentElement;
+    }
+  });
+}
+
+/** Asegura hit area clicable en flechas atrás (círculo ~40px). */
+function pinBackButtons(root: HTMLElement) {
+  const markBack = (hit: HTMLElement) => {
+    hit.setAttribute('data-proto-action', 'volver');
+    hit.style.setProperty('z-index', '30', 'important');
+    hit.style.setProperty('pointer-events', 'auto', 'important');
+    if (!hit.style.position || hit.style.position === 'static') {
+      hit.style.position = 'relative';
+    }
+    markPressable(hit);
+  };
+
+  root.querySelectorAll<HTMLElement>('[data-proto-action="volver"]').forEach((el) => {
+    let btn: HTMLElement | null = el.parentElement;
+    let found: HTMLElement | null = null;
+    while (btn && btn !== root) {
+      const w = btn.offsetWidth || Number.parseFloat(btn.style.width) || 0;
+      const h = btn.offsetHeight || Number.parseFloat(btn.style.height) || 0;
+      if (w >= 32 && w <= 56 && h >= 32 && h <= 56) {
+        found = btn;
+        break;
+      }
+      btn = btn.parentElement;
+    }
+    markBack(found || (el.closest('[data-figma-id]') as HTMLElement) || el);
+  });
+
+  // Wrappers mapeados a volver por figma-id (por si el SVG aún no montó el attr)
+  root.querySelectorAll<HTMLElement>('[data-figma-id]').forEach((el) => {
+    const id = el.getAttribute('data-figma-id');
+    if (!id) return;
+    if (resolveFigmaNav('__any__', id) !== '__back__') return;
+    markBack(el);
+  });
+}
+
 /** Expande el hit area a la tarjeta/opción contenedora (pago, combo, producto). */
 function expandOptionHitArea(el: HTMLElement, actionLabel: string, root: HTMLElement) {
   let node: HTMLElement | null = el.parentElement;
@@ -427,14 +509,24 @@ export function enhanceFrame(
   // Barra «Tu carrito…» de menús de categoría → anclada al borde inferior
   pinCategoryCartBar(root);
 
+  // Quitar status bar (hora / señal / batería) de todas las pantallas
+  hideStatusBars(root);
+
+  // Flechas atrás: hit area amplia + z-index para que no las tape el contenido
+  pinBackButtons(root);
+
   // data-proto-action: marcar hit area (flechas atrás y opciones de combo)
   root.querySelectorAll<HTMLElement>('[data-proto-action]').forEach((el) => {
     const action = el.getAttribute('data-proto-action');
-    if (action === 'volver') {
+    if (action === 'volver' || action === 'atras') {
       const hit =
         (el.closest('[data-figma-id]') as HTMLElement | null) ||
         (el.parentElement as HTMLElement | null);
-      if (hit) markPressable(hit);
+      if (hit) {
+        hit.setAttribute('data-proto-action', 'volver');
+        markPressable(hit);
+      }
+      markPressable(el);
       return;
     }
     markPressable(el);

@@ -213,6 +213,14 @@ input.proto-field {
   background: rgba(59, 130, 246, 0.06) !important;
 }
 
+/* Status bar del mockup (hora / señal / batería): oculta en todas las UIs */
+[data-proto-status-bar] {
+  display: none !important;
+  height: 0 !important;
+  overflow: hidden !important;
+  pointer-events: none !important;
+}
+
 /* Barra «Tu carrito…» de categoría: clon anclado al borde inferior del phone */
 .phone-frame > [data-proto-cart-clone] {
   position: absolute !important;

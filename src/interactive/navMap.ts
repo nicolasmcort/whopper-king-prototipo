@@ -1099,9 +1099,10 @@ function bestPartial(
 export function resolveFigmaNav(screenId: string, figmaId: string): NavTarget | null {
   const action = FIGMA_ID_ACTIONS[figmaId];
   if (!action) return null;
+  // Flechas atrás del chrome: siempre historial (UI anterior)
+  if (action === 'volver' || action === 'atras') return '__back__';
   const dest = resolveNav(screenId, action);
   if (dest) return dest;
-  if (action === 'volver') return '__back__';
   if (action === 'cliente') return 'whopper-inicio';
   if (action === 'carrito') return 'tu-carrito-local';
   if (action === 'administrador') return 'inventario';

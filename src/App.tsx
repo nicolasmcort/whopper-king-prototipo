@@ -29,7 +29,10 @@ function readHash(): string {
 
 function App() {
   const [currentId, setCurrentId] = useState(readHash);
-  const [history, setHistory] = useState<string[]>(['whopper-inicio']);
+  const [history, setHistory] = useState<string[]>(() => {
+    const id = readHash();
+    return id === 'whopper-inicio' ? ['whopper-inicio'] : ['whopper-inicio', id];
+  });
   const frameRef = useRef<HTMLDivElement>(null);
 
   const current = screenById[currentId] ?? screens[0];
@@ -64,11 +67,16 @@ function App() {
 
   const back = useCallback(() => {
     setHistory((h) => {
-      if (h.length <= 1) {
-        go('whopper-inicio');
-        return h;
+      // Alinear historial si el tope no es la pantalla actual
+      let stack = h;
+      if (stack[stack.length - 1] !== currentId) {
+        stack = [...stack, currentId];
       }
-      const next = h.slice(0, -1);
+      if (stack.length <= 1) {
+        if (currentId !== 'whopper-inicio') go('whopper-inicio');
+        return stack.length ? stack : ['whopper-inicio'];
+      }
+      const next = stack.slice(0, -1);
       const id = next[next.length - 1];
       setCurrentId(id);
       const nextHash = `/${id}`;
@@ -78,7 +86,7 @@ function App() {
       }
       return next;
     });
-  }, [go]);
+  }, [go, currentId]);
 
   const navigate = useCallback(
     (target: NavTarget) => {
