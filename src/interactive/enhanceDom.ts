@@ -4,8 +4,13 @@ import {
   getCart,
   payScreenForCart,
   PRODUCT_BY_SCREEN,
+  subscribeCart,
 } from '../cart/store';
-import { mountLiveCart, syncMenuCartBars } from '../components/ClientLiveCart';
+import {
+  mountLiveCart,
+  syncHeaderCartBadge,
+  syncMenuCartBars,
+} from '../components/ClientLiveCart';
 import { mountOrderSummary } from '../components/ClientOrderSummary';
 import { mountPaymentHeader } from '../components/ClientPaymentHeader';
 import { mountTableSelect } from '../components/ClientTableSelect';
@@ -201,6 +206,132 @@ function findClientTabBar(root: HTMLElement): HTMLElement | null {
   return tab;
 }
 
+/** Localiza la barra naranja «Tu carrito…» de menús de categoría. */
+function findCategoryCartBar(root: HTMLElement): HTMLElement | null {
+  const scroll = root.querySelector<HTMLElement>('[data-proto-scroll]');
+  const scope = scroll || root;
+  const leaves = Array.from(scope.querySelectorAll<HTMLElement>('span, div, p')).filter(
+    (el) => el.childElementCount === 0,
+  );
+
+  for (const el of leaves) {
+    const t = (el.textContent || '').replace(/\s+/g, ' ').trim().toLowerCase();
+    if (
+      t !== 'tu carrito está vacío' &&
+      t !== 'tu carrito esta vacio' &&
+      !/^\d+\s+productos? en tu carrito$/.test(t)
+    ) {
+      continue;
+    }
+
+    let node: HTMLElement | null = el.parentElement;
+    while (node && node !== root && node !== scroll) {
+      if (node.hasAttribute('data-proto-cart-clone')) break;
+      const h = node.offsetHeight || Number.parseFloat(node.style.height) || 0;
+      const hasCoral = !!node.querySelector(
+        '[style*="ed6047"], [style*="#ed6047"], [style*="237, 96, 71"]',
+      );
+      const bg = (node.style.background || '').toLowerCase();
+      const isCoralSelf =
+        bg.includes('#ed6047') ||
+        bg.includes('237, 96, 71') ||
+        bg.includes('ed6047');
+      // Wrapper blanco (~98px) o el botón coral (~54px)
+      if (hasCoral && h >= 50 && h <= 140) {
+        // Preferir el wrapper con home indicator si existe
+        const parent = node.parentElement;
+        if (
+          parent &&
+          parent !== root &&
+          parent !== scroll &&
+          (parent.offsetHeight || Number.parseFloat(parent.style.height) || 0) >= 70 &&
+          (parent.offsetHeight || 0) <= 140 &&
+          parent.querySelector('[style*="ed6047"], [style*="#ed6047"]')
+        ) {
+          return parent;
+        }
+        return node;
+      }
+      if (isCoralSelf && h >= 48 && h <= 80) {
+        const wrap = node.parentElement;
+        if (wrap && wrap !== root && wrap !== scroll) return wrap;
+        return node;
+      }
+      node = node.parentElement;
+    }
+  }
+  return null;
+}
+
+/**
+ * Ancla la barra de carrito de categoría al borde inferior del phone-frame
+ * (fuera del scroll), para que quede siempre visible aunque haya pocos platos.
+ */
+function pinCategoryCartBar(root: HTMLElement) {
+  const bar = findCategoryCartBar(root);
+  if (!bar || bar.hasAttribute('data-proto-cart-clone')) return;
+
+  const scroll = root.querySelector<HTMLElement>('[data-proto-scroll]');
+  const barH = Math.max(
+    bar.offsetHeight || Number.parseFloat(bar.style.height) || 0,
+    90,
+  );
+
+  let clone = root.querySelector<HTMLElement>(':scope > [data-proto-cart-clone]');
+  if (!clone) {
+    clone = bar.cloneNode(true) as HTMLElement;
+    clone.removeAttribute('data-proto-cart-source');
+    clone.setAttribute('data-proto-cart-clone', '1');
+    clone.setAttribute('data-proto-sticky-cart', '1');
+    root.appendChild(clone);
+  } else {
+    clone.innerHTML = bar.innerHTML;
+  }
+
+  clone.style.setProperty('visibility', 'visible', 'important');
+  clone.style.setProperty('pointer-events', 'auto', 'important');
+  clone.style.setProperty('position', 'absolute', 'important');
+  clone.style.setProperty('left', '0', 'important');
+  clone.style.setProperty('right', '0', 'important');
+  clone.style.setProperty('bottom', '0', 'important');
+  clone.style.setProperty('top', 'auto', 'important');
+  clone.style.setProperty('width', '100%', 'important');
+  clone.style.setProperty('max-width', '100%', 'important');
+  clone.style.setProperty('height', `${barH}px`, 'important');
+  clone.style.setProperty('z-index', '55', 'important');
+  clone.style.setProperty('margin', '0', 'important');
+  clone.style.setProperty('flex-shrink', '0', 'important');
+
+  // Clic → carrito aunque el texto diga «N productos…»
+  clone.setAttribute('data-proto-action', 'carrito');
+  markPressable(clone);
+  const coralBtn = Array.from(clone.querySelectorAll<HTMLElement>('div')).find((d) => {
+    const bg = (d.style.background || '').toLowerCase();
+    return bg.includes('#ed6047') || bg.includes('237, 96, 71');
+  });
+  if (coralBtn) {
+    coralBtn.setAttribute('data-proto-action', 'carrito');
+    markPressable(coralBtn);
+  }
+
+  // Original en el flujo: colapsado (React lo sigue montando)
+  bar.setAttribute('data-proto-cart-source', '1');
+  bar.style.setProperty('visibility', 'hidden', 'important');
+  bar.style.setProperty('pointer-events', 'none', 'important');
+  bar.style.setProperty('height', '0', 'important');
+  bar.style.setProperty('min-height', '0', 'important');
+  bar.style.setProperty('overflow', 'hidden', 'important');
+  bar.style.setProperty('padding', '0', 'important');
+  bar.style.setProperty('margin', '0', 'important');
+  bar.style.setProperty('border', 'none', 'important');
+  bar.style.setProperty('box-shadow', 'none', 'important');
+
+  if (scroll) {
+    const tabPad = root.querySelector('[data-proto-tabbar-clone]') ? 79 : 0;
+    scroll.style.paddingBottom = `${barH + tabPad + 8}px`;
+  }
+}
+
 /**
  * Clona la tab bar como hija directa del phone-frame (fuera del scroll).
  * El original se oculta para no pelear con React.
@@ -293,36 +424,8 @@ export function enhanceFrame(
   // Tab bar Inicio / Buscar / Carrito / Mi cuenta → fija al scrollear
   pinClientTabBar(root);
 
-  // Barra "Tu carrito…": al final del contenido (sin sticky si hay tab bar)
-  const hasInjectedTab = !!root.querySelector('[data-proto-injected-tabbar]');
-  root.querySelectorAll<HTMLElement>('span, div, p').forEach((el) => {
-    const t = (el.textContent || '').replace(/\s+/g, ' ').trim().toLowerCase();
-    if (t !== 'tu carrito está vacío' && t !== 'tu carrito esta vacio') return;
-    let node: HTMLElement | null = el.parentElement;
-    while (node && node !== root) {
-      const h = node.offsetHeight || Number.parseFloat(node.style.height) || 0;
-      const bg = (node.style.background || '').toLowerCase();
-      const looksCartBar =
-        (h >= 50 && h <= 130) &&
-        (bg.includes('#fff') ||
-          bg.includes('ffffff') ||
-          bg.includes('transparent') ||
-          getComputedStyle(node).backgroundColor !== 'rgba(0, 0, 0, 0)' ||
-          node.style.position === 'sticky' ||
-          node.getAttribute('data-proto-end-cart') === '1');
-      if (!looksCartBar && !(h >= 50 && h <= 130 && node.querySelector('[style*="ed6047"], [style*="#ed6047"]'))) {
-        node = node.parentElement;
-        continue;
-      }
-      node.setAttribute(hasInjectedTab ? 'data-proto-end-cart' : 'data-proto-sticky-cart', '1');
-      if (hasInjectedTab) {
-        node.style.setProperty('position', 'relative', 'important');
-        node.style.setProperty('bottom', 'auto', 'important');
-        node.style.setProperty('height', 'auto', 'important');
-      }
-      break;
-    }
-  });
+  // Barra «Tu carrito…» de menús de categoría → anclada al borde inferior
+  pinCategoryCartBar(root);
 
   // data-proto-action: marcar hit area (flechas atrás y opciones de combo)
   root.querySelectorAll<HTMLElement>('[data-proto-action]').forEach((el) => {
@@ -478,7 +581,12 @@ export function enhanceFrame(
     // Si llegan directo (hash), usa carrito vivo; si vinieron de pagar, ya hay snapshot
     cleanups.push(mountOrderSummary(root));
   } else {
-    syncMenuCartBars(root);
+    const syncChrome = () => {
+      syncMenuCartBars(root);
+      syncHeaderCartBadge(root);
+    };
+    syncChrome();
+    cleanups.push(subscribeCart(syncChrome));
   }
 
   return () => {

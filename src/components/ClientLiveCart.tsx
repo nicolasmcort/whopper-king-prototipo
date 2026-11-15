@@ -722,7 +722,7 @@ export function mountLiveCart(
   };
 }
 
-/** Actualiza barras «Tu carrito…» en menús según el store. */
+/** Actualiza barras «Tu carrito…» en menús según el store (incluye clon fijo). */
 export function syncMenuCartBars(root: HTMLElement) {
   const { count, total } = cartTotals();
   const label =
@@ -733,33 +733,81 @@ export function syncMenuCartBars(root: HTMLElement) {
         : `${count} productos en tu carrito`;
   const money = formatCOP(total);
 
-  root.querySelectorAll('span, div').forEach((el) => {
-    if (el.children.length > 0) return;
-    const t = (el.textContent || '').replace(/\s+/g, ' ').trim().toLowerCase();
-    if (
-      t === 'tu carrito está vacío' ||
-      t === 'tu carrito esta vacio' ||
-      /productos en tu carrito/.test(t)
-    ) {
-      el.textContent = label;
-    }
-  });
+  const scopes = [
+    root,
+    ...Array.from(
+      root.querySelectorAll<HTMLElement>(
+        '[data-proto-cart-clone], [data-proto-end-cart], [data-proto-sticky-cart]',
+      ),
+    ),
+  ];
 
-  root.querySelectorAll('[data-proto-end-cart], [data-proto-sticky-cart]').forEach((bar) => {
-    const spans = Array.from(bar.querySelectorAll('span'));
-    for (const s of spans) {
-      const t = (s.textContent || '').trim();
-      if (/^\d+$/.test(t) && t.length <= 2) {
-        s.textContent = String(count);
-        break;
+  const seen = new Set<Element>();
+  for (const scope of scopes) {
+    scope.querySelectorAll('span, div').forEach((el) => {
+      if (seen.has(el) || el.children.length > 0) return;
+      seen.add(el);
+      const t = (el.textContent || '').replace(/\s+/g, ' ').trim().toLowerCase();
+      if (
+        t === 'tu carrito está vacío' ||
+        t === 'tu carrito esta vacio' ||
+        /productos? en tu carrito/.test(t)
+      ) {
+        el.textContent = label;
       }
-    }
-    for (const s of spans) {
-      const t = (s.textContent || '').trim();
-      if (/^\$\s*[\d.]+$/.test(t)) {
-        s.textContent = money;
-        break;
+    });
+  }
+
+  root
+    .querySelectorAll(
+      '[data-proto-cart-clone], [data-proto-end-cart], [data-proto-sticky-cart]',
+    )
+    .forEach((bar) => {
+      const spans = Array.from(bar.querySelectorAll('span'));
+      for (const s of spans) {
+        const t = (s.textContent || '').trim();
+        if (/^\d+$/.test(t) && t.length <= 3) {
+          s.textContent = String(count);
+          break;
+        }
       }
-    }
+      for (const s of spans) {
+        const t = (s.textContent || '').trim();
+        if (/^\$\s*[\d.]+$/.test(t)) {
+          s.textContent = money;
+          break;
+        }
+      }
+    });
+}
+
+/** Badge numérico del ícono carrito en Inicio (y similares). */
+export function syncHeaderCartBadge(root: HTMLElement) {
+  const { count } = cartTotals();
+  const label = String(count);
+
+  const byId = root.querySelector<HTMLElement>('[data-figma-id="679:1643"]');
+  if (byId) {
+    byId.textContent = label;
+  }
+
+  // Badge coral del header (círculo rojo con número)
+  root.querySelectorAll<HTMLElement>('div').forEach((el) => {
+    const bg = (el.style.background || '').toLowerCase();
+    const isBadge =
+      (bg.includes('#ed6047') || bg.includes('237, 96, 71')) &&
+      (el.style.borderRadius.includes('9999') ||
+        el.style.borderRadius.includes('50%') ||
+        el.style.borderRadius === '9999px');
+    if (!isBadge) return;
+    const w = el.offsetWidth || Number.parseFloat(el.style.width) || 0;
+    const h = el.offsetHeight || Number.parseFloat(el.style.height) || 0;
+    if (w > 28 || h > 28 || (w > 0 && w < 12)) return;
+    const span = el.querySelector('span');
+    if (!span || span.childElementCount > 0) return;
+    const t = (span.textContent || '').trim();
+    if (t && !/^\d{1,3}$/.test(t)) return;
+    span.textContent = label;
+    el.style.display = count === 0 ? 'none' : '';
   });
 }

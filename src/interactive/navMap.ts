@@ -1043,10 +1043,16 @@ const FIGMA_ID_ACTIONS: Record<string, string> = {
   // Contactos sheet: backdrop y Cerrar
   '342:2000': 'cerrar',
   '342:2067': 'cerrar',
-  // Header carrito sticky en menú
+  // Header carrito sticky en menú / Inicio
   '425:2642': 'carrito',
+  '425:2454': 'carrito',
+  '425:2455': 'carrito',
+  '748:1966': 'carrito',
+  '748:1967': 'carrito',
   '679:1636': 'carrito',
   '679:1638': 'carrito',
+  '679:1642': 'carrito',
+  '679:1643': 'carrito',
   // Filas de inventario → detalle (clic en toda la fila)
   '752:1956': 'tocineta',
   '752:1977': 'carne de res',
