@@ -697,7 +697,7 @@ export function EligeCMoPagarEnElLocalTarjeta() {
                       <div data-figma-id="650:3028" style={fixedLayer(20, 20, {
                           overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center"
                         })}>
-                        <ClientCardIcon size={20} color="#29241f" />
+                        <ClientCardIcon size={20} color="#ed6047" />
           </div>
                     </div>
                   </div>
@@ -771,7 +771,7 @@ export function EligeCMoPagarEnElLocalTarjeta() {
               alignItems: "center",
               justifyContent: "center"
             })}>
-            <ClientCashIcon size={20} color="#29241f" />
+            <ClientCashIcon size={20} color="#ed6047" />
           </div>
                     </div>
                   </div>

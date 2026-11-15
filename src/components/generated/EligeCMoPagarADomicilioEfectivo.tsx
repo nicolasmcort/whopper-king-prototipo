@@ -659,7 +659,7 @@ export function EligeCMoPagarADomicilioEfectivo() {
               <div data-figma-id="653:4169" style={fixedLayer(20, 20, {
                   overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center"
                 })}>
-                <ClientCardIcon size={20} color="#29241f" />
+                <ClientCardIcon size={20} color="#ed6047" />
           </div>
             </div>
             <div data-figma-id="653:4172" style={{
@@ -739,7 +739,7 @@ export function EligeCMoPagarADomicilioEfectivo() {
               alignItems: "center",
               justifyContent: "center"
             })}>
-            <ClientCashIcon size={20} color="#29241f" />
+            <ClientCashIcon size={20} color="#ed6047" />
           </div>
             </div>
             <div data-figma-id="653:4185" style={{

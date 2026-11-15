@@ -163,7 +163,7 @@ export function ClientStoreIcon({ size = 18, color = '#29241f', style }: Props) 
 }
 
 /** Tarjeta. */
-export function ClientCardIcon({ size = 20, color = '#29241f', style }: Props) {
+export function ClientCardIcon({ size = 20, color = '#ed6047', style }: Props) {
   return base(
     size,
     style,
@@ -184,7 +184,7 @@ export function ClientCardIcon({ size = 20, color = '#29241f', style }: Props) {
 }
 
 /** Efectivo. */
-export function ClientCashIcon({ size = 20, color = '#29241f', style }: Props) {
+export function ClientCashIcon({ size = 20, color = '#ed6047', style }: Props) {
   return base(
     size,
     style,
@@ -210,7 +210,7 @@ export function ClientCashIcon({ size = 20, color = '#29241f', style }: Props) {
 }
 
 /** Nequi — marca simplificada (N). */
-export function ClientNequiIcon({ size = 20, color = '#200020', style }: Props) {
+export function ClientNequiIcon({ size = 20, color = '#ed6047', style }: Props) {
   return base(
     size,
     style,
