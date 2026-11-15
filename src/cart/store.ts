@@ -16,6 +16,15 @@ export type CartState = {
   fulfillment: Fulfillment;
 };
 
+/** Pedido confirmado (congelado para pantallas de éxito / preparación). */
+export type OrderSnapshot = {
+  items: CartItem[];
+  fulfillment: Fulfillment;
+  subtotal: number;
+  delivery: number;
+  total: number;
+};
+
 const WHOPPER_IMG =
   'https://storage.googleapis.com/storage.magicpath.ai/user/426091581041446912/figma-assets/961948be-e1a8-485b-bc9d-b272387ae3a6.jpg';
 const TEXANA_IMG =
@@ -93,6 +102,7 @@ const INITIAL: CartState = {
 };
 
 let state: CartState = structuredClone(INITIAL);
+let lastOrder: OrderSnapshot | null = null;
 const listeners = new Set<() => void>();
 
 function emit() {
@@ -101,6 +111,37 @@ function emit() {
 
 export function getCart(): CartState {
   return state;
+}
+
+export function getLastOrder(): OrderSnapshot | null {
+  return lastOrder;
+}
+
+/** Congela el carrito actual como pedido confirmado. */
+export function commitOrder(): OrderSnapshot {
+  const { subtotal, delivery, total } = cartTotals();
+  lastOrder = {
+    items: state.items.map((i) => ({ ...i })),
+    fulfillment: state.fulfillment,
+    subtotal,
+    delivery,
+    total,
+  };
+  emit();
+  return lastOrder;
+}
+
+/** Resumen a mostrar en pantallas de pedido (snapshot o carrito vivo). */
+export function getOrderForSummary(): OrderSnapshot {
+  if (lastOrder) return lastOrder;
+  const { subtotal, delivery, total } = cartTotals();
+  return {
+    items: state.items.map((i) => ({ ...i })),
+    fulfillment: state.fulfillment,
+    subtotal,
+    delivery,
+    total,
+  };
 }
 
 export function subscribeCart(listener: () => void): () => void {

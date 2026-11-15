@@ -1,9 +1,11 @@
 import {
   addProductFromScreen,
+  commitOrder,
   payScreenForCart,
   PRODUCT_BY_SCREEN,
 } from '../cart/store';
 import { mountLiveCart, syncMenuCartBars } from '../components/ClientLiveCart';
+import { mountOrderSummary } from '../components/ClientOrderSummary';
 import {
   isButtonish,
   isEditableLabel,
@@ -386,6 +388,10 @@ export function enhanceFrame(
       const method = next.replace(/^pago-(local|dom)-/, '') || 'nequi';
       next = payScreenForCart(method);
     }
+    // Al confirmar pedido, congelar el carrito para el resumen
+    if (typeof next === 'string' && next.startsWith('pedido-')) {
+      commitOrder();
+    }
     navigate(next);
   };
 
@@ -439,6 +445,13 @@ export function enhanceFrame(
         navigate(id);
       }),
     );
+  } else if (
+    screenId === 'pedido-exitoso-local' ||
+    screenId === 'pedido-enviado-local' ||
+    screenId === 'pedido-enviado-domicilio'
+  ) {
+    // Si llegan directo (hash), usa carrito vivo; si vinieron de pagar, ya hay snapshot
+    cleanups.push(mountOrderSummary(root));
   } else {
     syncMenuCartBars(root);
   }
