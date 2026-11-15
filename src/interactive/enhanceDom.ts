@@ -178,6 +178,27 @@ export function enhanceFrame(
 ): () => void {
   const candidates = root.querySelectorAll<HTMLElement>('div, span, p, button, a, label');
 
+  // Barra "Tu carrito…" / acceso: fijar al borde inferior del phone-frame
+  root.querySelectorAll<HTMLElement>('span, div, p').forEach((el) => {
+    const t = (el.textContent || '').replace(/\s+/g, ' ').trim().toLowerCase();
+    if (t !== 'tu carrito está vacío' && t !== 'tu carrito esta vacio') return;
+    let node: HTMLElement | null = el.parentElement;
+    while (node && node !== root) {
+      const h = node.offsetHeight;
+      const bg = (node.style.background || '').toLowerCase();
+      if (h >= 80 && h <= 130 && (bg.includes('#fff') || bg.includes('ffffff') || getComputedStyle(node).backgroundColor !== 'rgba(0, 0, 0, 0)')) {
+        node.setAttribute('data-proto-sticky-cart', '1');
+        break;
+      }
+      // Contenedor blanco del footer (altura ~98)
+      if (h >= 90 && h <= 120) {
+        node.setAttribute('data-proto-sticky-cart', '1');
+        break;
+      }
+      node = node.parentElement;
+    }
+  });
+
   // data-proto-action: marcar hit area (flechas atrás y opciones de combo)
   root.querySelectorAll<HTMLElement>('[data-proto-action]').forEach((el) => {
     const action = el.getAttribute('data-proto-action');

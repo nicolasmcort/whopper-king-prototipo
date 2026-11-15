@@ -212,3 +212,11 @@ input.proto-field {
   border-radius: 6px;
   background: rgba(59, 130, 246, 0.06) !important;
 }
+
+/* Barra de carrito / acceso fija al borde inferior del phone-frame */
+.phone-frame [data-proto-sticky-cart] {
+  position: sticky !important;
+  bottom: 0 !important;
+  z-index: 40 !important;
+  margin-top: auto;
+}

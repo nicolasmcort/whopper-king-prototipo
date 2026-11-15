@@ -72,8 +72,6 @@ import { EligeCMoPagarEnElLocalBreB } from './components/generated/EligeCMoPagar
 import { EligeCMoPagarEnElLocalEfectivo } from './components/generated/EligeCMoPagarEnElLocalEfectivo';
 import { EligeCMoPagarEnElLocalNequi } from './components/generated/EligeCMoPagarEnElLocalNequi';
 import { EligeCMoPagarEnElLocalTarjeta } from './components/generated/EligeCMoPagarEnElLocalTarjeta';
-import { MenuDeHamburguesas } from './components/generated/MenuDeHamburguesas';
-
 export type Screen = {
   id: string;
   name: string;
@@ -154,7 +152,8 @@ export const screens: Screen[] = [
   { id: 'pago-local-efectivo', name: "[Cliente] Elige cómo pagar · En el local · Efectivo", Component: EligeCMoPagarEnElLocalEfectivo },
   { id: 'pago-local-nequi', name: "[Cliente] Elige cómo pagar · En el local · Nequi", Component: EligeCMoPagarEnElLocalNequi },
   { id: 'pago-local-tarjeta', name: "[Cliente] Elige cómo pagar · En el local · Tarjeta", Component: EligeCMoPagarEnElLocalTarjeta },
-  { id: 'menu-hamburguesas', name: "[Cliente] Menu de Hamburguesas", Component: MenuDeHamburguesas },
+  // Stub vacío reemplazado por el frame real Burgers · Whopper King
+  { id: 'menu-hamburguesas', name: "[Cliente] Menu de Hamburguesas", Component: BurgersWhopperKing },
 ];
 
 export const screenById = Object.fromEntries(screens.map((s) => [s.id, s])) as Record<

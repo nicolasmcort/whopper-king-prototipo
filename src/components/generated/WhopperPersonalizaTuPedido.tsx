@@ -267,29 +267,10 @@ export function WhopperPersonalizaTuPedido() {
             </div>
           </div>
         </div>
-        <div data-figma-id="552:3600" style={fixedLayer(40, 40, {
-          background: "#ed6047",
-          borderRadius: 10,
-          display: "flex",
-          padding: "7.75px 0 9.25px",
-          boxSizing: "border-box",
-          alignItems: "center",
-          justifyContent: "center"
-        })}>
-          <span data-figma-id="552:3601" style={{
-            ...text1,
-            ...font_Manrope,
-            color: "#ffffff",
-            fontSize: 15,
-            lineHeight: "22.5px",
-            textAlign: "center",
-            ...row3,
-            position: "relative",
-            flexShrink: 0
-          }}>
-            {"WK"}
-          </span>
-        </div>
+        <div data-figma-id="552:3600" aria-hidden="true" style={fixedLayer(40, 40, {
+          visibility: "hidden",
+          pointerEvents: "none"
+        })} />
       </div>
       <div data-figma-id="552:3602" style={{
         ...col1,

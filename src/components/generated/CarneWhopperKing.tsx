@@ -696,7 +696,9 @@ export function CarneWhopperKing() {
         padding: "12px 20px 0",
         boxSizing: "border-box",
         gap: 8,
-        position: "relative",
+        position: "sticky",
+        bottom: 0,
+        zIndex: 40,
         height: 98,
         flexShrink: 0,
         alignSelf: "stretch"

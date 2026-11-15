@@ -625,27 +625,22 @@ export function AlmuerzoWhopperKing() {
           <div data-figma-id="885:3676~4" style={{
               ...col6,
               position: "relative",
-              height: 35.302,
+              height: "auto",
+              minHeight: 35.302,
               flexShrink: 0,
               alignSelf: "stretch"
             }}>
             <span data-figma-id="707:1860~4" style={{
                 ...font_Manrope,
                 ...text2,
-                whiteSpace: "normal",
+                whiteSpace: "pre-line",
+                lineHeight: "19px",
                 ...layout3,
                 position: "relative",
                 flexShrink: 0,
                 alignSelf: "stretch"
               }}>
-              <span style={{
-                  position: "absolute",
-                  top: 0,
-                  whiteSpace: "pre",
-                  lineHeight: "19px",
-                  left: 0,
-                  textAlign: "left"
-                }}>{"Almuerzo Higado \nSudado"}</span>
+              {"Almuerzo Higado Sudado"}
             </span>
             <span data-figma-id="707:1861~4" style={{
                 ...font_Inter_13,
@@ -1197,7 +1192,9 @@ export function AlmuerzoWhopperKing() {
         padding: "12px 20px 0",
         boxSizing: "border-box",
         gap: 8,
-        position: "relative",
+        position: "sticky",
+        bottom: 0,
+        zIndex: 40,
         height: 98,
         flexShrink: 0,
         alignSelf: "stretch"

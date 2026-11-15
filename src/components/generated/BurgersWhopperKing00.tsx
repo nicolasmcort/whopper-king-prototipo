@@ -1181,7 +1181,13 @@ export function BurgersWhopperKing00() {
         </div>
       </div>
     </div>
-    <div data-figma-id="425:2017" style={fixedLayer(402, 98, {
+    <div data-figma-id="425:2017" style={{
+        position: "sticky",
+        bottom: 0,
+        zIndex: 40,
+        width: 402,
+        height: 98,
+        flexShrink: 0,
         background: "#ffffff",
         boxShadow: "inset 0 1px 0 0 #ebe4dc",
         ...col1,
@@ -1189,7 +1195,7 @@ export function BurgersWhopperKing00() {
         padding: "12px 20px 0",
         boxSizing: "border-box",
         gap: 8
-      })}>
+      }}>
       <div data-figma-id="425:2018" style={{
           background: "#ed6047",
           borderRadius: 14,
