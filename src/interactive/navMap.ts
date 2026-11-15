@@ -1058,6 +1058,11 @@ const FIGMA_ID_ACTIONS: Record<string, string> = {
   '595:2642': 'conocernos',
   '595:2644': 'conocernos',
   '595:2645': 'conocernos',
+  // Flecha atrás Sobre nosotros
+  '464:1737': 'volver',
+  '464:1738': 'volver',
+  '464:1739': 'volver',
+  '464:1740': 'volver',
   // Filas de inventario → detalle (clic en toda la fila)
   '752:1956': 'tocineta',
   '752:1977': 'carne de res',

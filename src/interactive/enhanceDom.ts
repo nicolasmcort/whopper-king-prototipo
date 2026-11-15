@@ -496,6 +496,11 @@ function disableDeadControls(root: HTMLElement) {
       if (row) markDead(row);
     }
   });
+
+  // Canales en Sobre nosotros (WhatsApp / Instagram / Facebook): solo visual
+  ['464:1929', '464:1943', '464:1958', '464:1930', '464:1944', '464:1959'].forEach(
+    (id) => markDead(root.querySelector<HTMLElement>(`[data-figma-id="${id}"]`)),
+  );
 }
 
 /**

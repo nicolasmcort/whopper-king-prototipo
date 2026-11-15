@@ -1,4 +1,10 @@
 import React from 'react';
+import {
+  ClientBackIcon,
+  ClientFacebookIcon,
+  ClientInstagramIcon,
+  ClientWhatsAppIcon,
+} from '../ClientUiIcons';
 type LayerValue = string | number;
 const absoluteLayer = (left: LayerValue, top: LayerValue, width: LayerValue, height: LayerValue, style: React.CSSProperties = {}): React.CSSProperties => ({
   position: "absolute",
@@ -353,7 +359,8 @@ export function SobreNosotros() {
       <div data-figma-id="464:1735" style={{
           background: "#fffcf8",
           ...col1,
-          padding: "64px 0 48px",
+          // Sin status bar del mockup: menos padding superior
+          padding: "16px 0 48px",
           boxSizing: "border-box",
           position: "absolute",
           left: 20,
@@ -374,12 +381,18 @@ export function SobreNosotros() {
             alignSelf: "stretch"
           }}>
           <div data-figma-id="464:1737" style={fixedLayer(36, 40)}>
-            <div data-figma-id="464:1738" style={absoluteLayer(-4, 0, 40, 40, row5)}>
-              <div data-figma-id="464:1739" style={fixedLayer("max-content", 16, {
+            <div data-figma-id="464:1738" style={absoluteLayer(-4, 0, 40, 40, {
+                ...row5,
+                cursor: "pointer"
+              })}>
+              <div data-figma-id="464:1739" style={fixedLayer(24, 24, {
                   ...col1,
-                  alignItems: "center"
+                  alignItems: "center",
+                  justifyContent: "center",
+                  overflow: "hidden",
+                  display: "flex"
                 })}>
-                <div data-figma-id="464:1740" style={fixedLayer(16, 16)} />
+                <ClientBackIcon size={22} color="#1e1e1e" />
               </div>
             </div>
           </div>
@@ -1356,12 +1369,12 @@ export function SobreNosotros() {
                         ...row5
                       })}>
                       <div data-figma-id="464:1932" style={fixedLayer(24, 24, {
-                          overflow: "hidden"
+                          overflow: "hidden",
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center"
                         })}>
-                        <div data-figma-id="464:1933" style={absoluteLayer("12.5%", "12.5%", "75%", "75%")} />
-                        <svg data-figma-id="464:1934" viewBox="-0.7 -0.7 8.502 8.604" preserveAspectRatio="none" style={absoluteLayer("calc(38.952% - 0.7px)", "calc(34.887% - 0.7px)", "calc(29.59% + 1.4px)", "calc(30.015% + 1.4px)")}>
-                          <use href="#figma-vector-623" fill="transparent" stroke="#16a34a" strokeWidth={1.4} vectorEffect="non-scaling-stroke" strokeLinecap="round" strokeLinejoin="round" />
-                        </svg>
+                        <ClientWhatsAppIcon size={22} color="#16a34a" />
                       </div>
                     </div>
                     <div data-figma-id="464:1935" style={fixedLayer("max-content", 40, col1)}>
@@ -1440,17 +1453,12 @@ export function SobreNosotros() {
                         ...row5
                       })}>
                       <div data-figma-id="464:1946" style={fixedLayer(24, 24, {
-                          overflow: "hidden"
+                          overflow: "hidden",
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center"
                         })}>
-                        <svg data-figma-id="464:1947" viewBox="-0.9 -0.9 21.8 21.8" preserveAspectRatio="none" style={absoluteLayer("calc(8.333% - 0.9px)", "calc(8.333% - 0.9px)", "calc(83.333% + 1.8px)", "calc(83.333% + 1.8px)")}>
-                          <use href="#figma-vector-634" fill="transparent" stroke="#ed6047" strokeWidth={1.8} vectorEffect="non-scaling-stroke" strokeLinecap="round" strokeLinejoin="round" />
-                        </svg>
-                        <svg data-figma-id="464:1948" viewBox="-0.9 -0.9 9.8 9.8" preserveAspectRatio="none" style={absoluteLayer("calc(33.333% - 0.9px)", "calc(33.333% - 0.9px)", "calc(33.333% + 1.8px)", "calc(33.333% + 1.8px)")}>
-                          <use href="#figma-vector-635" fill="transparent" stroke="#ed6047" strokeWidth={1.8} vectorEffect="non-scaling-stroke" strokeLinecap="round" strokeLinejoin="round" />
-                        </svg>
-                        <svg data-figma-id="464:1949" viewBox="-1.25 -1250 2.51 2501" preserveAspectRatio="none" style={absoluteLayer("calc(72.917% - 1.25px)", "calc(27.083% - 1.25px)", 1, 1)}>
-                          <path d="M0 0L0.01 0" fill="transparent" fillRule="nonzero" stroke="#ed6047" strokeWidth={2.5} vectorEffect="non-scaling-stroke" strokeLinecap="round" strokeLinejoin="round" />
-                        </svg>
+                        <ClientInstagramIcon size={20} color="#ed6047" />
                       </div>
                     </div>
                     <div data-figma-id="464:1950" style={fixedLayer("max-content", 40, col1)}>
@@ -1520,10 +1528,12 @@ export function SobreNosotros() {
                         ...row5
                       })}>
                       <div data-figma-id="464:1961" style={fixedLayer(24, 24, {
-                          overflow: "hidden"
+                          overflow: "hidden",
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center"
                         })}>
-                        <div data-figma-id="464:1962" style={absoluteLayer("8.333%", "8.333%", "83.333%", "83.333%")} />
-                        <div data-figma-id="464:1963" style={absoluteLayer("33.333%", "20.833%", "33.333%", "62.5%")} />
+                        <ClientFacebookIcon size={22} color="#1877f2" />
                       </div>
                     </div>
                     <div data-figma-id="464:1964" style={fixedLayer("max-content", 40, col1)}>

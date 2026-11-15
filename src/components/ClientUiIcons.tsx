@@ -543,3 +543,15 @@ export function ClientInstagramIcon({ size = 20, color = '#29241f', style }: Pro
     </>,
   );
 }
+
+/** Facebook — «f» clásica. */
+export function ClientFacebookIcon({ size = 20, color = '#1877f2', style }: Props) {
+  return base(
+    size,
+    style,
+    <path
+      d="M14.5 8.5h-2V7.2c0-.55.2-.9.95-.9H14.6V4.1c-.3-.04-.9-.1-1.7-.1-1.7 0-2.9 1-2.9 2.95V8.5H8v2.3h1.95V20h2.55v-9.2H15l.5-2.3h-1Z"
+      fill={color}
+    />,
+  );
+}
