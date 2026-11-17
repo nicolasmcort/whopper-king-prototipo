@@ -1,30 +1,124 @@
-import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
-import { ClientBottomTabBar } from './components/ClientBottomTabBar';
-import { enhanceFrame } from './interactive/enhanceDom';
-import { shouldReplaceHistory, type NavTarget } from './interactive/navMap';
+import {
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+  type RefObject,
+} from 'react';
+import { AdminDesktopNav } from '@/shared/components/layout/AdminDesktopNav';
+import { ClientBottomTabBar } from '@/shared/components/layout/ClientBottomTabBar';
+import { DesktopAdminApp } from './desktop/DesktopAdminApp';
+import { DesktopClientApp } from './desktop/DesktopClientApp';
+import { enhanceFrame } from '@/shared/interactive/enhanceDom';
+import { shouldReplaceHistory, type NavTarget } from '@/shared/interactive/navMap';
+import {
+  adminNavFor,
+  getBreakpoint,
+  isAdminScreen,
+  type Breakpoint,
+} from './responsive';
 import { screenById, screens } from './screens';
+import { applyDocumentSeo, pageHeadingFor } from './seo';
 
-/** Ancho del frame en Figma/MagicPath (móvil). */
-const PHONE_W = 402;
+/** Ancho de diseño Figma (no se estira; se escala). */
+const DESIGN_W = 402;
+/** Alto de referencia del viewport del prototipo. */
+const DESIGN_H = 844;
 
-/** Exportaciones que son solo el sheet/modal (sin chrome completo). */
 const SHEETS = new Set([
   'confirmar-eliminacion',
   'ajuste-mov-184',
   'ajuste-ped-1048',
   'eliminacion-mov-184',
+  'elim-cuenta',
+  'sms-telefono',
+  'correo-cambiar',
+  'recuperar-contrasena',
 ]);
 
-/**
- * Tab bar Inicio/Buscar/Carrito/Mi cuenta inyectada.
- * Menús de categoría (almuerzo, burgers, …) NO: solo «Tu carrito está vacío».
- * Inicio / Mi cuenta / Carrito ya la traen en su propio frame.
- */
+const CENTER_MODALS = new Set(['no-disponible']);
+
+const BOTTOM_SHEETS = new Set([
+  'elim-cuenta',
+  'sms-telefono',
+  'correo-cambiar',
+  'recuperar-contrasena',
+]);
+
+const LIGHT_SCRIM_SHEETS = new Set([
+  'sms-telefono',
+  'correo-cambiar',
+  'recuperar-contrasena',
+]);
+
+const OVERLAYS = new Set([...SHEETS, ...CENTER_MODALS]);
+
 const INJECT_TAB_BAR = new Set<string>();
 
 function readHash(): string {
   const h = window.location.hash.replace(/^#\/?/, '').trim();
   return h && screenById[h] ? h : 'whopper-inicio';
+}
+
+function useBreakpoint(): Breakpoint {
+  const [bp, setBp] = useState<Breakpoint>(() => getBreakpoint());
+  useEffect(() => {
+    const onResize = () => setBp(getBreakpoint());
+    window.addEventListener('resize', onResize);
+    return () => window.removeEventListener('resize', onResize);
+  }, []);
+  return bp;
+}
+
+/**
+ * Escala el marco 402×844 al stage.
+ * - mobile: llena el ancho (altura del frame = 100dvh/scale → scroll interno)
+ * - tablet/admin desktop: cabe entero en el área disponible
+ */
+function useFitScale(
+  stageRef: RefObject<HTMLDivElement | null>,
+  mode: 'mobile' | 'fit' | 'off',
+) {
+  const [scale, setScale] = useState(1);
+
+  useLayoutEffect(() => {
+    if (mode === 'off') {
+      setScale(1);
+      return;
+    }
+    const stage = stageRef.current;
+    if (!stage) {
+      setScale(1);
+      return;
+    }
+
+    const measure = () => {
+      if (mode === 'mobile') {
+        const aw = Math.max(stage.clientWidth || window.innerWidth, 1);
+        const next = aw / DESIGN_W;
+        setScale(Number.isFinite(next) ? Math.min(Math.max(next, 0.5), 1.2) : 1);
+        return;
+      }
+      const padX = 48;
+      const padY = 24;
+      const aw = Math.max(stage.clientWidth - padX, 120);
+      const ah = Math.max(stage.clientHeight - padY, 120);
+      const next = Math.min(aw / DESIGN_W, ah / DESIGN_H);
+      setScale(Number.isFinite(next) ? Math.min(Math.max(next, 0.5), 1.35) : 1);
+    };
+
+    measure();
+    const ro = new ResizeObserver(measure);
+    ro.observe(stage);
+    window.addEventListener('resize', measure);
+    return () => {
+      ro.disconnect();
+      window.removeEventListener('resize', measure);
+    };
+  }, [stageRef, mode]);
+
+  return scale;
 }
 
 function App() {
@@ -33,7 +127,11 @@ function App() {
     const id = readHash();
     return id === 'whopper-inicio' ? ['whopper-inicio'] : ['whopper-inicio', id];
   });
-  const frameRef = useRef<HTMLDivElement>(null);
+  const bp = useBreakpoint();
+  const isDesktop = bp === 'desktop';
+  const isMobile = bp === 'mobile';
+  const shellRef = useRef<HTMLDivElement>(null);
+  const stageRef = useRef<HTMLDivElement>(null);
   const historyRef = useRef(history);
   historyRef.current = history;
   const currentIdRef = useRef(currentId);
@@ -41,13 +139,39 @@ function App() {
 
   const current = screenById[currentId] ?? screens[0];
   const Screen = current.Component;
-  const isSheet = SHEETS.has(current.id);
+  const isCenterModal = CENTER_MODALS.has(current.id);
+  const isBottomSheet = BOTTOM_SHEETS.has(current.id);
+  const isFrameOverlay = isCenterModal || isBottomSheet;
+  const isOverlay = OVERLAYS.has(current.id);
   const showInjectedTabBar = INJECT_TAB_BAR.has(current.id);
+  const adminMode =
+    isAdminScreen(current.id) ||
+    (isOverlay && isAdminScreen(history[history.length - 2] || ''));
+  const underForAdmin =
+    isOverlay &&
+    [...history].reverse().find((id) => id !== current.id && !OVERLAYS.has(id));
+  const sidebarAdmin = adminMode || (underForAdmin ? isAdminScreen(underForAdmin) : false);
+
+  /** PC: UI web nativa para cliente y admin (no marco móvil). */
+  const useNativeClient = isDesktop && !sidebarAdmin;
+  const useNativeAdmin = isDesktop && sidebarAdmin;
+  const useNativeDesktop = useNativeClient || useNativeAdmin;
+
+  const scale = useFitScale(
+    stageRef,
+    useNativeDesktop ? 'off' : isMobile ? 'mobile' : 'fit',
+  );
 
   const underId =
-    isSheet
-      ? [...history].reverse().find((id) => id !== current.id && !SHEETS.has(id)) ||
-        'historial-movimientos'
+    isOverlay
+      ? [...history].reverse().find((id) => id !== current.id && !OVERLAYS.has(id)) ||
+        (isCenterModal
+          ? 'whopper-inicio'
+          : current.id === 'elim-cuenta'
+            ? 'privacidad'
+            : LIGHT_SCRIM_SHEETS.has(current.id)
+              ? 'login'
+              : 'historial-movimientos')
       : null;
   const Under = underId ? screenById[underId]?.Component : null;
 
@@ -83,7 +207,6 @@ function App() {
     const here = currentIdRef.current;
     let stack = [...historyRef.current];
     if (stack[stack.length - 1] !== here) stack.push(here);
-    // Quitar la pantalla actual (y duplicados)
     while (stack.length > 0 && stack[stack.length - 1] === here) {
       stack.pop();
     }
@@ -98,7 +221,6 @@ function App() {
         back();
         return;
       }
-      // Misma pantalla (p. ej. − en carrito): no remount
       if (target === currentIdRef.current) return;
       const replace = shouldReplaceHistory(currentIdRef.current, target);
       go(target, replace);
@@ -115,7 +237,6 @@ function App() {
         setCurrentId(id);
         return;
       }
-      // Navegación externa / botón atrás del browser
       const h = historyRef.current;
       const next = h[h.length - 1] === id ? h : [...h, id];
       historyRef.current = next;
@@ -128,83 +249,174 @@ function App() {
     return () => window.removeEventListener('hashchange', onHash);
   }, []);
 
+  useEffect(() => {
+    applyDocumentSeo(current.id, current.name);
+  }, [current.id, current.name]);
+
   useLayoutEffect(() => {
-    const root = frameRef.current;
+    if (useNativeDesktop) return;
+    const root = shellRef.current;
     if (!root) return;
     const cleanup = enhanceFrame(root, current.id, navigate);
     return () => cleanup();
-  }, [current.id, navigate]);
+  }, [current.id, navigate, bp, scale, useNativeDesktop]);
+
+  const heading = pageHeadingFor(current.id, current.name);
+
+  if (useNativeClient) {
+    return (
+      <div className="app-shell app-shell--desktop app-shell--native-desktop" data-breakpoint="desktop">
+        <h1 className="sr-only">{heading}</h1>
+        <main>
+          <DesktopClientApp screenId={current.id} navigate={navigate} />
+        </main>
+      </div>
+    );
+  }
+
+  if (useNativeAdmin) {
+    return (
+      <div
+        className="app-shell app-shell--desktop app-shell--native-desktop app-shell--native-admin"
+        data-breakpoint="desktop"
+      >
+        <h1 className="sr-only">{heading}</h1>
+        <main>
+          <DesktopAdminApp screenId={current.id} navigate={navigate} />
+        </main>
+      </div>
+    );
+  }
+
+  const showSidebar = isDesktop && sidebarAdmin && !isCenterModal;
+  const scaledW = DESIGN_W * scale;
+  const scaledH = DESIGN_H * scale;
 
   return (
     <div
-      style={{
-        minHeight: '100vh',
-        width: '100%',
-        background: '#1a2330',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'flex-start',
-        padding: '16px 0 32px',
-        boxSizing: 'border-box',
-      }}
+      ref={shellRef}
+      className={`app-shell app-shell--${bp}${showSidebar ? ' app-shell--with-sidebar' : ''}${
+        sidebarAdmin ? ' app-shell--admin' : ' app-shell--client'
+      }`}
+      data-breakpoint={bp}
     >
-      <div
-        ref={frameRef}
-        key={current.id}
-        className="phone-frame"
-        style={{
-          width: PHONE_W,
-          maxWidth: '100%',
-          height: 'min(844px, calc(100vh - 32px))',
-          background: '#f7f9fb',
-          position: 'relative',
-          overflow: 'hidden',
-          boxShadow: '0 12px 40px rgba(0,0,0,0.35)',
-        }}
-      >
-        {/* El scroll vive aquí; la tab bar se ancla al phone-frame (no scrollea) */}
+      {showSidebar ? (
+        <AdminDesktopNav
+          active={adminNavFor(underId && isAdminScreen(underId) ? underId : current.id)}
+        />
+      ) : null}
+
+      <div ref={stageRef} className="app-shell__stage">
         <div
-          className="phone-scroll"
-          data-proto-scroll="1"
-          data-proto-has-tabbar={showInjectedTabBar ? '1' : undefined}
+          className="app-shell__scaler"
           style={{
-            position: 'absolute',
-            inset: 0,
-            overflowX: 'hidden',
-            overflowY: 'auto',
-            // Tab bar fija (~79): padding para poder scrollear hasta ver el carrito completo
-            paddingBottom: showInjectedTabBar ? 96 : undefined,
-            boxSizing: 'border-box',
+            width: isMobile ? '100%' : scaledW,
+            height: isMobile ? '100dvh' : scaledH,
+            position: 'relative',
           }}
         >
-          {isSheet && Under ? (
-            <>
-              <div style={{ pointerEvents: 'none', filter: 'brightness(0.72)' }}>
-                <Under />
-              </div>
+          <div
+            key={current.id}
+            className={`phone-frame app-main${isMobile ? ' app-main--mobile' : ''}`}
+            style={{
+              width: DESIGN_W,
+              height: isMobile ? `calc(100dvh / ${scale})` : DESIGN_H,
+              position: 'absolute',
+              left: 0,
+              top: 0,
+              transform: `scale(${scale})`,
+              transformOrigin: 'top left',
+              background: '#fffcf8',
+              overflow: 'hidden',
+              boxShadow: isMobile ? 'none' : '0 12px 40px rgba(0,0,0,0.28)',
+              borderRadius: isMobile ? 0 : 16,
+            }}
+          >
+            <h1 className="sr-only">{heading}</h1>
+            <main
+              className="phone-scroll"
+              data-proto-scroll="1"
+              data-proto-has-tabbar={showInjectedTabBar ? '1' : undefined}
+              style={{
+                position: 'absolute',
+                inset: 0,
+                overflowX: 'hidden',
+                overflowY: isFrameOverlay ? 'hidden' : 'auto',
+                paddingBottom: showInjectedTabBar ? 96 : undefined,
+                boxSizing: 'border-box',
+                pointerEvents: isFrameOverlay ? 'none' : undefined,
+              }}
+            >
+              {isOverlay && Under ? (
+                <>
+                  <div
+                    style={{
+                      pointerEvents: 'none',
+                      filter: isFrameOverlay ? undefined : 'brightness(0.72)',
+                    }}
+                  >
+                    <Under />
+                  </div>
+                  {!isFrameOverlay ? (
+                    <div
+                      style={{
+                        position: 'absolute',
+                        inset: 0,
+                        background: 'rgba(15, 23, 42, 0.45)',
+                        display: 'flex',
+                        alignItems: 'flex-end',
+                        justifyContent: 'center',
+                        padding: 16,
+                        boxSizing: 'border-box',
+                        zIndex: 5,
+                      }}
+                    >
+                      <div style={{ width: '100%', maxWidth: DESIGN_W }}>
+                        <Screen />
+                      </div>
+                    </div>
+                  ) : null}
+                </>
+              ) : (
+                <Screen />
+              )}
+            </main>
+            {showInjectedTabBar ? <ClientBottomTabBar active="inicio" /> : null}
+            {isFrameOverlay && Under ? (
               <div
+                data-proto-frame-overlay="1"
                 style={{
                   position: 'absolute',
                   inset: 0,
-                  background: 'rgba(15, 23, 42, 0.45)',
+                  zIndex: 120,
+                  background: LIGHT_SCRIM_SHEETS.has(current.id)
+                    ? 'rgba(0, 0, 0, 0.15)'
+                    : 'rgba(12, 14, 20, 0.48)',
+                  backdropFilter: LIGHT_SCRIM_SHEETS.has(current.id)
+                    ? 'blur(1px)'
+                    : 'blur(8px)',
+                  WebkitBackdropFilter: LIGHT_SCRIM_SHEETS.has(current.id)
+                    ? 'blur(1px)'
+                    : 'blur(8px)',
                   display: 'flex',
-                  alignItems: 'flex-end',
+                  alignItems: isBottomSheet ? 'flex-end' : 'center',
                   justifyContent: 'center',
-                  padding: 16,
+                  padding: isBottomSheet ? 0 : 20,
                   boxSizing: 'border-box',
-                  zIndex: 5,
                 }}
               >
-                <div style={{ width: '100%', maxWidth: PHONE_W }}>
+                <div
+                  style={{
+                    width: '100%',
+                    maxWidth: isBottomSheet ? DESIGN_W : 362,
+                  }}
+                >
                   <Screen />
                 </div>
               </div>
-            </>
-          ) : (
-            <Screen />
-          )}
+            ) : null}
+          </div>
         </div>
-        {showInjectedTabBar ? <ClientBottomTabBar active="inicio" /> : null}
       </div>
     </div>
   );

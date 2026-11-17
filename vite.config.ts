@@ -13,4 +13,8 @@ export default defineConfig({
       '@': path.resolve(__dirname, './src'),
     },
   },
+  build: {
+    // Lighthouse: source maps del JS grande (depuración / best practices)
+    sourcemap: true,
+  },
 });

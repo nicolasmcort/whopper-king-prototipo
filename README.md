@@ -1,6 +1,6 @@
-# Whopper King — Prototipo UX (revisión)
+# Whopper King — Prototipo UX (Vite + React)
 
-Prototipo interactivo (Vite + React) con pantallas de **cliente** y **dueña/local** exportadas desde MagicPath/Figma.
+Prototipo interactivo cliente + admin, organizado por **features** y **shared** (Módulo II · Hito 2).
 
 ## Cómo correrlo
 
@@ -9,7 +9,21 @@ npm install
 npm run dev
 ```
 
-Abre la URL que imprima Vite (por defecto `http://127.0.0.1:5173`).
+Abre la URL de Vite (por defecto `http://127.0.0.1:5173`).
+
+## Estructura modular
+
+```text
+src/
+  features/     # auth, home, menu, cart, checkout, account, pqrs, admin-*
+  shared/       # layout, ui, interactive, hooks, lib, settings
+  desktop/      # shells nativos PC
+  App.tsx       # marco móvil + responsive
+  screens.tsx   # registro de pantallas (hash routes)
+```
+
+Detalle del inventario: `../Hitos/Hito 2/Inventario_de_Componentes.md`  
+Traspaso a otro directorio: `../Hitos/Hito 2/Guia_Traspaso_Modular.md`
 
 ## Rutas útiles (hash)
 
@@ -18,13 +32,14 @@ Abre la URL que imprima Vite (por defecto `http://127.0.0.1:5173`).
 | Inicio cliente | `/#/whopper-inicio` |
 | Menú / Almuerzo | `/#/menu` · `/#/menu-almuerzo` |
 | Carrito local | `/#/tu-carrito-local` |
-| Inventario (dueña) | `/#/inventario` |
+| Inventario (admin) | `/#/inventario` |
 | Números del negocio | `/#/numeros-negocio` |
+| PQRS | `/#/pqrs` |
 
-## Estado actual (nov 2026)
+## Scripts
 
-- Navegación cliente (categorías, carrito, `<-` → inicio)
-- Íconos de inicio alineados al SVG de Figma
-- Pantallas dueña (inventario / estadísticas) ya montadas
-
-WIP: fidelidad 1:1 de íconos/espaciado y flujos de pago/PQRS.
+| Comando | Qué hace |
+|---------|----------|
+| `npm run dev` | Desarrollo |
+| `npm run build` | Typecheck + bundle |
+| `npm run preview` | Preview del build |

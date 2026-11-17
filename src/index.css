@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;800&family=Plus+Jakarta+Sans:wght@600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;800&display=swap');
 @import 'tailwindcss';
 
 @plugin "tailwindcss-animate";
@@ -15,6 +15,19 @@ body {
   box-sizing: border-box;
   overflow: auto;
   overscroll-behavior-x: none;
+}
+
+/* SEO / a11y: headings visibles para crawlers y lectores, ocultos visualmente */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
 
 @theme inline {
@@ -183,7 +196,7 @@ img.broken-image-fallback {
 /* Prototipo interactivo sobre frames MagicPath */
 .proto-pressable {
   cursor: pointer !important;
-  transition: filter 0.12s ease, transform 0.12s ease, opacity 0.12s ease;
+  transition: filter 0.12s ease, transform 0.12s ease, opacity 0.12s ease, box-shadow 0.12s ease;
   -webkit-tap-highlight-color: transparent;
   user-select: none;
 }
@@ -198,19 +211,47 @@ img.broken-image-fallback {
   opacity: 0.92;
 }
 
+/* Foco por Tab: visible para revisión del profesor */
+.proto-pressable:focus {
+  outline: 2px solid #2563eb;
+  outline-offset: 2px;
+}
+
+.proto-pressable:focus:not(:focus-visible) {
+  outline: none;
+}
+
+.proto-pressable:focus-visible {
+  outline: 2.5px solid #2563eb;
+  outline-offset: 3px;
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.22);
+  z-index: 2;
+  position: relative;
+}
+
 .proto-field,
-input.proto-field {
+input.proto-field,
+textarea.proto-field,
+select.proto-field {
   cursor: text !important;
   caret-color: #1d4ed8;
   appearance: none;
   -webkit-appearance: none;
 }
 
-.proto-field:focus {
-  outline: 1.5px solid #3b82f6;
-  outline-offset: 1px;
+.proto-field:focus,
+.proto-field:focus-visible,
+input.proto-field:focus,
+input.proto-field:focus-visible,
+textarea.proto-field:focus,
+textarea.proto-field:focus-visible,
+select.proto-field:focus,
+select.proto-field:focus-visible {
+  outline: 2px solid #2563eb !important;
+  outline-offset: 2px;
   border-radius: 6px;
-  background: rgba(59, 130, 246, 0.06) !important;
+  background: rgba(37, 99, 235, 0.07) !important;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.18);
 }
 
 /* Status bar del mockup (hora / señal / batería): oculta en todas las UIs */
@@ -226,12 +267,131 @@ input.proto-field {
   padding: 0 !important;
 }
 
-/* Controles sin función (campana de notificaciones, etc.) */
+/* Controles decorativos no interactivos */
 [data-proto-dead] {
   cursor: default !important;
 }
 [data-proto-dead].proto-pressable {
   cursor: default !important;
+}
+
+/* Inertes: se ven y tabular como botones, sin destino */
+[data-proto-inert].proto-pressable {
+  cursor: pointer !important;
+}
+
+/* Stepper − 1 + del footer: anclado a la derecha, no tapa ni se sale */
+[data-proto-qty-row] {
+  position: relative !important;
+  display: block !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 0 !important;
+  box-sizing: border-box !important;
+  overflow: hidden !important;
+  min-height: 38px !important;
+}
+
+[data-proto-qty-row] > [data-proto-qty-label] {
+  display: flex !important;
+  flex-direction: column !important;
+  width: auto !important;
+  max-width: calc(100% - 108px) !important;
+  min-width: 0 !important;
+  overflow: hidden !important;
+  padding-right: 8px !important;
+  box-sizing: border-box !important;
+}
+
+[data-proto-qty] {
+  position: absolute !important;
+  right: 0 !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  flex: none !important;
+  width: 96px !important;
+  min-width: 96px !important;
+  max-width: 96px !important;
+  height: 36px !important;
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  box-sizing: border-box !important;
+  overflow: hidden !important;
+  padding: 0 10px !important;
+  gap: 0 !important;
+  z-index: 2 !important;
+}
+
+[data-proto-qty] > * {
+  flex: 0 0 auto !important;
+  max-width: 28px !important;
+}
+
+[data-proto-qty-btn] {
+  cursor: pointer !important;
+  user-select: none !important;
+  -webkit-user-select: none !important;
+  min-width: 24px !important;
+  min-height: 24px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+[data-proto-qty-btn]:active {
+  opacity: 0.65;
+}
+
+[data-proto-qty] input,
+[data-proto-qty] textarea {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+/* Tabs de segmento (Almuerzo/Menú, Favoritos/Hamburguesas): mismo ancho */
+[data-proto-seg-tabs] {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: stretch !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+  gap: 0 !important;
+}
+
+[data-proto-seg-tab] {
+  position: relative !important;
+  left: auto !important;
+  right: auto !important;
+  top: auto !important;
+  flex: 1 1 0 !important;
+  width: auto !important;
+  min-width: 0 !important;
+  max-width: none !important;
+  height: 45px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  box-sizing: border-box !important;
+}
+
+[data-proto-seg-tab] > span,
+[data-proto-seg-tab] span {
+  position: static !important;
+  left: auto !important;
+  top: auto !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  height: auto !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  text-align: center !important;
 }
 
 /* Header con flecha atrás: por encima del contenido (evita clic absorbido) */
@@ -297,5 +457,168 @@ input.proto-field {
 /* Original dentro del scroll: invisible (React la sigue controlando) */
 .phone-scroll [data-proto-tabbar-source] {
   visibility: hidden !important;
+  pointer-events: none !important;
+}
+
+/* ========== Responsive shell (scale-to-fit, sin estirar Figma) ========== */
+.app-shell {
+  height: 100dvh;
+  min-height: 100dvh;
+  width: 100%;
+  display: flex;
+  background: #1a2330;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.app-shell--mobile {
+  background: #fffcf8;
+}
+
+/* Cliente desktop: UI nativa a pantalla completa (no marco 402px) */
+.app-shell--native-desktop {
+  height: auto;
+  min-height: 100dvh;
+  overflow: auto;
+  background: #fffcf8;
+  display: block;
+}
+
+.app-shell__stage {
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  padding: 16px 24px;
+  overflow: hidden;
+}
+
+.app-shell--desktop .app-shell__stage {
+  justify-content: flex-start;
+  padding-left: 28px;
+}
+
+.app-shell--tablet .app-shell__stage {
+  justify-content: center;
+}
+
+.app-shell--mobile .app-shell__stage {
+  padding: 0;
+  align-items: stretch;
+  justify-content: stretch;
+}
+
+.app-shell__scaler {
+  position: relative;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+.app-sidebar {
+  width: 240px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 24px 16px;
+  box-sizing: border-box;
+  background: #fffcf8;
+  border-right: 1px solid #ebe4dc;
+  min-height: 100dvh;
+}
+
+.app-sidebar--admin {
+  background: #f7f9fb;
+  border-right-color: #e6e8ea;
+}
+
+.app-sidebar__brand {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 4px 10px 20px;
+}
+
+.app-sidebar__logo {
+  font-family: 'Manrope', system-ui, sans-serif;
+  font-weight: 800;
+  font-size: 22px;
+  color: #ed6047;
+  letter-spacing: -0.02em;
+}
+
+.app-sidebar__logo--admin {
+  color: #2457c5;
+}
+
+.app-sidebar__tag {
+  font-family: 'Manrope', system-ui, sans-serif;
+  font-size: 12px;
+  color: #82776e;
+}
+
+.app-sidebar__nav {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+}
+
+.app-sidebar__item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 12px 14px;
+  border: none;
+  border-radius: 12px;
+  background: transparent;
+  font-family: 'Manrope', system-ui, sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  text-align: left;
+  box-sizing: border-box;
+}
+
+.app-sidebar__item:hover {
+  background: rgba(237, 96, 71, 0.08);
+}
+
+.app-sidebar--admin .app-sidebar__item:hover {
+  background: rgba(36, 87, 197, 0.08);
+}
+
+.app-sidebar__item.is-active {
+  background: rgba(237, 96, 71, 0.12);
+}
+
+.app-sidebar--admin .app-sidebar__item.is-active {
+  background: rgba(36, 87, 197, 0.12);
+}
+
+.app-sidebar__switch {
+  margin-top: auto;
+  color: #2457c5 !important;
+  border: 1px solid #d0d7e8 !important;
+}
+
+.app-sidebar__foot {
+  padding: 12px 10px 4px;
+  font-family: 'Manrope', system-ui, sans-serif;
+  font-size: 11px;
+}
+
+/* Desktop: sidebar reemplaza tab bar inferior */
+.app-shell--desktop .phone-frame > [data-proto-tabbar-clone],
+.app-shell--desktop .phone-scroll [data-proto-tabbar-source],
+.app-shell--desktop .phone-scroll [data-proto-fixed-tabbar],
+.app-main[data-desktop-nav='1'] > [data-proto-tabbar-clone] {
+  display: none !important;
+  visibility: hidden !important;
+  height: 0 !important;
   pointer-events: none !important;
 }
